@@ -1257,7 +1257,7 @@ pre code {
     width: 75%;
   }
   .col-lg-8 {
-    width: 66.66666666666666%;
+    width: 100%;
   }
   .col-lg-7 {
     width: 58.333333333333336%;
@@ -1389,7 +1389,7 @@ pre code {
     margin-left: 25%;
   }
   .col-lg-offset-2 {
-    margin-left: 16.666666666666664%;
+    margin-left: 0%;
   }
   .col-lg-offset-1 {
     margin-left: 8.333333333333332%;
