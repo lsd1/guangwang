@@ -5,11 +5,12 @@
 body {
     font-family: 'Open Sans', sans-serif;
 	letter-spacing:1px;
-    color:#fff;
+    color:#232020;
    
 }
 p{
 padding:20px;
+text-align: center;
 }
 
 section
@@ -19,14 +20,15 @@ padding:50px 20px 25px 20px;
 h2
 {
 
-font-size:60px;
+font-size:40px;
 
 }
 
 p {
     
-    line-height:30px;
+    line-height:40px;
     margin-bottom:35px;
+    font-size: 20px;
 }
 hr {
     border-top: 1px solid rgb(27, 106, 131);
@@ -71,6 +73,7 @@ color: #FFF;
 #home {
     text-align:center;
     padding-bottom:50px;
+    background-color: black;
 }
 #home i {
     margin:5px;
@@ -148,4 +151,14 @@ background-color:transparent;
     color:#fff;
     background-color:rgb(27, 106, 131);
     padding:20px;
+}
+.media-heading {
+    margin: 30px 0 5px;
+}
+.icon-mid {
+    margin: 0 auto;
+    width: 20%;
+}
+.media img {
+    width:100%;
 }
