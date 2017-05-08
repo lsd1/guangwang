@@ -8,6 +8,10 @@ body {
     color:#232020;
    
 }
+a {
+    text-decoration: none;
+    cursor:hand;
+}
 p{
 padding:20px;
 text-align: center;
@@ -38,7 +42,7 @@ margin: 0px 100px 0px 100px
    NAVBAR STYLES
  ============================================================ */
 .navbar-inverse {
-background-color: #C42924;
+background-color: #e84127;
 border-color: transparent;
 }
 
@@ -74,6 +78,7 @@ color: #FFF;
     text-align:center;
     padding-bottom:50px;
     background-color: black;
+    padding-top: 50px;
 }
 #home i {
     margin:5px;
@@ -161,4 +166,82 @@ background-color:transparent;
 }
 .media img {
     width:100%;
+}
+.store-p {
+    text-align: left;
+    border-bottom: 1px solid white;
+    padding: 0 0 0 12px;
+    width: 60%;
+    margin:0 0 14px 65px;
+}
+.store-p-b {
+    text-align: left;
+    border-bottom: 1px solid white;
+    padding: 0 0 0 12px;
+    width: 60%;
+    margin: 0 0 50px 65px;
+}
+.store-h2 {
+    text-indent: 6rem;
+    padding-bottom: 15px;
+    font-size: 35px;
+}
+.store-media-body {
+    width:100%;float:left;
+}
+.store-i {
+    border:2px solid rgba(255, 255, 255, 0.86);
+    border-radius: 20px;
+    padding: 8px;
+}
+.store-div {
+    width:100%;
+    float:left;
+    padding: 55px 0px 30px 70px;
+}
+.store-media {
+    background-color: rgba(255, 255, 255, 0.43);
+    max-width: 350px;
+    margin-bottom: 10px;
+}
+.navbar-collapse {
+    max-height: 370px;
+    border: 0px;
+}
+.trapezoid {
+    border-bottom: 70px solid #C42924;
+    border-left: 20px solid rgba(255, 0, 0, 0);
+    border-right: 20px solid rgba(255, 0, 0, 0);
+    width: 300px;
+    margin: 0 auto;
+}
+.about-bg {
+    width: 166px;
+    height: 139px;
+    background-image: url(../img/我们的脉果儿多边形.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-left: 53px;
+    padding-top: 44px;
+    color:white;
+}
+.media-heading {
+    text-align: center;
+}
+#carousel-slider {
+    padding:0;
+}
+.call-us a {
+    color:white;
+}
+#add a,#about a {
+    color:black;
+}
+.about-bg:hover{
+    font-size:75px!important;
+}
+.footer p {
+    font-size: 15px!important;
+    padding:0;
+    margin: 0;
 }
