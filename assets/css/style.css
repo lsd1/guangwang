@@ -173,6 +173,7 @@ background-color:transparent;
     padding: 0 0 0 12px;
     width: 60%;
     margin:0 0 14px 65px;
+    font-size: 18px;
 }
 .store-p-b {
     text-align: left;
@@ -180,6 +181,7 @@ background-color:transparent;
     padding: 0 0 0 12px;
     width: 60%;
     margin: 0 0 50px 65px;
+    font-size: 18px;
 }
 .store-h2 {
     text-indent: 6rem;
@@ -190,7 +192,8 @@ background-color:transparent;
     width:100%;float:left;
 }
 .store-i {
-    border:2px solid rgba(255, 255, 255, 0.86);
+    color:#F6DFCB;
+    border:2px solid #F6DFCB;;
     border-radius: 20px;
     padding: 8px;
 }
@@ -201,8 +204,13 @@ background-color:transparent;
 }
 .store-media {
     background-color: rgba(255, 255, 255, 0.43);
+    border:1px solid rgba(255, 255, 255, 0);
     max-width: 350px;
     margin-bottom: 10px;
+    transition: all 1.5s;
+    -moz-transition: all 1.5s;/*!* Firefox 4 *!*/
+    -webkit-transition:all 1.5s;/*!* Safari 和 Chrome *!*/
+    -o-transition:all 1.5s;	/*!* Opera *!*/
 }
 .navbar-collapse {
     max-height: 370px;
@@ -221,9 +229,12 @@ background-color:transparent;
     background-image: url(../img/我们的脉果儿多边形.png);
     background-repeat: no-repeat;
     background-size: 100%;
-    padding-left: 53px;
-    padding-top: 44px;
     color:white;
+    padding-left: 52px;
+    padding-top: 42px;
+}
+i {
+    font-size: 75px;
 }
 .media-heading {
     text-align: center;
@@ -238,10 +249,107 @@ background-color:transparent;
     color:black;
 }
 .about-bg:hover{
-    font-size:75px!important;
+    -webkit-transform:scale(1.15) ;
+    -moz-transform:scale(1.15) ;
+    -o-transform:scale(1.15);
 }
+
 .footer p {
-    font-size: 15px!important;
+    font-size: 15px;
     padding:0;
     margin: 0;
+    line-height: 20px;
+}
+.add-padding{
+    text-align: left;
+    transition: padding-left 0.5s;
+    -moz-transition: padding-left 0.5s;	/* Firefox 4 */
+    -webkit-transition: padding-left 0.5s;	/* Safari 和 Chrome */
+    -o-transition: padding-left 0.5s;	/* Opera */
+}
+.add-padding:hover{
+    padding-left:15px;
+}
+.store-media:hover {
+    -webkit-transform:scale(1.05) ;
+    border-color:white;
+    background-color:rgba(255, 255, 255, 0) ;
+}
+.news-img {
+border:2px solid black;
+}
+.news-figcaption {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 100%;
+    height: 65%;
+    background-color:rgba(23, 21, 19, 0.33);
+    transition: all 1s;
+    -moz-transition: all 1s;/*!* Firefox 4 *!*/
+    -webkit-transition:all 1s;/*!* Safari 和 Chrome *!*/
+    -o-transition:all 1s;	/*!* Opera *!*/
+}
+.news-figcaption h3 {
+    text-align: center;
+    margin-top: 10rem;
+    font-weight: 800;
+    font-size: 3rem;
+}
+.news-figure {
+    border:1px solid black;
+    position:relative;
+    float: left;
+    min-width: 100%;
+    max-height: 360px;
+}
+.news-figure span {
+    padding: 7px 15px;
+    background-color: black;
+    color:white;
+    z-index: 999;
+    position: relative;
+}
+.news-figure p{
+    line-height: 100px;
+    margin-bottom: 0;
+}
+.news-figure span:hover {
+    background-color: #bb0000;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    transition-timing-function: ease-in;
+    transition-duration: 0.5s;
+    -webkit-transform: scaleY(0);
+    -webkit-transform-origin: 50% 0;
+}
+.news-figcaption:hover{
+    background-color:rgba(23, 21, 19, 0);
+}
+.union-figure {
+    position:relative;
+    float: left;
+    min-width: 100%;
+    max-height: 360px;
+}
+.union-figcaption {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(23, 21, 19, 0.33);
+    transition: all 1s;
+    -moz-transition: all 1s;/* Firefox 4 */
+    -webkit-transition:all 1s;/*Safari 和 Chrome */
+    -o-transition:all 1s;	/* Opera */
+}
+.union-figcaption:hover{
+    background-color:rgba(23, 21, 19, 0);
+}
+.union-figcaption h3 {
+    text-align: center;
+    margin-top: 24%;
+    font-weight: 100;
+    font-size: 3rem;
+    color:white;
 }
