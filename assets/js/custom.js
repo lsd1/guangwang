@@ -21,7 +21,7 @@
                ======================================*/
             $('#carousel-slider').carousel({
                 interval: 3000 //TIME IN MILLI SECONDS
-            })
+            });
             /*====================================
                 SCROLLING SCRIPTS
                 ======================================*/
@@ -78,6 +78,11 @@
     });
 
 }(jQuery));
+$(document).on("#carousel-slider",function(){
+    $("img").on("swipeleft",function(){
+        $('#carousel-slider').Carousel.prototype.next
+    });
+});
 
 
 
