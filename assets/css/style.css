@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 /* =============================================================
    GENERAL STYLES
  ============================================================ */
@@ -355,61 +355,24 @@ border:2px solid black;
 }
 .carousel-btn-1 {
     position:absolute;
-    top:43%;
+    padding-top: 30%;
+    left:0;
+    width:7%;
 }
 .carousel-btn-2 {
     position:absolute;
-    top:43%;
+    padding-top: 30%;
     right:0;
+    width:7%;
 }
-@media screen and (min-width: 1201px) {
-    .carousel-btn-1 {
-        position:absolute;
-        top:45%;
-    }
-    .carousel-btn-2 {
-        position:absolute;
-        top:45%;
-        right:0;
+.carousel-btn-1 img, .carousel-btn-2 img {
+    width: 100%;
+}
+@media (min-width: 768px) and (max-width: 991px){
+    .navbar-nav > li > a {
+     font-size: 15px!important;
     }
 }
-/* css注释：设置了浏览器宽度不小于1201px时 abc 显示1200px宽度 */
 
-@media screen and (max-width: 1200px) {
-    .carousel-btn-1 {
-        position:absolute;
-        top:43%;
-    }
-    .carousel-btn-2 {
-        position:absolute;
-        top:43%;
-        right:0;
-    }
-}
-/* 设置了浏览器宽度不大于1200px时 abc 显示900px宽度 */
 
-@media screen and (max-width: 901px) {
-    .carousel-btn-1 img,.carousel-btn-2 img {width: 80%;}
-}
-/* 设置了浏览器宽度不大于901px时 abc 显示200px宽度 */
 
-@media screen and (max-width: 700px) and (min-width: 625px) {
-    .carousel-btn-1 img,.carousel-btn-2 img {width: 60%;}
-    .carousel-btn-1 {
-        position:absolute;
-        top:43%;
-    }
-    .carousel-btn-2 {
-        position:absolute;
-        top:43%;
-        right:0;
-    }
-}
-@media screen and (max-width: 624px) {
-    .carousel-btn-1 {
-       display: none;
-    }
-    .carousel-btn-2 {
-        display: none;
-    }
-}
