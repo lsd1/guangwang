@@ -205,7 +205,6 @@ background-color:transparent;
 .store-media {
     background-color: rgba(255, 255, 255, 0.43);
     border:1px solid rgba(255, 255, 255, 0);
-    max-width: 350px;
     margin-bottom: 10px;
     transition: all 1.5s;
     -moz-transition: all 1.5s;/*!* Firefox 4 *!*/
@@ -534,5 +533,7 @@ border:2px solid black;
     margin-left: 33%;
     margin-top: -36%;
 }
-
+.add-media {
+    padding-left: 20%;
+}
 
