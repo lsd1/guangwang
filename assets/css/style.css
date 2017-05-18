@@ -375,4 +375,164 @@ border:2px solid black;
 }
 
 
+.col-lg-2p4,.col-md-2p4,.col-sm-2p4 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+}
+@media (min-width: 1200px){
+    .col-lg-2p4 {
+        width: 20%;
+    }
+}
+@media (min-width: 992px){
+    .col-md-2p4 {
+        width: 20%;
+    }
+}
+@media (max-width: 992px) and (min-width: 768px){
+    .about-bg {
+        width: 115px;
+        height: 100px;
+        padding-left: 33px;
+        padding-top: 25px;
+    }
+    .about-bg i {
+        font-size: 50px!important;
+    }
+}
+@media (min-width: 768px){
+    .col-sm-2p4 {
+        width: 20%;
+    }
+}
+
+
+/*发展里程*/
+
+.milestone {
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.milestone-centent {
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 0;
+    position: relative;
+}
+
+.ul-milestone {
+    position: relative;
+}
+
+.ul-milestone .bg {
+    position: absolute;
+    width: 4px;
+    background: #5DBCEF;
+    max-height: 1703px;
+    height: 1703px;
+    left: 14.8%;
+    z-index: 2;
+    top: 30px;
+}
+
+.li-milestone {
+    z-index: 99;
+    padding-bottom: 40px;
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    width: 100%;
+}
+
+.li-milestone .icon {
+    width: 44px;
+    height: 44px;
+    background: url('../img/about_icon_time.png');
+    float: left;
+    position: absolute;
+    left: 10%;
+    top: 9px;
+}
+
+.li-milestone .icon1 {
+    width: 18px;
+    height: 18px;
+    background: url('../img/about_icon_dot.png') no-repeat center center;
+    float: left;
+    position: absolute;
+    left: 11%;
+    top: 22px;
+}
+
+.li-milestone .time {
+    font-size: 20px;
+    color: #5A6066;
+    line-height: 60px;
+    float: left;
+    width: 10%;
+    text-align: right;
+    padding-right: 15px;
+}
+
+.li-milestone .bold {
+    font-size: 36px;
+    color: #2D3033;
+    line-height: 60px;
+    font-weight: bold;
+}
+
+.li-milestone .pao {
+    height: 60px;
+    background: #FAFAFA;
+    border: 1px solid #DCDEE0;
+    border-radius: 4px;
+    float: left;
+    margin-left: 60px;
+    position: relative
+}
+
+.li-milestone .pao .jt {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    left: -10px;
+    top: 22px;
+    background: url('../img/about_time_triangle.png');
+}
+
+.li-milestone .pao span {
+    font-size: 24px;
+    color: #5A6066;
+    line-height: 60px;
+    display: block;
+    padding: 0 20px;
+}
+.line {
+    font-weight: 100;
+}
+.about-p {
+    padding: 0;
+    text-align: left;
+    font-size: 1.7rem;
+}
+.about-media {
+    padding-top: 6rem;
+    padding-left: 6rem;
+}
+.about-row-f5 {
+    background-color:#f5f5f5;
+}
+.about-row-wh {
+    background-color:white;
+}
+.about-img {
+    position: absolute;
+    margin-left: 33%;
+    margin-top: -36%;
+}
+
 
