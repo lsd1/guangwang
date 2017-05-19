@@ -42,7 +42,7 @@ margin: 0px 100px 0px 100px
    NAVBAR STYLES
  ============================================================ */
 .navbar-inverse {
-background-color: #e84127;
+background-color: #2babd0;
 border-color: transparent;
 }
 
@@ -154,7 +154,7 @@ background-color:transparent;
 .footer {
     text-align:right;
     color:#fff;
-    background-color:rgb(27, 106, 131);
+    background-color:white;
     padding:20px;
 }
 .media-heading {
@@ -216,7 +216,7 @@ background-color:transparent;
     border: 0px;
 }
 .trapezoid {
-    border-bottom: 70px solid #C42924;
+    border-bottom: 70px solid #2babd0;
     border-left: 20px solid rgba(255, 0, 0, 0);
     border-right: 20px solid rgba(255, 0, 0, 0);
     width: 300px;
@@ -357,22 +357,24 @@ border:2px solid black;
     padding-top: 30%;
     left:0;
     width:7%;
+    z-index: 1;
 }
 .carousel-btn-2 {
     position:absolute;
     padding-top: 30%;
     right:0;
     width:7%;
+    z-index: 1;
 }
 .carousel-btn-1 img, .carousel-btn-2 img {
     width: 100%;
 }
+
 @media (min-width: 768px) and (max-width: 991px){
     .navbar-nav > li > a {
      font-size: 15px!important;
     }
 }
-
 
 .col-lg-2p4,.col-md-2p4,.col-sm-2p4 {
     position: relative;
@@ -536,4 +538,97 @@ border:2px solid black;
 .add-media {
     padding-left: 20%;
 }
-
+.more-time {
+    width:15%;
+    float:left;
+    padding-top: 7%;
+}
+.more-bg {
+    width:85%;
+    float:left;
+    padding: 14px;
+    border-left: 2px solid;
+}
+.more-media {
+    width:100%;
+    background-color: #dcdbdb;
+}
+.more-img {
+    width:26%;
+    float:left;
+}
+.more-img img {
+    width:100%;
+}
+.more-content {
+    width:65%;
+    float:left;
+    overflow: hidden;
+}
+.more-content-p {
+    padding:0;
+    padding-left:5%;
+    margin:0;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: left;
+    color:rgba(0, 0, 0, 0.56);
+}
+.more {
+    display: inline-block;
+}
+.time {
+    width:100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 2rem;
+}
+.more-content-h4 {
+    padding-left:5%;
+    font-weight:500;
+}
+.point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 5px solid black;
+    border-radius: 5px;
+    left: 15.57%;
+    top: 42%;
+}
+.more-a {
+    line-height: 1rem;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.96);
+    border: 1px solid;
+    color: black;
+    display: inline-block;
+    margin: 50px 0px 0 30px;
+    text-decoration: none;
+}
+.more-con {
+    margin-top: 8rem;
+}
+.our-head {
+    margin: 10px 0 5px!important;
+}
+.morenews-con {
+    margin-top: 3rem;
+}
+.morenews-con h3,.morenews-con h5 {
+    text-align: center;
+}
+.morenews-con p {
+    text-indent: 4rem;
+    text-align: left;
+    padding:0;
+    margin:0;
+    margin-top: 2rem;
+    line-height: 3rem;
+    display: inline-block;
+}
+.morenews-con div {
+    width:100%;
+    margin:0 auto;
+    text-align:center
+}
