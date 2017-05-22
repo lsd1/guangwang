@@ -632,3 +632,6 @@ border:2px solid black;
     margin:0 auto;
     text-align:center
 }
+.morenews-con section {
+    padding: 0 !important;
+}
