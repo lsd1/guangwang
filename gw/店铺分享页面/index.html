@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="body">
+	<div class="shop-bg"><img src="./images/173282.jpg"></div>
+	<div class="shop-avatar"><div class="avatar"></div></div>
+	<div class="shop-title"><p>四季榴莲旗舰店(和平店)</p></div>
+	<div class="star" data-score="4"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><d> 4.0</d>
+	</div>
+	<div class="active-info">
+		<p>活动主题：一起去看油菜花</p>
+		<p>活动时间：2017.04.01-2017.05.31</p>
+	</div>
+	<div class="active-content">
+		<img src="./images/5.jpg">
+		<p>
+			《卡拉马佐夫兄弟》是俄国大作家陀思妥耶夫斯基的最后一部长篇小说。它是根据一桩真实的弑父案写成的。它围绕着卡拉马佐夫和他的儿子们：德米特里、伊凡、阿历克赛以及名为奴仆实为私生子的斯麦尔佳科夫，展示了一个错综复杂的社会、家庭、道德和人性的悲剧主题。
+		</p>
+		<img src="./images/2.jpg">
+		<p>
+			《卡拉马佐夫兄弟》是俄国大作家陀思妥耶夫斯基的最后一部长篇小说。它是根据一桩真实的弑父案写成的。它围绕着卡拉马佐夫和他的儿子们：德米特里、伊凡、阿历克赛以及名为奴仆实为私生子的斯麦尔佳科夫，展示了一个错综复杂的社会、家庭、道德和人性的悲剧主题。
+		</p>
+	</div>
+	<div class="active-bg"><img src="./images/more_active.png"></div>
+	<div class="more_active_title">
+		<div class="more_active_img"><img src="./images/hui.png"></div>
+		<div class="more_active_text"><a href="">新品满50减10，满100减30，满200减80</a></div>
+	</div>
+	<div class="more_active_title">
+		<div class="more_active_img"><img src="./images/hui.png"></div>
+		<div class="more_active_text"><a href="">新品满50减10，满100减30，满200减80</a></div>
+	</div>
+	<div class="comment">
+		<div class="comm_head">
+			<div class="comm_count">评论 500</div><div class="write_comm"><img src="./images/pen.png">写评论</div>
+		</div>
+		<div class="comm_content">
+			<div class="comm_content_side">
+				<div class="comm_content_img"></div>
+			</div>
+			<div class="comm_text">
+				<div class="name">雅雅呀</div><div class="date">12-25 06:23</div>
+				<div>
+				<p>脉果儿公司 | 扫地阿姨</p>
+				<p class="content">评论内容评论内容评论内容评论内容评论内容评论内容评论内容</p>
+				</div>
+			</div>
+		</div>
+		<div class="comm_content">
+			<div class="comm_content_side">
+				<div class="comm_content_img"></div>
+			</div>
+			<div class="comm_text">
+				<div class="name">雅雅呀</div><div class="date">12-25 06:23</div>
+				<div>
+					<p>脉果儿公司 | 扫地阿姨</p>
+					<p class="content">评论内容评论内容评论内容评论内容评论内容评论内容评论内容</p>
+				</div>
+			</div>
+		</div>
+		<div class="comm_content">
+			<div class="comm_content_side">
+				<div class="comm_content_img"></div>
+			</div>
+			<div class="comm_text">
+				<div class="name">雅雅呀</div><div class="date">12-25 06:23</div>
+				<div>
+					<p>脉果儿公司 | 扫地阿姨</p>
+					<p class="content">评论内容评论内容评论内容评论内容评论内容评论内容评论内容</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="end">
+		<div class="end_text">活动费用<span class="yuan">100</span>元，返<span class="pv">12</span>pv</div>
+		<div class="end_btn"><span>立即报名</span></div>
+
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script>
+	var score = $('.star').attr('data-score');
+	var i = 0;
+	$('.star span').each(function(){
+		i++;
+        $(this).css("color","#FFA200");
+        if(i>=score)return false;
+	});
+</script>
+</html>
