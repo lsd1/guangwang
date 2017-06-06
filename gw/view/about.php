@@ -2,7 +2,7 @@
 <section id="about"  style="padding:50px 0 0 0;">
     <div class="container about-con" style="width:100%;">
         <div class="row">
-            <img width="100%" src="/gw/assets/img/关于我们-2.jpg">
+            <img width="100%" src="<?php echo ROOTPATH ;?>assets/img/关于我们-2.jpg">
         </div>
         <div class="row about-row-f5">
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -42,11 +42,11 @@
                 </div>
             </div>
         </div>
-        <div class="about-img"><img src="../gw/assets/img/鸿隆世纪.png"></div>
+        <div class="about-img"><img src="..<?php echo ROOTPATH ;?>assets/img/鸿隆世纪.png"></div>
         <div class="row about-row-f5">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="media about-left">
-                    <img src="../gw/assets/img/APP.png">
+                    <img src="..<?php echo ROOTPATH ;?>assets/img/APP.png">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -306,7 +306,7 @@
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="media">
-                    <img src="/gw/assets/img/奖牌.jpg">
+                    <img src="<?php echo ROOTPATH ;?>assets/img/奖牌.jpg">
                 </div>
             </div>
         </div>

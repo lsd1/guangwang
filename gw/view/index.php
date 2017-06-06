@@ -5,17 +5,17 @@
            <div class="row">
                <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 ">
                    <div id="carousel-slider" data-ride="carousel" class="carousel slide">
-                       <!--<div class="carousel-btn-1"><img src="/gw/assets/img/滚播标-1.png"></div>
-                       <div class="carousel-btn-2"><img src="/gw/assets/img/滚播标-2.png"></div>-->
+                       <!--<div class="carousel-btn-1"><img src="<?php echo ROOTPATH ;?>assets/img/滚播标-1.png"></div>
+                       <div class="carousel-btn-2"><img src="<?php echo ROOTPATH ;?>assets/img/滚播标-2.png"></div>-->
                        <div class="carousel-inner">
                             <div class="item active">
-                                <img src="/gw/assets/img/网站-banner-1-1920.jpg">
+                                <img src="<?php echo ROOTPATH ;?>assets/img/网站-banner-1-1920.jpg">
                             </div>
                             <div class="item">
-                                <img src="/gw/assets/img/网站-banner-2-1920.jpg">
+                                <img src="<?php echo ROOTPATH ;?>assets/img/网站-banner-2-1920.jpg">
                             </div>
                             <div class="item">
-                                <img src="/gw/assets/img/banner-3-1920.jpg">
+                                <img src="<?php echo ROOTPATH ;?>assets/img/banner-3-1920.jpg">
                             </div>
                         </div>
                         <!--INDICATORS-->
@@ -37,7 +37,7 @@
             <div class="row" >
                 <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0  text-center">
                     <h2>我们的脉果儿</h2>
-                    <img src="/gw/assets/img/多边形装饰.png"><br/><br/><br/><br/>
+                    <img src="<?php echo ROOTPATH ;?>assets/img/多边形装饰.png"><br/><br/><br/><br/>
                 </div>
                 <div class="col-lg-2p4 col-md-2p4 col-sm-2p4">
                     <div class="media">
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0  text-center">
                     <h2>商家加盟</h2>
-                    <img src="/gw/assets/img/多边形装饰.png"><br/><br/>
+                    <img src="<?php echo ROOTPATH ;?>assets/img/多边形装饰.png"><br/><br/>
                     <p>
                         脉果儿平台通过人脉社交拓展一个大数据平台，商家平台出售已有资源，<br/>
                         与大平台资源共享，同时获得其他资源的收益。
@@ -179,7 +179,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="media">
                         <figure class="union-figure">
-                            <img src="/gw/assets/img/商家加盟-1.jpg"/>
+                            <img src="<?php echo ROOTPATH ;?>assets/img/商家加盟-1.jpg"/>
                             <figcaption class="union-figcaption">
                                 <h3>减轻用户负担</h3>
                             </figcaption>
@@ -192,7 +192,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="media">
                         <figure class="union-figure">
-                            <img src="/gw/assets/img/商家加盟-2.jpg">
+                            <img src="<?php echo ROOTPATH ;?>assets/img/商家加盟-2.jpg">
                             <figcaption class="union-figcaption">
                                 <h3>人人为你推广</h3>
                             </figcaption>
@@ -205,7 +205,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="media">
                         <figure class="union-figure">
-                            <img src="/gw/assets/img/商家加盟-3.jpg">
+                            <img src="<?php echo ROOTPATH ;?>assets/img/商家加盟-3.jpg">
                             <figcaption class="union-figcaption">
                                 <h3>一人消费人人获益</h3>
                             </figcaption>
@@ -223,7 +223,7 @@
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0  text-center">
                     <h2>新闻动态</h2>
-                    <img src="/gw/assets/img/多边形装饰.png"><br/><br/>
+                    <img src="<?php echo ROOTPATH ;?>assets/img/多边形装饰.png"><br/><br/>
                 </div>
             </div>
             <div class="row ">
@@ -233,11 +233,11 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="media">
                         <figure class="news-figure">
-                            <img src="/gw/assets/img/新闻.jpg" width="350" height="234" />
+                            <img src="<?php echo ROOTPATH ;?>assets/img/新闻.jpg" width="350" height="234" />
                             <figcaption class="news-figcaption">
                                 <h3><?php echo $v['title']?></h3>
                             </figcaption>
-                            <p><span><a href="/gw/index.php?act=news&op=index&id=<?php echo $v['id']?>">Read More</a></span></p>
+                            <p><span><a href="<?php echo ROOTPATH ;?>index.php?act=news&op=index&id=<?php echo $v['id']?>">Read More</a></span></p>
                         </figure>
                     </div>
                 </div>
@@ -253,7 +253,7 @@
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0  text-center">
                     <h2>加入我们</h2>
-                    <img src="/gw/assets/img/多边形装饰.png">
+                    <img src="<?php echo ROOTPATH ;?>assets/img/多边形装饰.png">
                     <p >
                         在这里，<br />
                         只要你有足够的才华证明自己，没有谁会对你指手画脚，<br />
@@ -266,7 +266,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="media add-media">
                         <div class="pull-left">
-                            <img src="/gw/assets/img/加入我们.png">
+                            <img src="<?php echo ROOTPATH ;?>assets/img/加入我们.png">
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading add-padding">客服专员</h3>
@@ -276,7 +276,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="media add-media">
                         <div class="pull-left">
-                            <img src="/gw/assets/img/加入我们.png">
+                            <img src="<?php echo ROOTPATH ;?>assets/img/加入我们.png">
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading add-padding">运营专员</h3>
@@ -286,7 +286,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="media add-media">
                     <div class="pull-left">
-                        <img src="/gw/assets/img/加入我们.png">
+                        <img src="<?php echo ROOTPATH ;?>assets/img/加入我们.png">
                     </div>
                     <div class="media-body">
                         <h3 class="media-heading add-padding">行政专员</h3>
@@ -296,7 +296,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="media add-media">
                         <div class="pull-left">
-                            <img src="/gw/assets/img/加入我们.png">
+                            <img src="<?php echo ROOTPATH ;?>assets/img/加入我们.png">
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading add-padding">人事专员</h3>

@@ -2,7 +2,7 @@
 <section id="morenews-content" >
     <div class="container">
         <div class="row">
-            <img width="100%" src="/gw/assets/img/新闻动态.jpg">
+            <img width="100%" src="<?php echo ROOTPATH ;?>assets/img/新闻动态.jpg">
         </div>
     </div>
     <div class="container">

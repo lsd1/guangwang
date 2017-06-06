@@ -22,9 +22,9 @@ foreach($query_str as $v){
 }
 $c_name = empty($query_arr['act'])? 'index' : $query_arr['act'];
 $method = empty($query_arr['op'])? 'index' : $query_arr['op'];
-$controller_file = ROOTPATH.'/gw/controller/'.$c_name.'.php';//拼接控制器文件路径
+$controller_file = ROOT.ROOTPATH.'controller/'.$c_name.'.php';//拼接控制器文件路径
 try{
-    require_once ROOTPATH.'/gw/controller/database.php';
+    require_once ROOT.ROOTPATH.'controller/database.php';
     require_once $controller_file;//加载相应控制器文件
     $controller = $c_name.'Controller';
     $controller = new $controller;//实例化控制器
