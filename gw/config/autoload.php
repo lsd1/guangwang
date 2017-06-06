@@ -18,7 +18,7 @@ $query_str = explode('&',$_SERVER['QUERY_STRING']);
 global $query_arr;
 foreach($query_str as $v){
     $query = explode('=',$v);
-    $query_arr[$query[0]] = $query[1];
+    @$query_arr[$query[0]] = $query[1];
 }
 $c_name = empty($query_arr['act'])? 'index' : $query_arr['act'];
 $method = empty($query_arr['op'])? 'index' : $query_arr['op'];

@@ -1,4 +1,4 @@
-﻿<?php include 'header2.php' ?>
+<?php include 'header2.php' ?>
 <section id="about"  style="padding:50px 0 0 0;">
     <div class="container about-con" style="width:100%;">
         <div class="row">

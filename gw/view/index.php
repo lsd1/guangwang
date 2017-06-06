@@ -1,4 +1,4 @@
-﻿﻿<?php include 'header.php';?>
+<?php include 'header.php';?>
     <!--NAVBAR SECTION END-->
    <div id="home" >
        <div class="container" style="padding:0;width:100%;">

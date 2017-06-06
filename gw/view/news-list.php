@@ -1,4 +1,4 @@
-﻿﻿<?php include 'header2.php'; ?>
+<?php include 'header2.php'; ?>
 <section id="morenews" >
     <div class="container">
         <div class="row">
