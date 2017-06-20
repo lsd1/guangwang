@@ -233,10 +233,15 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="media">
                         <figure class="news-figure">
-                            <img src="<?php echo ROOTPATH ;?>assets/img/新闻.jpg" width="350" height="234" />
+
+                                <img src="<?php echo ROOTPATH ;?>assets/img/新闻.jpg" width="350" height="234" />
+                            <a class="figcaption-a" href="<?php echo ROOTPATH ;?>index.php?act=news&op=index&id=<?php echo $v['id']?>">
                             <figcaption class="news-figcaption">
+
                                 <h3><?php echo $v['title']?></h3>
+
                             </figcaption>
+                            </a>
                             <p><span><a href="<?php echo ROOTPATH ;?>index.php?act=news&op=index&id=<?php echo $v['id']?>">Read More</a></span></p>
                         </figure>
                     </div>
