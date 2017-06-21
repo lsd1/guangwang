@@ -1,0 +1,199 @@
+body,div,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
+body { font-size:14px; line-height:150%;text-align:left; color:#666; font-family:"微软雅黑","Arial Black", Gadget, sans-serif; background:url() left top repeat; }
+img{ border:0; -ms-interpolation-mode:bicubic; margin:0; padding:0;}
+a:link {color:#666; text-decoration:none; outline:none;}
+a:visited {color:#666; text-decoration:none;}
+a:hover { color:#510449; text-decoration:none;}
+a:active { color:#510449; text-decoration:none;}
+ul,li{list-style:none;}
+
+.pw{min-width:320px; background:none repeat scroll 0% 0%; margin:0px auto;overflow:hidden; min-height:480px; width:100%; padding-bottom:51px;}
+
+/*@media screen and (max-width:480px){}*/
+
+/***************样式开始*********/
+.body {
+    margin:0 auto;
+    max-width: 480px;
+}
+img {
+    width:100%;
+}
+.shop-avatar {
+    width:100%;
+    height:auto;
+}
+.avatar {
+    background-image: url(../images/shop_avatar.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 4rem;
+    position: relative;
+    top: -4rem;
+    left: -webkit-calc(50% - 4em);
+    left: -moz-calc(50% - 4em);
+}
+.shop-title {
+    width:100%;
+    height:auto;
+    margin-top: -13%;
+}
+.shop-title p {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.star {
+    width: 100%;
+    height: 3rem;
+    color:rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1.2rem;
+}
+.star d{
+    color:#FFA200;
+}
+.active-info p{
+    font-size: 1.1rem;
+    padding: 3% 0 0 3%;
+    color: black;
+}
+.active-content {
+    padding:3%;
+}
+.active-content p {
+    line-height: 2rem;
+}
+.active-bg {
+    width:100%;
+    height:auto;
+}
+.more_active_title {
+    width:100%;
+    height:auto;
+    display: inline-block;
+}
+.more_active_img {
+    width:5%;
+    float: left;
+    padding-left: 3%;
+    padding-right: 1%;
+    padding-top: 1rem;
+    height:auto;
+}
+.more_active_text {
+    width:91%;
+    float: left;
+    padding-top: 1rem;
+    height:auto;
+}
+.comment {
+    clear: both;
+    width:100%;
+    height:auto;
+    margin-top: 1rem;
+}
+.comm_head {
+    width:100%;
+    padding: 1rem 0 2.06rem;
+    background-color: #F4F4F4;
+    border-top: 1px solid rgba(128, 128, 128, 0.29);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.29);
+}
+.comm_count {
+    font-size: 1rem;
+    padding-left: 1rem;
+    display: inline-block;
+    float: left;
+    color:#03A1FA;
+}
+.write_comm {
+    font-size: 1rem;
+    padding-right: 1rem;
+    display: inline-block;
+    float: right;
+}
+.write_comm img{
+    width: 0.8rem;
+    vertical-align: middle;
+    padding-right: 3px;
+}
+.comm_content {
+    margin-top: 1.5rem;
+}
+.comm_content_side {
+   width:20%;
+    float: left;
+}
+.comm_content_img {
+    background-image: url('../images/4.jpeg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 2rem;
+}
+.comm_text {
+    width:80%;
+    float: left;
+}
+.comm_text .name {
+    width:40%;
+    float: left;
+    text-align: left;
+    color:black;
+    font-size: 1rem;
+}
+.comm_text .date {
+    width:56%;
+    float:right;
+    text-align: right;
+    padding-right: 4%;
+}
+.comm_text .content{
+    color:black;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #F4F4F4;
+}
+.end {
+    width:100%;
+    background-color: #F4F4F4;
+    clear: both;
+    margin-top: 8rem;
+    padding-bottom: 2.5rem;
+    padding-top: 1rem;
+
+    height:auto;
+}
+.end_text {
+    padding-left: 1rem;
+    text-align: left;
+    width:55%;
+    float:left;
+    height:auto;
+}
+.end_btn {
+    text-align: right;
+    width:35%;
+    float:right;
+    height:auto;
+}
+.end_btn span {
+    padding:0.5rem 1.5rem;
+    background-color:#03A1FA;
+    border-radius: 0.2rem;
+    margin-right: 0.9rem;
+    color: white;
+}
+.yuan {
+    color:#FF0000;
+}
+.pv {
+    color:#FFA200;
+}
