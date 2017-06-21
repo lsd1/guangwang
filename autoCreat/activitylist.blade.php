@@ -87,16 +87,7 @@
                             }
                         });
                     },
-                    "aoColumns": [
-                        {"sTitle": "店铺ID", "mDataProp": "sid", "sWidth": "8%"},
-                        {"sTitle": "标题", "mDataProp": "title", "sWidth": "8%"},
-                        {"sTitle": "具体内容", "mDataProp": "details", "sWidth": "9%"},
-                        {"sTitle": "活动费用", "mDataProp": "amount", "sWidth": "9%"},
-                        {"sTitle": "商户金额", "mDataProp": "merchant", "sWidth": "8%"},
-                        {"sTitle": "返还PV", "mDataProp": "backPV", "sWidth": "8%"},
-                        {"sTitle": "状态", "mDataProp": "curStatus", "sWidth": "9%"},
-                        {"sTitle": "创建时间", "mDataProp": "createTime", "sWidth": "11%"}
-                    ],
+                    "aoColumns": 列表字段,
                     "aoColumnDefs": [
 //                        {
 //                            "aTargets": [2],
