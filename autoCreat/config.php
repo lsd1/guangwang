@@ -1,7 +1,7 @@
 <?php
-define('HOST','localhost');
-define('USER','root');
-define('PWD','root');
-define('DB','shop');
+define('HOST','120.27.136.103');
+define('USER','liusidong');
+define('PWD','Lsdlily123');
+define('DB','maiguoer-pre');
 define('CHARSET','utf8');
-$table = array('mge_cms_article');
+$table = array('mge_rebate_activity');

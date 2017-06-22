@@ -105,8 +105,8 @@ foreach($table AS $val){
     /*处理left.blade.php*/
     $left_blade = file_get_contents('left.blade.php');
     $exist = strpos($left_blade,'<input type="hidden" data-id="'.$m_l_name.'">');
-    $left_li = ' <li><a tabindex="-1" href="{{url(\''.$m_l_name.'/'.$table_l_name.'list.html\')}}"><i class="icon-chevron-right"></i>'.$table_l_name.'列表</a></li>
-                    <input type="hidden" data-id="'.$table_l_name.'">';//left.blade.php的li
+    $left_li = '<li><a tabindex="-1" href="{{url(\''.$m_l_name.'/'.$table_l_name.'list.html\')}}"><i class="icon-chevron-right"></i>'.$table_l_name.'列表</a></li>
+                    <input type="hidden" data-id="'.$m_l_name.'">';//left.blade.php的li
 
     $count = substr_count($left_blade,'tab-pane');
     if($exist === false)
@@ -119,8 +119,7 @@ foreach($table AS $val){
                     <input type="hidden" id="memu_tab">';
         $left_blade = str_replace('<input type="hidden" id="memu_tab">',$left_tab,$left_blade);//插入left_tab-plane
     }
-
-    $left_blade = str_replace('<input type="hidden" data-id="'.$table_l_name.'">',$left_li,$left_blade);//插入left_li
+    $left_blade = str_replace('<input type="hidden" data-id="'.$m_l_name.'">',$left_li,$left_blade);//插入left_li
     file_put_contents('./resources/views/layouts/left.blade.php',$left_blade);
 
     /*处理top.blade.php*/
@@ -144,22 +143,25 @@ foreach($table AS $val){
         {
             $arr = json_decode($val,true);
             $top_exist = 0;
-            foreach($arr as $v)
+            $k = '0';
+            foreach($arr as $k=>$v)
             {
                 $arr_name = explode('/',$v);
-                if(strpos($arr_name[0],$m_l_name))//定位该模块位置
+                if($arr_name[0] == $m_l_name)//定位该模块位置
                 {
                     $top_exist = 1;
-                    break;
+                    unset($arr[$k]);
+                    $arr[$k.'**'] = $v;
                 }
             }
             if($top_exist == 1)
             {
                 if(!in_array($m_l_name.'/'.$table_l_name,$arr))
                 {
-                    $arr[] = $m_l_name.'/'.$table_l_name;//插入到相应位置
+                    $arr[] = $m_l_name.'/'.$table_l_name.'list';//插入到相应位置
                 }
                 $new_val = json_encode($arr);
+                $new_val = str_replace(array('\\','[',']','**'),array('','{','}',''),$new_val);
                 $top_blade = str_replace($val,$new_val,$top_blade);
                 break;
             }
@@ -170,7 +172,7 @@ foreach($table AS $val){
     /*处理model*/
     $old_arr = array('大写模块名','小写模块名','大写表名','小写表名','列表字段','查询字段','主键名');
     $new_arr = array($m_u_name,$m_l_name,$table_u_name,$table_l_name,$aoColumns,$column_name,$primary_key);
-    $file_arr = array('model.php','controller.php','blade.php','repository.php','datatable.php');
+    $file_arr = array('model.php','controller.php','blade.php','repository.php','datatable.php','route.php');
 
     foreach($file_arr as $k=>$v)
     {
@@ -193,6 +195,9 @@ foreach($table AS $val){
                 break;
             case 'datatable.php' :
                 $file_name = './app/Repositories/Criteria/'.$m_u_name.'/'.$table_u_name.'Datatable.php';
+                break;
+            case 'route.php' :
+                echo $file_con;
                 break;
         }
         file_put_contents($file_name,$file_con);
