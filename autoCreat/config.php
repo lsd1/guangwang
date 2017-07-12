@@ -4,4 +4,4 @@ define('USER','liusidong');
 define('PWD','Lsdlily123');
 define('DB','maiguoer-pre');
 define('CHARSET','utf8');
-$table = array('mge_rebate_activity');
+$table = array('mge_rebate_service');
