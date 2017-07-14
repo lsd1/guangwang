@@ -27,7 +27,8 @@ class SdkXML{
         return $this->xml->outputMemory(true);
     }
   }
-    public static function XTA($xmlstring){        
+
+    public function XTA($xmlstring){
         return json_decode(json_encode((array) simplexml_load_string($xmlstring)), true);
     }
 }
