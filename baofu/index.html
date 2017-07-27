@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src = "http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+</head>
+<body>
+<form method="post" action="./baofu.php">
+获取设备指纹：<input value="" id="device_id" name="device_id" />
+订单号：<input value="test1500361792000" id="trans_id" name="trans_id" />
+<button type="submit">预支付</button>
+</form>
+<button type="button" onclick="getId()">获取ID</button>
+</body>
+<script>
+    var head= document.getElementsByTagName('head')[0];
+    var script= document.createElement('script');
+    script.id = "deviceScript";
+    script.type= 'text/javascript';
+    script.src= 'https://fk.baofoo.com/js/member/getDevice.js';
+    script.innerHTML ="500361792000_100000178_test1500361792121";
+    script.onload = script.onreadystatechange;
+    head.appendChild(script);
+    function getId(){
+        $.ajax({
+            url:'https://fk.baofoo.com/getDeviceMem',
+            dataType: 'jsonp',
+            data:{member_id:'100000178',session_id:'100000178test1500361792121'},
+            success:function(res){
+                console.log(res);
+            }
+        });
+    }
+
+</script>
+</html>
