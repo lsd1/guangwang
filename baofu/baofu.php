@@ -1,34 +1,36 @@
 <?php
-error_reporting(0); //抑制所有错误信息
+//error_reporting(0); //抑制所有错误信息
 @header("content-Type: text/html; charset=utf-8"); //语言强制
-
+date_default_timezone_set('PRC');
 require_once('SdkXML.php');
 require_once('BFRSA.php');
 
-$pre_order_url = 'https://vgw.baofoo.com/quickpay/api/prepareorder';
-$cfm_order_url = 'https://vgw.baofoo.com/quickpay/api/confirmorder';
+$pre_order_url = 'https://gw.baofoo.com/quickpay/api/prepareorder';
+$cfm_order_url = 'https://gw.baofoo.com/quickpay/api/confirmorder';
 $notify_url = 'https://preapi.maiguoer.com/test';
-$query_order_url = 'https://vgw.baofoo.com/quickpay/api/queryorder';
-$query_bind_url = 'https://vgw.baofoo.com/quickpay/api/querybind';
+$query_order_url = 'https://gw.baofoo.com/quickpay/api/queryorder';
+$query_bind_url = 'https://gw.baofoo.com/quickpay/api/querybind';
+$removecard = 'https://gw.baofoo.com/quickpay/api/removecard';//解除绑定
 $get_device_id_url = "https://fk.baofoo.com/getDeviceMem";//设备指纹请求地址。
 
+
 $version = "4.0.1.0";//版本号
-$member_id = "100000178";	//商户号
-$terminal_id = "100000916";	//终端号
+$member_id = "1173345";	//商户号
+$terminal_id = "34897";	//终端号
 $input_charset = "1";//字符集
 $language = "1";//语言
 $data_type = "xml";//加密报文的数据类型（xml/json）
 $txt_sub_type = '01'; //默认01普通02分账
 
-$private_key_password = "100000178_204500";	//商户私钥证书密码
-$pfxfilename = "bfkey_100000178@@100000916.pfx";  //注意证书路径是否存在
-$cerfilename = "bfkey_100000178@@100000916.cer";//注意证书路径是否存在
+$private_key_password = "MaigUOErwangLuo";	//商户私钥证书密码
+$pfxfilename = "./CER/mge_prv.pfx";  //注意证书路径是否存在
+$cerfilename = "./CER/mge_pub.cer";//注意证书路径是否存在
 
 /*预支付*/
 $trans_id = 'test' . time();
 $device_id_data = ['member_id'=>$member_id,'session_id'=>'1000001200test1500361792004'];
 $device_id_data2 = ['member_id'=>$member_id,'session_id'=>$member_id.$trans_id];
-//print_r($device_id_data);die;
+
 /*$res_device_id = curl_post($get_device_id_url,$device_id_data);
 echo $res_device_id;die;
 var_dump($res_device_id);die;*/
@@ -109,8 +111,8 @@ $data2 = [
     'data_type' => $data_type,'data_content' => $string2
 ];
 
-//$res2 = curl_post($cfm_order_url, $data2);
-/*$res2 = res_to_arr($res2);
+/*$res2 = curl_post($cfm_order_url, $data2);
+$res2 = res_to_arr($res2);
 $res2 = $BFRsa->decryptByPublicKey($res2['data_content']);
 $data_content = $toxml->XTA($res2);
 var_dump($data_content);echo '<br>';*/
@@ -128,15 +130,15 @@ $data3 = [
     'data_type' => $data_type,'data_content' => $string3
 ];
 
-//$res3 = curl_post($query_order_url, $data3);
-//$res3 = res_to_arr($res3);
-/*$res3 = $BFRsa->decryptByPublicKey($res3['data_content']);
+/*$res3 = curl_post($query_order_url, $data3);
+$res3 = res_to_arr($res3);
+$res3 = $BFRsa->decryptByPublicKey($res3['data_content']);
 $data_content = $toxml->XTA($res3);
 var_dump($data_content);echo '<br>';*/
 
 /*查询绑卡情况*/
 $parms4 = [
-    'terminal_id' => $terminal_id, 'member_id' => $member_id, 'user_id' => '100000','trans_serial_no' => $trans_serial_no,
+    'terminal_id' => $terminal_id, 'member_id' => $member_id, 'user_id' => '6162950','trans_serial_no' => $trans_serial_no,
 	'req_reserved' => $req_reserved,'additional_info' => $additional_info
 ];
 $string4 = $toxml->toXml($parms4);
@@ -146,12 +148,30 @@ $data4 = [
     'data_type' => $data_type,'data_content' => $string4
 ];
 
-$res4 = curl_post($query_bind_url, $data4);
+/*$res4 = curl_post($query_bind_url, $data4);
 $res4 = res_to_arr($res4);
 $res4 = $BFRsa->decryptByPublicKey($res4['data_content']);
-$data_content = $toxml->XTA($res4);
-var_dump($data_content);echo '<br>';
+$data_content = $toxml->XTA($res4);*/
 
+/*解除绑定*/
+$parms5 = [
+    'terminal_id' => $terminal_id, 'member_id' => $member_id, 'bind_id'=>'bed0f4341bf2399dc811ee18bcc173858ed115cdb6483e244cc7f0d57a9f814eae5ded36ed6ab53e','user_id' => '6162950','additional_info' => $additional_info,
+    'req_reserved' => $req_reserved,'trans_serial_no' => $trans_serial_no
+];
+$toxml = new SdkXML();
+$BFRsa = new BFRSA($pfxfilename, $cerfilename, $private_key_password);
+$string5 = $toxml->toXml($parms5);
+$string5 = $BFRsa->encryptedByPrivateKey($string5);
+$data5 = [
+    'version' => $version, 'input_charset' => $input_charset,'terminal_id' => $terminal_id, 'member_id' => $member_id,
+    'data_type' => $data_type,'data_content' => $string5
+];
+$res5 = curl_post($removecard, $data5);
+print_r($res5);die;
+$res5 = res_to_arr($res5);
+$res5 = $BFRsa->decryptByPublicKey($res5['data_content']);
+$data_content = $toxml->XTA($res5);
+print_r($res5);die;
 
 function res_to_arr($res){
     $res = explode('&',$res);
