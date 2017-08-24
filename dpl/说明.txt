@@ -1,0 +1,13 @@
+﻿1.商户证书pfx、快钱公钥cer、pfx证书密码，请到function.php中设置
+2.需要开启：
+extension=php_openssl.dll
+extension=php_mcrypt.dll
+
+测试账号：10011629536
+PFX证书：des3tester.pfx
+PFX证书密码：1234
+快钱公钥：99bill.cert.rsa.20140803.cer
+
+sendx.php-批付
+sendx2.php-时间段查询批次查询
+sendx2.php-

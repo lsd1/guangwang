@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://www.youxianli.cn/ref/prize/gundong/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>滚动抽奖</title>
+    <link rel="stylesheet" type="text/css" href="./滚动抽奖_files/style.css">
+</head>
+
+<body>
+    <div class="bg">
+        <img src="./滚动抽奖_files/bg.jpg">
+    </div>
+    <div class="box">
+        <div class="jz">
+            <p><b>滚动抽奖</b>
+            </p>
+            <!--        <span class="name">姓名</span><br />--> <span class="phone">00000000000</span>
+            <br>
+            <div class="start" id="btntxt" onclick="start()">开始</div>
+            <br>
+            <!--
+        <div class="start" id="btn_replay" >重新开始</div>
+        --></div>
+        <div class="zjmd">
+            <p class="p1">中奖者名单</p>
+            <div class="list"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./滚动抽奖_files/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="./滚动抽奖_files/cj.js"></script>
+    <div id="rightArrow" style="right: -5px; background-position: -50px 0px;">
+        <a href="javascript:;" title="抽奖设置"></a>
+    </div>
+    <div id="floatDivBoxs" style="right: -175px;">
+        <div class="floatDtt">抽奖设置</div>
+        <div class="floatShadow" style="padding: 20px;">
+            <div>抽取数量（人）：</div>
+            <input type="text" style="width: 100%;" id="count">
+            <br>
+            <br>
+            <div>请输入名单：</div>
+            <div>
+                <textarea name="userlist" id="userlist"></textarea>
+            </div>
+            <div>提示：名单要比抽取数量多2个以上</div>
+            <br>
+            <input type="button" style="width: 100%;" id="btn_check" value="确定">
+        </div>
+        <!--    <div class="floatDbg"></div>--></div>
+    <script type="text/javascript">
+        var flag = 1;
+
+        function hideSidebar() {
+            $("#floatDivBoxs").animate({
+                right: '-175px'
+            }, 300);
+            $('#rightArrow').animate({
+                right: '-5px'
+            }, 300);
+            $('#rightArrow').css('background-position', '-50px 0');
+            flag = 0;
+        }
+
+        function showSidebar() {
+            $("#floatDivBoxs").animate({
+                right: '0'
+            }, 300);
+            $('#rightArrow').animate({
+                right: '170px'
+            }, 300);
+            $('#rightArrow').css('background-position', '0px 0');
+            flag = 1;
+        }
+        $('#rightArrow').click(function() {
+            if (flag == 1) {
+                hideSidebar();
+            } else {
+                showSidebar();
+            }
+        });
+        $('#btn_check').click(function() {
+            var count = $("#count").val();
+            if (count == "" || isNaN(count)) {
+                alert("请输入正确的数量");
+                $("#count").focus();
+                return;
+            } else {
+                td = $("#count").val();
+            }
+            var text = $("#userlist").val();
+            if (text == "") return;
+            var temp_text = text.split("\n");
+            var target = new Array();
+            for (var i = 0; i < temp_text.length; i++) {
+                if (temp_text[i] != "") {
+                    target.push(temp_text[i]);
+                }
+            }
+            phone = target;
+            if (phone.length > 2) {
+                pcount = phone.length - 1;
+                hideSidebar();
+            } else {
+                alert("请输入手机号码");
+                $("#userlist").focus();
+            }
+            $('.list').html("");
+            $(".phone").html("00000000000");
+        });
+        $("#btn_replay").click(function() { 
+			window.location.href = window.location.href;
+        });
+		
+        hideSidebar();
+		
+    </script>
+
+
+    <!--音乐-->
+    <audio id="sound_play" loop="loop" style="display:none">
+        <source src="images/play.mp3" type="audio/mpeg">
+    </audio>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    });
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/hichat.js"></script>
+
+
+</body></html>

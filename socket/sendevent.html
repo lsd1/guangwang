@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1>获取服务端更新数据</h1>
+<div id="result"></div>
+
+<script>
+	var evtSource=new EventSource("demo_sse.php");
+
+	evtSource.onmessage = function(e) {
+	  var newElement = document.createElement("li");
+	  newElement.innerHTML = "message: " + e.data;
+	  document.getElementById("result").appendChild(newElement);
+	}
+
+	evtSource.addEventListener("ping", function(e) {
+	  var newElement = document.createElement("li");
+	  var obj = JSON.parse(e.data);
+	  newElement.innerHTML = "ping at " + obj.time;
+	  document.getElementById("result").appendChild(newElement);
+	}, false);
+</script>
+
+</body>
+</html>
