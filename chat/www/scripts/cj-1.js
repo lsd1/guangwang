@@ -1,9 +1,10 @@
 var nametxt = $('.name'),
- phonetxt = $('.phone'),
- running = true,
- num,
- t,//定时器
- counts = 0;
+    phonetxt = $('.phone'),
+    running = true,
+    num,
+    t,//定时器
+    counts = 0,
+    t2;
 
 //开始停止
 function start() {
@@ -13,6 +14,9 @@ function start() {
     running = false;
     startNum();
     $('#sound_play')[0].play();
+    t2 = setTimeout(function(){
+        showTips("网络故障！");
+    }, 10000);
 }
 //循环参加名单
 function startNum() {
@@ -22,16 +26,18 @@ function startNum() {
         startNum();
     }
     phonetxt.html(target);
-    t = setTimeout(startNum, 0);
+    t = setTimeout(startNum, 50);
 }
 //停止跳动,打印中奖者名单
 function show() {
 	running = true;
     clearInterval(t);
     t = 0;
+    clearInterval(t2);
+    t2 = 0;
 	phonetxt.html(phonenum);
     $('.list').prepend("<p>" + lottery_type + ":" + phonenum + "</p>");
-	if(td  <= 0){
+	if(td  < 0){
 		setTimeout(function(){
             showTips("开奖结束");
         },1000);
@@ -40,13 +46,14 @@ function show() {
 //查询抽奖概率。
 function search(){
     var maiguo_num = $('#maiguo_num').val();
-    if(maiguo_num == ''){showTips('请输入查询号码!');return false;}
-    var allcounts = phone.length;
+    maiguo_num = maiguo_num.replace(/(^\s*)|(\s*$)/g, "");
+    var allcounts = phone_ca.length;
     if(allcounts == 0){
         showTips('抽奖还未开始！不能查询！');return false;
     }else{
-        for(i in phone){
-            if(phone[i] == maiguo_num){
+        if(maiguo_num == ''){showTips('请输入查询号码!');return false;}
+        for(i in phone_ca){
+            if(phone_ca[i] == maiguo_num){
                 counts++;
             }
         }

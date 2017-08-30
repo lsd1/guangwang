@@ -7,39 +7,59 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     phone = [],//抽奖用户列表
     list = '',//获奖列表
-    td = 0,//奖项数目
+    td = 0,//剩余抽奖次数
     status = 0,//抽奖状态，0为停止，1为进行中。
-    lottery_type = '',//抽奖类型。1：一等奖；2：二等奖；3：三等奖；4：四等奖。
+    lottery_type = '',//抽奖类型。1：一等奖；2：二等奖；3：三等奖。
 	lottery_arr = [],
 	zd = [],//指定中奖数组。
 	lucky_num = '', //中奖号码。
-    routes;
+    routes,//路由
+    phone_ca;//phone原始副本，不随phone改变。
+
+//bodyParser接管post数据
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+//引入路由文件
 routes = require('./www/route')(app,fs);
 app.use('/',express.static(__dirname + '/www'));
-server.listen(process.env.PORT || 4000);//publish to heroku
+server.listen(process.env.PORT || 4000);
+
+//从配置文件获取各项参数，初始化各项参数。
+fs.readFile('./option.js',{flag:'r+',encoding:'utf-8'},function(err,data) {
+    if (err) {
+        console.log("读取文件失败！");
+    } else {
+        var data = JSON.parse(data);
+        var num_cache = 0;
+        lottery_arr = [];
+        zd = data.zd;
+        phone = data.phone;
+        phone_ca = phone.slice(0);
+        for(i in zd){
+            num_cache = num_cache + parseInt(zd[i]["num"]);
+            for(var j = 0;j<parseInt(zd[i]["num"]);j++){
+                lottery_arr.push(zd[i]["name"])
+            }
+        }
+        num_cache--;
+        td = num_cache;
+        lottery_type = lottery_arr[parseInt(td)];
+        list = '';
+        status = 0;
+    }
+});
+
 io.sockets.on('connection', function(socket) {
+    //admin页面限制为单点登录。同时打开两个admin页面时会自动关闭之前打开的admin页面。
     socket.on('isAdmin',function () {
     	socket.broadcast.emit('close','');
     });
+
     //给新连接用户发送参与抽奖用户列表
-    socket.emit('sendData',phone,td,status,lottery_type,list);
+    socket.emit('sendData',phone,td,status,lottery_type,list,phone_ca);
 
-    //捕获admin更新抽奖用户列表，奖项数目，不重复的抽奖用户列表,抽奖状态事件。
-    socket.on('getData', function(arg_phone,arg_td,arg_status,arg_lottery_type,arg_zd,arg_list) {
-        phone = arg_phone;
-        td = arg_td;
-        status = arg_status;
-        lottery_type = arg_lottery_type;
-		zd = arg_zd;
-		list = arg_list;
-        //将最新抽奖用户列表，奖项数目，不重复的抽奖用户列表发送到客户端
-        socket.broadcast.emit('sendData',phone,td,status,lottery_type,list);
-        socket.emit('sendData',phone,td,status,lottery_type,list);//更新当前用户。
-    });
-
-	//获取最新获奖列表
+	//获取最新获奖列表。
     socket.on('getList', function(arg_list) {
 		list = arg_list;
 	});
@@ -56,9 +76,9 @@ io.sockets.on('connection', function(socket) {
     //捕获admin抽奖结束事件
     socket.on('stop', function() {
         //停止抽奖并将结果发送到客户端。
+        td--;
         socket.broadcast.emit('running','stop',td,phone,lucky_num,lottery_type);
 		socket.emit('running','stop',td,phone,lucky_num,lottery_type);
-		td--;
 		lottery_type = lottery_arr[parseInt(td)];
         status = 0;//停止
     });
@@ -83,18 +103,22 @@ io.sockets.on('connection', function(socket) {
 		lottery_arr = [];
 		zd = arg_opt;//获取指定中奖名单。
 		phone = arg_phone;
+        var td_all = 0;
 		for(i in zd){
-			td = parseInt(td)+parseInt(zd[i]["num"]);
+            td_all = td_all+parseInt(zd[i]["num"]);
 			for(var j = 0;j<parseInt(zd[i]["num"]);j++){
 				lottery_arr.push(zd[i]["name"])
 			}
 		}
-		td--;
+        td_all--;
+        td = td_all;
 		lottery_type = lottery_arr[parseInt(td)];
 		var option = new Object();
 		option.phone = arg_phone;
 		option.zd = arg_opt;
         option.pwd = arg_pwd;
+        phone_ca = phone.slice(0);
+        list = '';
 		var data = JSON.stringify(option);
 		fs.writeFile('./option.js',data,{flag:'w',encoding:'utf-8',mode:'0666'},function(err){
 			if(err){
@@ -105,7 +129,7 @@ io.sockets.on('connection', function(socket) {
 				//发送保存成功信息。
                 socket.emit('msg','保存成功！');
                 //将最新配置信息发送到抽奖页面。
-                socket.broadcast.emit('sendData',phone,td,0,lottery_type,'');
+                socket.broadcast.emit('sendData',phone,td,0,lottery_type,'',phone_ca);
 			}
 		});
 	});
@@ -121,6 +145,7 @@ io.sockets.on('connection', function(socket) {
                 lottery_arr = [];
                 zd = data.zd;//获取指定中奖名单。
                 phone = data.phone;
+                phone_ca = phone.slice(0);
                 for(i in zd){
                     num_cache = num_cache + parseInt(zd[i]["num"]);
                     for(var j = 0;j<parseInt(zd[i]["num"]);j++){
@@ -132,17 +157,18 @@ io.sockets.on('connection', function(socket) {
                 lottery_type = lottery_arr[parseInt(td)];
                 list = '';
                 status = 0;
-                socket.broadcast.emit('sendData',phone,td,status,lottery_type,list);
-                socket.emit('sendData',phone,td,status,lottery_type,list);//更新当前用户。
+                socket.broadcast.emit('sendData',phone,td,status,lottery_type,list,phone_ca);
+                socket.emit('sendData',phone,td,status,lottery_type,list,phone_ca);//更新当前用户。
             }
         });
     });
 });
 
+//根据配置文件生成中奖号码。
 function zj(){
     var num = Math.floor(Math.random() * (phone.length-1));
 	lucky_num = phone[num];
-    if(zd[lottery_type]["zd"].length>0){//如果对应的zd有值，那么去求交集
+    if(zd[lottery_type]["zd"].length>0){//如果奖项有指定值，那么去求交集
 		var rever_phone = [];
         var intersection_zd = [];//交集
         for(var j=0; j<phone.length; j++){
@@ -153,25 +179,24 @@ function zj(){
                intersection_zd.push(zd[lottery_type]["zd"][i].toString());
            }
         }
-        if(intersection_zd.length>0){//如果有交集，从交集中抽取。
+        if(intersection_zd.length>0){//如果有交集不为空，号码从交集中随机抽取。
 			var zd_num = Math.floor(Math.random() * (intersection_zd.length-1));
 			num = phone.indexOf(intersection_zd[zd_num].toString());
 			//删除已中奖号码。
 			lucky_num = phone[num];
-		}else{//如果当前奖项没有交集，那么要要防止其他设定奖项被抽到。
+		}else{//如果当前奖项没有交集，那么要要防止其他已设定奖项的号码被抽到，过滤已指定号码。
             var num_arr = new Array();
         	for(i in zd){
-        		num_arr = num_arr.concat(zd[i]["zd"]);//去除所有设定奖项。
+        		num_arr = num_arr.concat(zd[i]["zd"]);//获取所有设定奖项的号码。
 			}
-            var phone_ca = phone.slice(0);
             var test;
-            for(var i=0; i<num_arr.length; i++){//排除所有设定奖项。
+            for(var i=0; i<num_arr.length; i++){//排除所有设定奖项号码。
                 test = phone_ca.indexOf(num_arr[i].toString());
 				if(test != -1){
                     phone_ca.splice(test,1);
                 }
 			}
-            num = Math.floor(Math.random() * (phone_ca.length-1));//排除后再随机抽取。
+            num = Math.floor(Math.random() * (phone_ca.length-1));//排除后再随机抽取号码。
             lucky_num = phone_ca[num];
         }
 	}

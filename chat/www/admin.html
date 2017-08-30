@@ -12,6 +12,15 @@
         display: none;
     }
 </style>
+<script>
+    (function () {
+        if(document.documentElement.clientWidth<500){
+            document.documentElement.style.fontSize = '16px';
+        }else{
+            document.documentElement.style.fontSize = '25px';
+        }
+    })();
+</script>
 <body>
     <div class="bg">
         <img src="./scripts/bg.jpg">

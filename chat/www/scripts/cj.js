@@ -16,18 +16,13 @@ function action(){
 
 //开始停止
 function start() {
-    if(td<1){
-        showTips("请设置抽奖人数");
-        return;
-    }
     if (phone.length > 2) {
         pcount = phone.length - 1;
     }else{
         showTips("待抽奖号码太少了");
         return;
     }
-
-    if(td<=0){
+    if(td<0){
         showTips("奖项已抽取完毕");
         return;
     }
@@ -47,7 +42,7 @@ function startNum() {
         startNum();
     }
     phonetxt.html(target);
-    t = setTimeout(startNum, 100);
+    t = setTimeout(startNum, 50);
 }
 
 //停止跳动
@@ -67,7 +62,7 @@ function show() {
     that.socket.emit('getList',$('.list').html());
     var result = phone.join("\n");
     $("textarea").val("").val(result);
-    if (pcount <= 0 || td <= 0) {
+    if (pcount <= 0 || td < 0) {
         $("#btn_replay").show();
         setTimeout(function(){
             showTips("开奖结束");

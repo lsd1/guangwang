@@ -10,16 +10,34 @@
 </head>
 <style>
     .red {
-        border: 2px solid red;
+        border: 2px solid red!important;
     }
-    body {
+    .opt_content {
         color: white;
         background: #417d9a;
         max-width: 50rem;
         margin: auto;
     }
+    .opt_content .opt button {
+        height: 2rem;
+        border: none;
+        border-radius: 0.1rem;
+        background-color: white;
+        line-height: 1rem;
+    }
+    .opt_content input {
+        height: 2rem;
+        border: none;
+        border-radius: 0.1rem;
+        background-color: white;
+        text-indent: 1rem;
+        margin-right: 1rem;
+    }
+    .opt_content .s_btn{
+        width:3rem;
+    }
 </style>
-<body>
+<body class="opt_content">
 <div class="showTips hide"><div class="con"></div></div>
 <div id = "body">
 <div class="opt">
@@ -28,6 +46,9 @@
 <div class="opt">
     <div class="opt_tit">添加抽奖用户：</div>
     <textarea class="opt_area" id="all_num" name="all_num" rows="15"></textarea><br />
+    <div class="opt_tit">查询用户曝光次数：</div>
+    <input id="opt_num" value="" placeholder="输入脉果号并搜索" ><button id="opt_search" class="s_btn">查询</button>
+    <div class="opt_tit">设置曝光次数：</div><input type="number" id="opt_val" value="" placeholder="输入要设置的脉果号"><input type="number" id = "opt_times" value="" placeholder="输入曝光次数"><button id="opt_set" class="s_btn">设置</button>
 </div>
 
 <!--<div class="add">
@@ -70,7 +91,6 @@ HiChat.prototype = {
 				var name = arg_zd[i]['name'];
 				var num = arg_zd[i]['num'];
 				var zd = arg_zd[i]['zd'].join("\n");
-				console.log(zd);
 				html = html+
 				'<div class="add">'
 				+'<div class="add_cel"><div class="add_name">奖项名称：</div><div class="add_val"><input type="text" id="add_name'+count+'" name="add'+count+'" value="'+name+'" placeholder="设置奖项名称" /></div></div>'
@@ -122,12 +142,14 @@ $("#save").click(function(){
             $("#add_name"+i).addClass("red");
             showTips('奖项名称不能为空！');
             err++;
+            return false;
         }
 		var num = $("#add_num"+i).val();
         if(num < 1){
             $("#add_num"+i).addClass("red");
             showTips('奖项数量必须大于0！');
             err++;
+            return false;
         }
 		var zd = $("#add_zd"+i).val();
 		if(zd){
@@ -148,11 +170,13 @@ $("#save").click(function(){
 	if(pwd.val() == '111111'){
 	    pwd.addClass("red");
 	    err++;
-	    showTips('首次登陆必须修改密码！');
+	    showTips('首次登陆请修改密码！');
+        return false;
     }else if(pwd.val().length<6){
 	    pwd.addClass("red");
 	    err++;
 	    showTips("密码不能少于6个字符");
+        return false;
     }
     if(err == 0){
         that.socket.emit('setOpt',opt,all_num,pwd.val());
@@ -162,6 +186,7 @@ $("#save").click(function(){
 function counts(){
 	count = $(".add").length;
 }
+
 function showTips(tip){
     $(".con").html(tip);
     $(".showTips").show();
@@ -169,5 +194,50 @@ function showTips(tip){
         $(".showTips").hide();
     },1500);
 }
+
+
+$("#opt_search").click(function(){
+    var all_num = $("#all_num").val().split("\n");
+    var counts = 0;
+    var num = $("#opt_num").val();
+    num = num.replace(/(^\s*)|(\s*$)/g, "");
+    if(num==""){
+        showTips("号码不能为空！");
+        return false;
+    }else{
+        for(var i=0;i<all_num.length;i++){
+            if(all_num[i] == num){
+                counts++;
+            }
+        }
+        showTips(counts.toString()+'次');
+    }
+});
+
+$("#opt_set").click(function(){
+    var num = $("#opt_val").val();
+    num = num.replace(/(^\s*)|(\s*$)/g, "");
+    var times = $("#opt_times").val();
+    if(num == "" || times == "" || times == 0){
+        showTips("选项不能为空！");
+    }else{
+        var all_num_arr = $("#all_num").val();
+        if(all_num_arr.indexOf(num) == -1){
+            showTips("此号码不存在！"); return false;
+        }else{
+            var all_num_str = all_num_arr.split("\n");
+            //有多个则连续删除多个。
+            do {
+                all_num_str.splice(all_num_str.indexOf(num.toString()), 1);
+            } while (all_num_str.indexOf(num.toString()) != -1);
+
+            for(var i = 0;i<times;i++){
+                all_num_str.push(num);
+            }
+            $("#all_num").val(all_num_str.join("\n"));
+            showTips("设置成功!");
+        }
+    }
+});
 </script>
 </html>

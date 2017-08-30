@@ -2,22 +2,16 @@
  *抽奖
  */
 var status = false,
- that,
- phone = [],
- td,
- phonenum,
- list,
- lottery_type = '';//抽奖类型。1：一等奖；2：二等奖；3：三等奖；4：四等奖。
+    that,
+    phone = [],
+    td,
+    phonenum,
+    list,
+    lottery_type = '',//抽奖类型。1：一等奖；2：二等奖；3：三等奖；4：四等奖。
+    phone_ca ;//phone的副本
 window.onload = function() {
     var hichat = new HiChat();
     hichat.init();
-    (function () {
-        if(document.documentElement.clientWidth<500){
-            document.documentElement.style.fontSize = '16px';
-        }else{
-            document.documentElement.style.fontSize = '25px';
-        }
-    })();
 };
 var HiChat = function() {
     this.socket = null;
@@ -27,7 +21,7 @@ HiChat.prototype = {
         that = this;
         this.socket = io.connect();
         //获取抽奖名单
-        this.socket.on('sendData', function(arg_phone,arg_td,arg_status,arg_lottery_type,arg_list) {
+        this.socket.on('sendData', function(arg_phone,arg_td,arg_status,arg_lottery_type,arg_list,arg_phone_ca) {
 			console.log('链接成功！');
             lottery_type = arg_lottery_type;
             phone = arg_phone;
@@ -35,12 +29,13 @@ HiChat.prototype = {
 			status = arg_status;
 			lottery_type = arg_lottery_type;
 			list = arg_list;
+            phone_ca = arg_phone_ca;
             console.log(arg_phone);
             console.log(arg_td);
             console.log(arg_status);
             console.log(arg_lottery_type);            
 			console.log(arg_list);
-			if(td<1){
+			if(td<0){
 			    $(" #btn_replay").show();
             }else{
                 $(" #btn_replay").hide();
@@ -91,22 +86,6 @@ HiChat.prototype = {
 		    //清空抽奖列表，抽奖人数，抽奖状态。
             that.socket.emit('reStart','');
         });
-        //上传抽奖列表，重新开始。
-        /*document.getElementById('btn_check').addEventListener('click',function(){
-            var td = document.getElementById('count').value;
-            var text = document.getElementById('userlist').value;
-            if (text == "") return;
-            var temp_text = text.split("\n");
-            var target = new Array();
-            var rever_target = new Array();
-            for (var i = 0; i < temp_text.length; i++) {
-                if (temp_text[i] != "") {
-                    target.push(temp_text[i]);
-                }
-            }
-            lottery_type = document.getElementById('lottery_type').value;
-            that.socket.emit('getData',target,td,false,lottery_type,zd,'');
-        });*/
 	}
 };
 function showTips(tip){
