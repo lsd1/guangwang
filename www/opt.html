@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+</head>
+<body>
+<div id = "body">
+添加抽奖用户：<textarea id="all_num" name="all_num" cols="15" rows="15"></textarea><br />
+<button id="add">添加奖项</button><button id="del">删除最后一个奖项</button>
+<!--<div class="add">
+奖项名称：<input type="text" id="add_name1" name="add_name1" value="" placeholder="设置奖项名称" /><br/>
+奖项数量：<input type="text" id="add_num1" name="add_num1" value="" placeholder="设置奖项数量" /><br/>
+中奖号码：<textarea id="add_zd1" name="add_zd1" cols="7" rows="5"></textarea>
+</div>-->
+</div>
+<button id = "save">保存</button>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="./scripts/jquery-1.8.0.js"></script>
+<script>
+var that,
+count;
+window.onload = function() {
+	counts();
+    var hichat = new HiChat();
+    hichat.init();
+};
+var HiChat = function() {
+    this.socket = null;
+};
+HiChat.prototype = {
+	init: function() {
+		that = this;
+        this.socket = io.connect();
+		this.socket.on('sendOpt',function(arg_phone,arg_zd){
+			$("#all_num").val(arg_phone.join("\n"));	
+			var html = "";
+			count = 0;
+			for(i in arg_zd){
+				count++;
+				var name = arg_zd[i]['name'];
+				var num = arg_zd[i]['num'];
+				var zd = arg_zd[i]['zd'].join("\n");
+				console.log(zd);
+				html = html+
+				'<div class="add">'
+				+'奖项名称：<input type="text" id="add_name'+count+'" name="add'+count+'" value="'+name+'" placeholder="设置奖项名称" /><br/>'
+				+'奖项数量：<input type="text" id="add_num'+count+'" name="add_num'+count+'" value="'+num+'" placeholder="设置奖项数量" /><br/>'
+				+'中奖号码：<textarea id="add_zd'+count+'" cols="7" rows="5" >'+zd+'</textarea>'
+				+'</div>';
+			}
+			$('#body').append(html);
+		});
+        this.socket.on('msg',function(arg_msg){
+            alert(arg_msg);
+        });
+		this.socket.emit('getOpt','');
+	}
+}
+</script>
+<script>
+
+$("#add").click(function(){
+	if(count <= 0){
+		count = 1;
+	}else{
+		count++
+	}
+	var add = '<div class="add">'
+			+'奖项名称：<input type="text" id="add_name'+count+'" name="add'+count+'" value="" placeholder="设置奖项名称" /><br/>'
+			+'奖项数量：<input type="text" id="add_num'+count+'" name="add_num'+count+'" value="" placeholder="设置奖项数量" /><br/>'
+			+'中奖号码：<textarea id="add_zd'+count+'" cols="7" rows="5"></textarea>'
+			+'</div>';
+	$("#body").append(add);
+});
+
+$("#del").click(function(){
+    if(count == 1){
+        alert('不能全部删除');return false;
+    }
+	$(".add:last").remove();	
+	count--;
+});
+
+$("#save").click(function(){
+	var opt = new Object();
+	var err = 0;
+	i = 1;
+	$(".add").each(function(e){
+		var name = $("#add_name"+i).val();
+		if(name == ''){
+            $("#add_name"+i).css('border','2px solid red');
+            alert('奖项名称不能为空！');
+            err++;
+        }
+		var num = $("#add_num"+i).val();
+        if(num < 1){
+            $("#add_num"+i).css('border','2px solid red');
+            alert('奖项数量必须大于0！');
+            err++;
+        }
+		var zd = $("#add_zd"+i).val();
+		if(zd){
+			zd = zd.split("\n");
+		}else{
+			zd = [];
+		}
+		opt[name] = {"name":name,"num":num,"zd":zd};
+		i++;
+	});
+	var all_num = $('#all_num').val();
+	if(all_num){
+		all_num = all_num.split("\n");
+	}else{
+		all_num = [];
+	}
+    if(err == 0){
+        that.socket.emit('setOpt',opt,all_num);
+    }
+});
+
+function counts(){
+	count = $(".add").length;
+}
+</script>
+</html>
