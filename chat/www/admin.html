@@ -7,6 +7,11 @@
     <title>滚动抽奖</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
+<style>
+    #btn_replay {
+        display: none;
+    }
+</style>
 <body>
     <div class="bg">
         <img src="./scripts/bg.jpg">
@@ -16,27 +21,24 @@
         <div class="jz">
             <p><b>滚动抽奖</b>
             </p>
-            <span class="phone" id = "last_phone">000000</span>
+            <!--<span class="name">姓名</span><br />--> <span id = "last_phone" class="phone">000000</span>
             <br>
-            <i class="start" id="btn_replay" style="display: none" ></i>
-            <input type="button" style="display: none" id="btn_check" value="确定">
+            <div class="start" id="btntxt" onclick="action()">开始</div>
+            <br>
+            <div class="start" id="btn_replay" >重新开始</div>
         </div>
         <div class="zjmd">
             <p class="p1">中奖者名单</p>
             <div class="list" id = "luck_list"></div>
         </div>
-        <div class="zjmd">
-            <p class="p1">查询抽奖机会</p>
-            <input class="search" type="text" id ="maiguo_num" value="" placeholder="请输入脉果儿号"><button id="search" onclick="search()">查询</button>
-        </div>
     </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="scripts/hichat.js"></script>
 <script type="text/javascript" src="./scripts/jquery-1.8.0.js"></script>
-<script type="text/javascript" src="./scripts/cj-1.js"></script>
-
+<script type="text/javascript" src="./scripts/cj.js"></script>
 <!--音乐-->
 <audio id="sound_play" loop="loop" style="display:none">
-	<source src="images/play.mp3" type="audio/mpeg">
+    <source src="images/play.mp3" type="audio/mpeg">
 </audio>
-</body></html>
+</body>
+</html>

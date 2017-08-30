@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #770908;
+
+    font-family: "微软雅黑";
+}
+
+.bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.bg img {
+    width: 100%;
+    height: auto;
+}
+
+.box {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    top: 6%;
+    left: 0;
+    right: 0;
+}
+
+.jz {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+.jz p {
+    line-height: 80px;
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.jz span {
+    padding:0 1rem;
+    font-size: 3rem;
+    background: #fff;
+}
+
+.start, .stop {
+    height: 3.5rem;
+    line-height: 3.5rem;
+    text-align: center;
+    font-size: 2rem;
+    border-radius: 10px;
+    margin: auto;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 2rem;
+    max-width: 13rem;
+}
+
+.start {
+    background: #24ADD7;
+}
+
+.stop {
+    background: #FC6666;
+}
+
+.zjmd {
+    width: 77%;
+    height: auto;
+    background: #ffffff;
+    overflow: hidden;
+    font-size: 1.5rem;
+    max-width: 15rem;
+    margin:auto;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.zjmd .p1 {
+    line-height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #DE0000;
+    font-weight: bold;
+    padding: 1px;
+    background: #FFCC33;
+}
+.zjmd .list {
+    padding: 1rem;
+    overflow-y: auto;
+}
+.zjmd p {
+    line-height: 2rem;
+    text-align: justify;
+}
+
+
+#btn_replay{
+    height: 3.5rem;
+    line-height: 3.5rem;
+    text-align: center;
+    font-size: 1.7rem;
+    border-radius: 10px;
+    margin: auto;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#btn_check{
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 10px;
+    margin: auto;
+    color: #000;
+    cursor: pointer;
+    background: gold;
+    font-weight: bold;
+}
+
+#floatDivBoxs {
+    width: 50%;
+    background: #fff;
+    position: fixed;
+    top: 150px;
+    right: 0;
+    z-index: 999;
+}
+
+#floatDivBoxs .floatDtt {
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: #f08326;
+    color: #fff;
+    font-size: 0.8rem;
+    text-indent: 22px;
+    position: relative;
+}
+
+#floatDivBoxs .floatDqq {
+    padding: 0 14px;
+}
+
+#floatDivBoxs .floatDqq li {
+    height: 45px;
+    line-height: 45px;
+    font-size: 0.6rem;
+    border-bottom: 1px solid #e3e3e3;
+    padding: 0 0 0 50px;
+}
+
+#floatDivBoxs .floatDtxt {
+    font-size: 0.8rem;
+    color: #333;
+    padding: 12px 14px;
+}
+
+#floatDivBoxs .floatDtel {
+    padding: 0 0 15px 10px;
+}
+
+#floatDivBoxs .floatDtel img {
+    display: block;
+}
+
+#floatDivBoxs .floatDbg {
+    width: 100%;
+    height: 20px;
+    background: url(../images/online_botbg.jpg) no-repeat;
+    box-shadow: -2px 0 3px rgba(0, 0, 0, 0.25);
+}
+
+#floatDivBoxs #count{
+    margin: 10px auto;
+}
+#floatDivBoxs textarea{
+    height: 200px;
+    width: 90%;
+    font-size: 0.1rem;
+    overflow-y: auto;
+    padding: 10px 5%;
+    margin: 10px auto;
+}
+
+.floatShadow {
+    background: #fff;
+    box-shadow: -2px 0 3px rgba(0, 0, 0, 0.25);
+}
+.showTips {
+    background-color: rgba(82, 76, 76, 0.96);
+    z-index: 999;
+    border-radius: 0.2rem;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    margin: auto;
+    min-width: 8rem;
+    min-height: 4rem;
+    max-width: 10rem;
+    max-height: 5rem;
+}
+.hide {
+    display: none;
+}
+.search {
+    padding: 0.1rem;
+    width: 43%;
+    margin-right: 3%;
+    height: 1.5rem;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+#search {
+    width: 23%;
+    height: 1.8rem;
+    border-radius: 4px;
+    background-color: #03A9F4;
+    color: white;
+    font-size: 0.8rem;
+    border: none;
+}
+.con {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    right: 0;
+    margin: auto;
+    color: white;
+    text-align: center;
+}
+.login_pwd {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    right: 0;
+    margin: auto;
+    color: white;
+    width: 100%;
+    max-width: 12rem;
+    border: 2px solid;
+    padding: 2rem;
+    border-radius: 0.3rem;
+}
+.cel {
+    width: 100%;
+    float: left;
+}
+.cel_pwd {
+    width: 100%;
+    height: 2rem;
+    border: none;
+    border-radius: 0.2rem;
+    text-indent: 1rem;
+    display: block;
+    margin: 0 auto;
+}
+.cel_admin {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 1rem;
+    height: 2rem;
+    border-radius: 0.1rem;
+    border: none;
+    background-color: #00BCD4;
+    color: white;
+}
+.cel_opt {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 1rem;
+    height: 2rem;
+    border-radius: 0.1rem;
+    border: none;
+    background-color: #00BCD4;
+    color: white;
+}
+.show {
+    display: none;
+}
+.opt {
+    margin-top: 1rem;
+    width:80%;
+    padding:1rem;
+    border: 1px solid;
+    margin:0 auto;
+}
+.opt_tit {
+    width: 100%;
+}
+.opt_area {
+    width: 100%;
+}
+.add {
+    margin-top: 1rem;
+    width:80%;
+    padding:1rem;
+    border: 1px solid;
+    margin:0 auto;
+}
+.add_cel {
+    display: inline-block;
+    width:100%;
+}
+.add_val {
+    width: 59%;
+    float: left;
+}
+.add_name {
+    width: 40%;
+    float: left;
+}
+.add_area {
+    width:100%
+}
+.opt_btn {
+    width: 40%;
+    height: 2rem;
+    border: none;
+    border-radius: 0.1rem;
+    margin: 5%;
+    background-color: white;
+}
