@@ -4,7 +4,8 @@ var nametxt = $('.name'),
     running = true,//抽奖状态
     num,
     t,//定时器
-    phone = [];//抽奖列表
+    phone = [],//抽奖列表
+	t2;
 
 function action(){
     if(running){
@@ -26,6 +27,9 @@ function start() {
         showTips("奖项已抽取完毕");
         return;
     }
+	t2 = setTimeout(function(){
+		showTips("网络故障！",2000,function(){window.location.reload();});
+    }, 10000);
     running = false;
     $('#btntxt').removeClass('start').addClass('stop');
     $('#btntxt').html('停止');
@@ -54,12 +58,13 @@ function stop() {
 function show() {
 	clearInterval(t);
     t = 0;
+	clearInterval(t2);
+    t2 = 0;
     phonetxt.html(phonenum);
     running = true;
     $('#btntxt').removeClass('stop').addClass('start');
     $('#btntxt').html('开始');
     $('.list').prepend("<p>" + lottery_type + ":" + phonenum + "</p>");
-    that.socket.emit('getList',$('.list').html());
     var result = phone.join("\n");
     $("textarea").val("").val(result);
     if (pcount <= 0 || td < 0) {

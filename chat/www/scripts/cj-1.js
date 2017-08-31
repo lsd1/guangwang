@@ -15,7 +15,8 @@ function start() {
     startNum();
     $('#sound_play')[0].play();
     t2 = setTimeout(function(){
-        showTips("网络故障！");
+        showTips("网络故障！",2000,function(){window.location.reload();});
+		
     }, 10000);
 }
 //循环参加名单

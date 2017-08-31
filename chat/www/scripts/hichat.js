@@ -21,19 +21,16 @@ HiChat.prototype = {
         that = this;
         this.socket = io.connect();
         //获取抽奖名单
-        this.socket.on('sendData', function(arg_phone,arg_td,arg_status,arg_lottery_type,arg_list,arg_phone_ca) {
+        this.socket.on('sendData', function(arg_phone,arg_td,arg_status,arg_list,arg_phone_ca) {
 			console.log('链接成功！');
-            lottery_type = arg_lottery_type;
             phone = arg_phone;
 			td = arg_td;
 			status = arg_status;
-			lottery_type = arg_lottery_type;
 			list = arg_list;
             phone_ca = arg_phone_ca;
             console.log(arg_phone);
             console.log(arg_td);
-            console.log(arg_status);
-            console.log(arg_lottery_type);            
+            console.log(arg_status);       
 			console.log(arg_list);
 			if(td<0){
 			    $(" #btn_replay").show();
@@ -88,10 +85,19 @@ HiChat.prototype = {
         });
 	}
 };
-function showTips(tip){
+
+//提示
+function showTips(tip,time,fun){
+	if(!time){
+		time = 1500;
+	}
     $(".con").html(tip);
     $(".showTips").show();
     setTimeout(function(){
         $(".showTips").hide();
-    },1500);
+		if(fun){
+			fun();
+		}
+    },time);
+	
 }

@@ -14,14 +14,15 @@ var express = require('express'),
 	zd = [],//指定中奖数组。
 	lucky_num = '', //中奖号码。
     routes,//路由
-    phone_ca;//phone原始副本，不随phone改变。
+    phone_ca,//phone原始副本，不随phone改变。
+	lucky_num_arr = new Array();//已经中奖号码数组。
 
 //bodyParser接管post数据
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //引入路由文件
-routes = require('./www/route')(app,fs);
+routes = require('./route')(app,fs);
 app.use('/',express.static(__dirname + '/www'));
 server.listen(process.env.PORT || 4000);
 
@@ -50,6 +51,23 @@ fs.readFile('./option.js',{flag:'r+',encoding:'utf-8'},function(err,data) {
     }
 });
 
+fs.readFile('./result.js',{flag:'r+',encoding:'utf-8'},function(err,data) {
+    if (err) {
+        console.log("读取文件失败！");
+    } else {
+        var data = JSON.parse(data);
+		if(data.td>=0){
+			phone = data.phone;
+			td = data.td;
+			status = data.status;
+			lottery_type = data.lottery_type;
+			list = data.list;
+			phone_ca = data.phone_ca;
+			luck_num_arr = data.luck_num_arr;
+		}
+    }
+});
+
 io.sockets.on('connection', function(socket) {
     //admin页面限制为单点登录。同时打开两个admin页面时会自动关闭之前打开的admin页面。
     socket.on('isAdmin',function () {
@@ -57,12 +75,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     //给新连接用户发送参与抽奖用户列表
-    socket.emit('sendData',phone,td,status,lottery_type,list,phone_ca);
-
-	//获取最新获奖列表。
-    socket.on('getList', function(arg_list) {
-		list = arg_list;
-	});
+    socket.emit('sendData',phone,td,status,list,phone_ca);
 
 	//捕获admin抽奖启动事件
     socket.on('start', function() {
@@ -75,11 +88,31 @@ io.sockets.on('connection', function(socket) {
 
     //捕获admin抽奖结束事件
     socket.on('stop', function() {
-        //停止抽奖并将结果发送到客户端。
+        //停止抽奖并将结果保存到文件发送到客户端。
         td--;
+		lucky_num_arr.unshift(lucky_num);
+		list = list+"<p>" + lottery_type + ":" + lucky_num + "</p>";
+		var data = new Object();
+		data.td = td;		
+		data.phone = phone;
+		data.status = 0;
+		data.lottery_type = lottery_type;
+		data.phone_ca = phone;		
+		data.list = list;
+		data.luck_num_arr = lucky_num_arr;
+		data = JSON.stringify(data);
+		fs.writeFile('./result.js',data,{flag:'w',encoding:'utf-8',mode:'0666'},function(err){
+			if(err){
+				console.log("文件写入失败！");
+                socket.emit('msg','保存失败！');
+			} else {
+				console.log("文件写入成功！");           
+			}
+		});
+
+		//发送结果到用户界面。
         socket.broadcast.emit('running','stop',td,phone,lucky_num,lottery_type);
 		socket.emit('running','stop',td,phone,lucky_num,lottery_type);
-		lottery_type = lottery_arr[parseInt(td)];
         status = 0;//停止
     });
 
@@ -112,7 +145,6 @@ io.sockets.on('connection', function(socket) {
 		}
         td_all--;
         td = td_all;
-		lottery_type = lottery_arr[parseInt(td)];
 		var option = new Object();
 		option.phone = arg_phone;
 		option.zd = arg_opt;
@@ -129,7 +161,7 @@ io.sockets.on('connection', function(socket) {
 				//发送保存成功信息。
                 socket.emit('msg','保存成功！');
                 //将最新配置信息发送到抽奖页面。
-                socket.broadcast.emit('sendData',phone,td,0,lottery_type,'',phone_ca);
+                socket.broadcast.emit('sendData',phone,td,0,'',phone_ca);
 			}
 		});
 	});
@@ -154,11 +186,11 @@ io.sockets.on('connection', function(socket) {
                 }
                 num_cache--;
 				td = num_cache;
-                lottery_type = lottery_arr[parseInt(td)];
                 list = '';
                 status = 0;
-                socket.broadcast.emit('sendData',phone,td,status,lottery_type,list,phone_ca);
-                socket.emit('sendData',phone,td,status,lottery_type,list,phone_ca);//更新当前用户。
+				lucky_num_arr = new Array();
+                socket.broadcast.emit('sendData',phone,td,status,list,phone_ca);
+                socket.emit('sendData',phone,td,status,list,phone_ca);//更新当前用户。
             }
         });
     });
@@ -175,7 +207,7 @@ function zj(){
             rever_phone[phone[j]] = j;
         }
         for(i in zd[lottery_type]["zd"]){
-           if(rever_phone[zd[lottery_type]["zd"][i]]){
+           if(rever_phone[zd[lottery_type]["zd"][i]] != undefined){
                intersection_zd.push(zd[lottery_type]["zd"][i].toString());
            }
         }

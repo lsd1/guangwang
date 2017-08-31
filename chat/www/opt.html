@@ -221,22 +221,25 @@ $("#opt_set").click(function(){
     if(num == "" || times == "" || times == 0){
         showTips("选项不能为空！");
     }else{
-        var all_num_arr = $("#all_num").val();
-        if(all_num_arr.indexOf(num) == -1){
-            showTips("此号码不存在！"); return false;
-        }else{
-            var all_num_str = all_num_arr.split("\n");
+        var all_num_str = $("#all_num").val();
+			
+            var all_num_arr = all_num_str.split("\n");
+			if(all_num_str == ""){
+				all_num_arr = [];
+			}
+					console.log(all_num_arr);
+					console.log(num);
             //有多个则连续删除多个。
-            do {
-                all_num_str.splice(all_num_str.indexOf(num.toString()), 1);
-            } while (all_num_str.indexOf(num.toString()) != -1);
-
+            while (all_num_arr.indexOf(num.toString()) != -1){
+				all_num_arr.splice(all_num_arr.indexOf(num.toString()), 1);
+			};
+			console.log(all_num_arr);
             for(var i = 0;i<times;i++){
-                all_num_str.push(num);
+                all_num_arr.push(num);
             }
-            $("#all_num").val(all_num_str.join("\n"));
+			console.log(all_num_arr);
+            $("#all_num").val(all_num_arr.join("\n"));
             showTips("设置成功!");
-        }
     }
 });
 </script>
