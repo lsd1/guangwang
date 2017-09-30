@@ -342,11 +342,10 @@
                     //创建地图函数：
                     function createMap(){
                         var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
-                        var point = new BMap.Point(114.12154,22.549664);//定义一个中心点坐标
+                        var point = new BMap.Point(113.953953,22.685478);//定义一个中心点坐标
                         map.centerAndZoom(point,18);//设定地图的中心点和坐标并将地图显示在地图容器中
                         window.map = map;//将map变量存储在全局
                     }
-
                     //地图事件设置函数：
                     function setMapEvent(){
                         map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
@@ -369,7 +368,7 @@
                     }
 
                     //标注点数组
-                    var markerArr = [{title:"我的标记",content:"鸿隆世纪广场B座3楼305",point:"114.120906|22.549739",isOpen:1,icon:{w:23,h:25,l:46,t:21,x:9,lb:12}}
+                    var markerArr = [{title:"我的地址",content:"广东省 深圳市 宝安区 石岩街道 宝石东路209号 星城购物中心13A层",point:"113.953953|22.685478",isOpen:1,icon:{w:23,h:25,l:46,t:21,x:9,lb:12}}
                     ];
                     //创建marker
                     function addMarker(){

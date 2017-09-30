@@ -1,5 +1,25 @@
 ﻿<?php include 'header.php';?>
     <!--NAVBAR SECTION END-->
+    <div id="show-img">
+      <button class="img-close">关闭</button>
+      <div id="img-con"></div>
+    </div>
+    <div class="alert-show" style="">
+      <button type="button" class="alert-close">关闭</button>
+
+          <h3>关于脉果儿非ICO业务的说明公告</h3>
+          <p>9月4日下午3时，中国人民银行(央行)等七部门联合发布了《关于防范代币发行融资风险的公告》，紧急叫停了ICO非法集资行为。
+          我公司（深圳市脉果儿网络科技有限责任公司）是一家创新集合型平台的移动互联网公司，其主要业务由三大板块构成，业务从未含或参与从事与ICO及与其有关的相关事宜，介绍如下：
+          </p>
+          <p>1、	社交平台：通过移动APP进行即时通讯，文字、图片、表情、语音、视频等，经营期间已取得由中华人民共和国工业和信息化部发放的《中华人民共和国增值电信业务经营许可证》。
+          许可证编号：<a href="javascript:void(0);" class="alert-img" data-href="<?php echo ROOTPATH ;?>assets/img/3.png">B2-20151037</a></p>
+          <p>2、	游戏平台：社交用户有一个基于社交指数养成的果园游戏。通过好友之间的互访动作进行游戏互动产出果儿币，经验值等对应的游戏积分，增加用户粘性。所有积分均由游戏产出，并未通过任何形式的认购融资发行虚拟货币。为了增进电商平台的活跃情况，公司将果儿币属性拓展赋予它“购物券”“兑换卷”等功能权益，类似淘宝的“集分宝”可以在商城消费时充抵部分购物款项等。游戏运营期间，公司依法取得由广东省文化厅发放的《网络文化经营许可证》。
+          许可证编号：<a href="javascript:void(0);" class="alert-img" data-href="<?php echo ROOTPATH ;?>assets/img/1.png">粤网文【2015】1813-335号</a></p>
+          <p>3、电商平台：B2C2C模式的店铺入驻方式，商户加盟入驻开店通过平台销售产品，与社交用户互动，线上线下消费数据处理业务。公司依法取得ICP及EDI电信增值业务许可证。
+          许可证编号：<a href="javascript:void(0);" class="alert-img" data-href="<?php echo ROOTPATH ;?>assets/img/2.png">粤B2-20160006</a></p>
+          <p >为避免误传特此公告，敬请周知！<p>
+          <p style="text-align:center;">深圳市脉果儿网络科技有限责任公司</p>
+    </div>
    <div id="home" >
        <div class="container" style="padding:0;width:100%;">
            <div class="row">

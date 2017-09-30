@@ -8,7 +8,7 @@
 
     100% Free To use For Personal And Commercial Use.
     IN EXCHANGE JUST GIVE US CREDIT US AND TELL YOUR FRIENDS ABOUT US
-   
+
     ========================================================  */
 
 (function ($) {
@@ -41,10 +41,10 @@
             $(function () {
                 /*$.vegas('slideshow', {
                     backgrounds: [
-                      { src: 'assets/img/1.jpg', fade: 1000, delay: 9000 }, 
-                      { src: 'assets/img/2.jpg', fade: 1000, delay: 9000 }, 
-                        
-                     
+                      { src: 'assets/img/1.jpg', fade: 1000, delay: 9000 },
+                      { src: 'assets/img/2.jpg', fade: 1000, delay: 9000 },
+
+
                     ]
                 })('overlay', {
                     /!** SLIDESHOW OVERLAY IMAGE **!/
@@ -53,10 +53,10 @@
 
             });
 
-          
+
 
             /*====================================
-               WRITE YOUR SCRIPTS BELOW 
+               WRITE YOUR SCRIPTS BELOW
            ======================================*/
 
 
@@ -88,10 +88,22 @@ $('.nav li').on('click',function(){
     $(this).addClass('act');
 
 });
-var click = window.location.href.match(/#.*/)[0];
-click = click.match(/[a-z].*/)[0];
-console.log(click);
-$('.li'+click).addClass('act');
-
-
-
+$('.alert-close').click(function(){
+    $('.alert-show').hide();
+});
+var click = window.location.href.match(/#.*/);
+if(click !== null){
+  click = click[0].match(/[a-z].*/)[0];
+  console.log(click);
+  $('.li'+click).addClass('act');
+}
+$('.alert-img').click(function(){
+    var img = $(this).attr("data-href");
+    console.log(img);
+    $("#img-con").html('<img src="'+img+'">');
+    $("#show-img").show();
+});
+$('.img-close').click(function(){
+    $("#img-con").html('');
+    $("#show-img").hide();
+});

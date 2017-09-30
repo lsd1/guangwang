@@ -6,7 +6,7 @@ body {
     font-family: '微软雅黑'!important;
 	letter-spacing:1px;
     color:#232020;
-   
+
 }
 body,h1,h2,h3,h4,h5,h6,p,a,span{
     font-family: '微软雅黑'!important;
@@ -37,10 +37,9 @@ font-size:40px;
 }
 
 p {
-    
-    line-height:40px;
+    /*line-height:40px;
     margin-bottom:35px;
-    font-size: 20px;
+    font-size: 20px;*/
 }
 hr {
     border-top: 1px solid rgb(27, 106, 131);
@@ -101,9 +100,9 @@ text-transform:uppercase;
 }
 /*SLIDER STYLES*/
 #carousel-slider {
-    color:#fff; 
+    color:#fff;
     min-height:420px;
-    padding:30px 20px 5px 20px; 
+    padding:30px 20px 5px 20px;
 }
     .carousel-control.left {
 left: 0;
@@ -127,7 +126,7 @@ background-image: linear-gradient(to right,rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0
     width:20px;
     height:20px;
 	background-color:transparent;
-    
+
 }
 
 /* =============================================================
@@ -754,4 +753,70 @@ border:2px solid black;
     color:grey;
     float: right;
     margin-bottom: 2rem;
+}
+.alert-show{
+  width:50%;
+  position: fixed;
+  left: 0;
+  top: 20%;
+  right: 0;
+  margin: auto;
+  background-color: white;
+  z-index: 998;
+  border-radius: 5px;
+  border: none;
+  padding:20px;
+}
+.alert-close{
+  float: right;
+  border-radius: 3px;
+  background-color: white;
+  border: 1px solid grey;
+  border-top: none;
+  border-right: none;
+}
+.alert-show p{
+  font-size: 12px;
+  text-align: left;
+  text-indent: 20px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+.alert-show h3 {
+  color: red;
+  text-align: center;
+}
+.alert-show a {
+  color: blue;
+}
+
+.alert-show a:hover {
+    text-decoration: none;
+    color: #2a6496;
+}
+
+#show-img{
+  width:30%;
+  position: fixed;
+  left: 0;
+  top: 10%;
+  right: 0;
+  margin: auto;
+  background-color: white;
+  z-index: 999;
+  border-radius: 5px;
+  border: none;
+  padding:20px;
+  display: none;
+}
+.img-close {
+  float: right;
+  border-radius: 3px;
+  background-color: white;
+  border: 1px solid grey;
+  border-top: none;
+  border-right: none;
+}
+#show-img img{
+  width: 100%;
 }
