@@ -6,7 +6,7 @@
  * Time: 15:10
  */
 header("Content-Type: text/html;charset=utf-8");
-$conn = mysqli_connect('maiguoer.mysql.rds.aliyuncs.com','liusidong','Lsdlily123','maiguoer');
+$conn = mysqli_connect('rm-wz9bd20d3b7f4nefzco.mysql.rds.aliyuncs.com','liudd','sisimge2017','maiguoer-test');
 mysqli_query($conn,"set character set 'utf8'");//设置读库字符编码
 mysqli_query($conn,"set names 'utf8'");//设置写库字符编码
 $GLOBALS['area'] = array();
@@ -23,6 +23,7 @@ function show_area($conn,$id,$level = 0,$fid = null) {
     $res = mysqli_query($conn,'select * from mge_comm_area where cateId='.$id);
     if($res){
         while($row = mysqli_fetch_assoc($res)){
+            if($row['id'] != 535 && $row['cateId'])
             if($level == 1){
                 $GLOBALS['area'][$row['id']]['id'] = $row['id'];
                 $GLOBALS['area'][$row['id']]['name'] = $row['areaName'];
@@ -36,11 +37,16 @@ function show_area($conn,$id,$level = 0,$fid = null) {
             if($level == 2){
                 $fid = $row['cateId'];
             }
-            show_area($conn,$row['id'],$level,$fid);
-        }
-    }
-}
 
+            if($level<=2)
+            show_area($conn, $row['id'], $level, $fid);
+
+        }
+
+    }
+    //print_r($GLOBALS['area']);die;
+}
+//var_dump($GLOBALS['area'])
 /*
  *把数组下标格式化为从0递增开始。
  */
