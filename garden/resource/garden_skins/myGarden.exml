@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="myGarden" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="mygarden_png" x="0" y="0" locked="true"/>
+	<e:Group width="750" height="100" x="-2" y="984" locked="true">
+		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
+		<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
+		<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
+		<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
+	</e:Group>
+	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
+		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
+		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
+		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
+	</e:Group>
+	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0" locked="true" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4" locked="true"/>
+		<e:Rect width="580" height="544" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0" locked="true"/>
+		<e:Rect width="544" height="418" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2" locked="true"/>
+		<e:Button id="props_close" label="" x="594" y="420" width="45" height="45">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image source="text_props_png" y="414" horizontalCenter="0"/>
+		<e:Group id="group_muck" width="180" height="209" x="101" y="494" locked="true">
+			<e:Image source="props_icon01_png" scaleX="1" scaleY="1" verticalCenter="-25.5" horizontalCenter="0"/>
+			<e:Label text="肥料" y="138" textColor="0x000000" bold="true" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+			<e:Label id="muck_num" text="x888" fontFamily="Microsoft YaHei" textColor="0xf9a000" size="25" horizontalCenter="0.5" bottom="8"/>
+		</e:Group>
+		<e:Group id="group_insecticide" width="180" height="209" x="282" y="493" locked="true">
+			<e:Image source="props_icon02_png" horizontalCenter="0" verticalCenter="-25.5"/>
+			<e:Label text="驱虫" y="138" fontFamily="Microsoft YaHei" textColor="0x000000" bold="true" verticalAlign="justify" horizontalCenter="0"/>
+			<e:Label id="insecticide_num" text="x888" horizontalCenter="0" fontFamily="Microsoft YaHei" y="176" size="25" textColor="0xf9a000"/>
+		</e:Group>
+		<e:Group id="group_medicine" width="180" height="209" x="461" y="493" locked="true">
+			<e:Image source="props_icon03_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-25.5"/>
+			<e:Label text="药剂" y="138" textColor="0x000000" fontFamily="Microsoft YaHei" bold="true" horizontalCenter="0" textAlign="center"/>
+			<e:Label id="medicine_num" text="x888" fontFamily="Microsoft YaHei" size="25" textColor="0xf9a000" y="176" horizontalCenter="0"/>
+		</e:Group>
+		<e:Group id="group_ripening" width="180" height="209" x="101" y="702" locked="true">
+			<e:Image source="props_icon04_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-25.5"/>
+			<e:Label text="催熟" y="138" textColor="0x000000" bold="true" fontFamily="Microsoft YaHei" horizontalCenter="0" textAlign="center"/>
+			<e:Label id="ripening_num" text="x888" fontFamily="Microsoft YaHei" textAlign="center" horizontalCenter="0" y="176" textColor="0xf9a000" size="25"/>
+		</e:Group>
+		<e:Group id="group_protection" width="180" height="209" x="281" y="702.5" locked="true">
+			<e:Image source="props_icon05_png" scaleX="1" scaleY="1" verticalCenter="-25.5" horizontalCenter="0"/>
+			<e:Label text="防偷" y="138" textColor="0x000000" fontFamily="Microsoft YaHei" textAlign="center" bold="true" horizontalCenter="0"/>
+			<e:Label id="protextion_num" text="x888" horizontalCenter="0" fontFamily="Microsoft YaHei" y="176" textAlign="center" textColor="0xf9a000" size="25"/>
+		</e:Group>
+	</e:Group>
+		
+	<e:Group id="panel_use_musk" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="580" height="450" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
+		<e:Rect width="544" height="334" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
+		<e:Button id="use_musk_close" label="" x="594" y="420" width="45" height="45">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image source="text_props_use01_png" y="414" horizontalCenter="0"/>
+		<e:Rect id="commit_use_musk" width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" verticalCenter="78" horizontalCenter="0"/>
+		<e:Label text="确定" y="730.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Label text="　　在施用肥料24小时后，可以结出果实20颗，是否确定使用？" y="502" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" horizontalCenter="0" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20"/>
+	</e:Group>
+</e:Skin>
