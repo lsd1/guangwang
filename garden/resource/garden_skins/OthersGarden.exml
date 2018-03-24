@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="mygarden_png" x="0" y="0" locked="true"/>
+	<e:Group width="750" height="100" x="-2" y="984">
+		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
+		<e:Image id="back" x="32" y="7" source="othersgarden_icon_back_png"/>
+		<e:Image id="interaction" source="mygarden_icon_interaction_png" x="533" y="7"/>
+		<e:Image id="water" x="646" y="7" source="othersgarden_icon_water_png"/>
+	</e:Group>
+	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
+		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
+		<e:Label text="他的果园动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
+		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
+	</e:Group>
+	
+	<e:Group id="panel_garden_interactive" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
+		<e:Image y="224" horizontalCenter="0" source="text_interaction_png" anchorOffsetY="0" height="46"/>
+		<e:Button id="garden_interactive_close" label="" x="678" y="224" width="45" height="45" anchorOffsetY="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+			</e:Skin>
+		</e:skinName>
+		</e:Button>
+		<e:Scroller width="700" height="1049" bottom="0" horizontalCenter="0">
+			<e:Group id="group_interactive_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="790"/>
+		</e:Scroller>
+	</e:Group>
+</e:Skin>
