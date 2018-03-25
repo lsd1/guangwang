@@ -52,5 +52,7 @@ declare module skins{
 }
 declare class loginButton extends eui.Skin{
 }
+declare class interactionList extends eui.Skin{
+}
 declare class myGarden extends eui.Skin{
 }

@@ -25,7 +25,7 @@ class index extends eui.Component {
 	private reg_rep_pass_word:eui.EditableText;
 	public constructor() {
 		super();
-		this.skinName = "resource/garden_skins/index.exml";
+		this.skinName = "resource/garden_skins/Index.exml";
 
 		//打开登录、注册弹框
 		this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnLogClick, this);
@@ -79,7 +79,7 @@ class index extends eui.Component {
 
 	//登录
 	private onCommitLogClick(){
-		this.parent.addChild(garden.Shared())
+		this.parent.addChild(MyGarden.Shared())
 		this.parent.removeChild(this);
 		//var httpReq = new HttpReq();
 		//var url:string = 'http://httpbin.org/post';

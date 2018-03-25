@@ -1,4 +1,4 @@
-class avatarList extends eui.Component{
+class AvatarList extends eui.Component{
 	private group:eui.Group = new eui.Group;
 	private avatarImage:eui.Image;
 	private statusImage:eui.Image;

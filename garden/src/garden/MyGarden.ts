@@ -69,10 +69,19 @@ class MyGarden extends eui.Component{
 	private group_interactive_list:eui.Group;
 	//关闭果园互动按钮
 	private garden_interactive_close:eui.Button;
+
+	//果园动态弹出框
+	private panel_garden_news:eui.Group;
+	//果园动态关闭按钮
+	private garden_news_close:eui.Button;
+	//果园动态列表
+	private group_news_list:eui.Group;
+	//更多动态按钮
+	private garden_more_news:any;
 	
 	public constructor() {
 		super();
-		this.skinName = "resource/garden_skins/myGarden.exml";
+		this.skinName = "resource/garden_skins/MyGarden.exml";
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
 		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
 		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
@@ -85,6 +94,8 @@ class MyGarden extends eui.Component{
 		this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
 		this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuskTap, this);
 		this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenInteractiveCloseTap, this);
+		this.garden_news_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenNewsCloseTap, this);
+
 		//顶部果园用户头像、昵称信息
 		var topGrop:eui.Group = new eui.Group();
 		var topAvatar = this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
@@ -116,9 +127,17 @@ class MyGarden extends eui.Component{
 		for(var i = 0; i < 6; i++){
 			let avatar = new AvatarList();
 			avatar.x = 25 + i * 120;
-			let avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
-			this.group_avatar.addChild(avatar_cell);
+			if(i==5){
+				this.garden_more_news = avatar.createAvatar(i + 1, "mygarden_png", "30");
+				this.group_avatar.addChild(this.garden_more_news);
+				
+			}else{
+				let avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
+				this.group_avatar.addChild(avatar_cell);
+			}
 		}
+
+		this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
 	}
 
 	//点击道具
@@ -193,6 +212,27 @@ class MyGarden extends eui.Component{
 	//关闭果园互动
 	private onGardenInteractiveCloseTap(e:egret.TouchEvent){
 		this.panel_garden_interactive.visible = false;
+	}
+
+	//关闭果园动态
+	private onGardenNewsCloseTap(e:egret.TouchEvent){
+		this.panel_garden_news.visible = false;
+	}
+
+	//弹出果园动态框
+	private onGardenMoreNewsTap(){
+		for(var i = 0; i < 17; i++){
+			let news = new NewsList();
+			if(i == 0){
+				var list = news.createList('mygarden_png', '曲终人散', 3600, 0, i * 122);
+			}else if(i < 2 && i > 0){
+				var list = news.createList('mygarden_png', '曲终人散', 3500, 0, i * 122);
+			}else{
+				var list = news.createList('mygarden_png', '曲终人散', 3400, 0, i * 122);
+			}
+			this.group_news_list.addChild(list);
+		}
+		this.panel_garden_news.visible = true;		
 	}
 
 }

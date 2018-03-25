@@ -1,21 +1,11 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
-var InteractionList = (function (_super) {
-    __extends(InteractionList, _super);
+var InteractionList = (function () {
     function InteractionList(userInfo) {
-        var _this = _super.call(this) || this;
-        _this.common = Common.Shared();
-        _this.userInfo = userInfo;
-        console.log(_this.userInfo);
-        return _this;
+        this.common = Common.Shared();
+        this.userInfo = userInfo;
+        console.log(this.userInfo);
     }
     //生成互动列表
     InteractionList.prototype.createList = function (resource, username, type, typeResource, x, y) {
@@ -76,11 +66,11 @@ var InteractionList = (function (_super) {
         return group;
     };
     InteractionList.prototype.onInteractionListTap = function (e) {
-        this.parent.addChild(OthersGarden.Shared());
-        this.parent.removeChild(this);
-        //console.log(this.userInfo);
+        MyGarden.Shared().parent.addChild(OthersGarden.Shared());
+        MyGarden.Shared().parent.removeChild(MyGarden.Shared());
+        console.log(this.userInfo);
     };
     return InteractionList;
-}(eui.Component));
+}());
 __reflect(InteractionList.prototype, "InteractionList");
 //# sourceMappingURL=InteractionList.js.map

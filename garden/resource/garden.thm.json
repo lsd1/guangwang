@@ -1,11 +1,13 @@
 {
   "skins": {
-    "index":"resource/garden_skins/index.exml",
-    "myGarden":"resource/garden_skins/myGarden.exml"
+    "index":"resource/garden_skins/Index.exml",
+    "myGarden":"resource/garden_skins/MyGarden.exml",
+    "myGarden":"resource/garden_skins/OthersGarden.exml"
   },
   "autoGenerateExmlsList": true,
   "exmls": [
-    "resource/garden_skins/index.exml",
-    "resource/garden_skins/myGarden.exml"
+    "resource/garden_skins/Index.exml",
+    "resource/garden_skins/MyGarden.exml",
+    "resource/garden_skins/OthersGarden.exml"
   ]
 }

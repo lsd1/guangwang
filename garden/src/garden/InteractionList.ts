@@ -1,8 +1,7 @@
-class InteractionList extends eui.Component {
+class InteractionList {
 	private common = Common.Shared();
 	private userInfo:any;
 	public constructor(userInfo) {
-		super();
 		this.userInfo = userInfo;
 		console.log(this.userInfo);
 	}
@@ -64,9 +63,9 @@ class InteractionList extends eui.Component {
 	}
 
 	public onInteractionListTap(e:egret.TouchEvent){
-		this.parent.addChild(OthersGarden.Shared())
-		this.parent.removeChild(this);
-		//console.log(this.userInfo);
+		MyGarden.Shared().parent.addChild(OthersGarden.Shared());
+		MyGarden.Shared().parent.removeChild(MyGarden.Shared());
+		console.log(this.userInfo);
 	}
 
 }

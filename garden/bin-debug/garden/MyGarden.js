@@ -13,7 +13,7 @@ var MyGarden = (function (_super) {
     function MyGarden() {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
-        _this.skinName = "resource/garden_skins/myGarden.exml";
+        _this.skinName = "resource/garden_skins/MyGarden.exml";
         _this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsTap, _this);
         _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
         _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
@@ -26,6 +26,7 @@ var MyGarden = (function (_super) {
         _this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupProtectionTap, _this);
         _this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuskTap, _this);
         _this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenInteractiveCloseTap, _this);
+        _this.garden_news_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenNewsCloseTap, _this);
         //顶部果园用户头像、昵称信息
         var topGrop = new eui.Group();
         var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
@@ -55,9 +56,16 @@ var MyGarden = (function (_super) {
         for (var i = 0; i < 6; i++) {
             var avatar = new AvatarList();
             avatar.x = 25 + i * 120;
-            var avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
-            _this.group_avatar.addChild(avatar_cell);
+            if (i == 5) {
+                _this.garden_more_news = avatar.createAvatar(i + 1, "mygarden_png", "30");
+                _this.group_avatar.addChild(_this.garden_more_news);
+            }
+            else {
+                var avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
+                _this.group_avatar.addChild(avatar_cell);
+            }
         }
+        _this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenMoreNewsTap, _this);
         return _this;
     }
     MyGarden.Shared = function () {
@@ -123,6 +131,27 @@ var MyGarden = (function (_super) {
     //关闭果园互动
     MyGarden.prototype.onGardenInteractiveCloseTap = function (e) {
         this.panel_garden_interactive.visible = false;
+    };
+    //关闭果园动态
+    MyGarden.prototype.onGardenNewsCloseTap = function (e) {
+        this.panel_garden_news.visible = false;
+    };
+    //弹出果园动态框
+    MyGarden.prototype.onGardenMoreNewsTap = function () {
+        for (var i = 0; i < 17; i++) {
+            var news = new NewsList();
+            if (i == 0) {
+                var list = news.createList('mygarden_png', '曲终人散', 3600, 0, i * 122);
+            }
+            else if (i < 2 && i > 0) {
+                var list = news.createList('mygarden_png', '曲终人散', 3500, 0, i * 122);
+            }
+            else {
+                var list = news.createList('mygarden_png', '曲终人散', 3400, 0, i * 122);
+            }
+            this.group_news_list.addChild(list);
+        }
+        this.panel_garden_news.visible = true;
     };
     return MyGarden;
 }(eui.Component));

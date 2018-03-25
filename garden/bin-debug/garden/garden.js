@@ -51,7 +51,7 @@ var garden = (function (_super) {
         _this.addChild(line);
         //尾部果园互动消息列表
         for (var i = 0; i < 6; i++) {
-            var avatar = new avatarList();
+            var avatar = new AvatarList();
             avatar.x = 25 + i * 120;
             var avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
             _this.group_avatar.addChild(avatar_cell);

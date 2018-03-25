@@ -8,9 +8,9 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var avatarList = (function (_super) {
-    __extends(avatarList, _super);
-    function avatarList() {
+var AvatarList = (function (_super) {
+    __extends(AvatarList, _super);
+    function AvatarList() {
         var _this = _super.call(this) || this;
         _this.group = new eui.Group;
         _this.x = 0;
@@ -46,7 +46,7 @@ var avatarList = (function (_super) {
         _this.statusNumber.size = 20;
         return _this;
     }
-    avatarList.prototype.createAvatar = function (type, avatarResource, statusResource) {
+    AvatarList.prototype.createAvatar = function (type, avatarResource, statusResource) {
         var group = new eui.Group;
         this.group.x = this.x;
         this.group.y = this.y;
@@ -90,7 +90,7 @@ var avatarList = (function (_super) {
         }
         return this.group;
     };
-    return avatarList;
+    return AvatarList;
 }(eui.Component));
-__reflect(avatarList.prototype, "avatarList");
-//# sourceMappingURL=avatarList.js.map
+__reflect(AvatarList.prototype, "AvatarList");
+//# sourceMappingURL=AvatarList.js.map

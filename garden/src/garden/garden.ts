@@ -80,7 +80,7 @@ class garden extends eui.Component{
 
 		//尾部果园互动消息列表
 		for(var i = 0; i < 6; i++){
-			let avatar = new avatarList();
+			let avatar = new AvatarList();
 			avatar.x = 25 + i * 120;
 			let avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
 			this.group_avatar.addChild(avatar_cell);

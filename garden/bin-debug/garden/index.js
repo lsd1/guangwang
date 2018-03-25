@@ -12,7 +12,7 @@ var index = (function (_super) {
     __extends(index, _super);
     function index() {
         var _this = _super.call(this) || this;
-        _this.skinName = "resource/garden_skins/index.exml";
+        _this.skinName = "resource/garden_skins/Index.exml";
         //打开登录、注册弹框
         _this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBtnLogClick, _this);
         _this.btn_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBtnRegClick, _this);
@@ -63,7 +63,7 @@ var index = (function (_super) {
     };
     //登录
     index.prototype.onCommitLogClick = function () {
-        this.parent.addChild(garden.Shared());
+        this.parent.addChild(MyGarden.Shared());
         this.parent.removeChild(this);
         //var httpReq = new HttpReq();
         //var url:string = 'http://httpbin.org/post';
