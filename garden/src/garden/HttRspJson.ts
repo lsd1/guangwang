@@ -1,0 +1,4 @@
+class HttRspJson {
+	public constructor() {
+	}
+}

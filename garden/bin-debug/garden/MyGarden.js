@@ -14,19 +14,34 @@ var MyGarden = (function (_super) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/MyGarden.exml";
+        //道具列表
         _this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsTap, _this);
-        _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
-        _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
         _this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsCloseTap, _this);
+        _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
+        //施用肥料
         _this.use_musk_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onUseMuskCloseTap, _this);
         _this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMuckTap, _this);
+        _this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuskTap, _this);
+        //道具使用
         _this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupInsecticideTap, _this);
         _this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMedicineTap, _this);
         _this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupRipeningTap, _this);
         _this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupProtectionTap, _this);
-        _this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuskTap, _this);
+        //我的果园
+        _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
         _this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenInteractiveCloseTap, _this);
         _this.garden_news_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenNewsCloseTap, _this);
+        _this.garden_manger_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenMangerCloseTap, _this);
+        //修改密码
+        _this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangePasswordTap, _this);
+        _this.next_step.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onNextStepTap, _this);
+        _this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onSetPassWordCloseTap, _this);
+        _this.change_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangePassWordCloseTap, _this);
+        _this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocus, _this);
+        //提取积分
+        _this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointTap, _this);
+        _this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointCloseTap, _this);
+        _this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitExtractPointTap, _this);
         //顶部果园用户头像、昵称信息
         var topGrop = new eui.Group();
         var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
@@ -97,6 +112,22 @@ var MyGarden = (function (_super) {
     };
     //点击管理
     MyGarden.prototype.onManageTap = function (e) {
+        for (var i = 0; i < 40; i++) {
+            var point_log = new eui.Label();
+            point_log.text = '提取积分-800 2018-03-05 14:00';
+            point_log.textColor = 0x673C13;
+            point_log.size = 25;
+            point_log.y = 40 * i;
+            point_log.x = 50;
+            point_log.width = 650;
+            point_log.height = 80;
+            this.group_point_list.addChild(point_log);
+        }
+        this.panel_garden_manger.visible = true;
+    };
+    //关闭我的果园弹框
+    MyGarden.prototype.onGardenMangerCloseTap = function (e) {
+        this.panel_garden_manger.visible = false;
     };
     //关闭道具弹框
     MyGarden.prototype.onPropsCloseTap = function (e) {
@@ -137,7 +168,7 @@ var MyGarden = (function (_super) {
         this.panel_garden_news.visible = false;
     };
     //弹出果园动态框
-    MyGarden.prototype.onGardenMoreNewsTap = function () {
+    MyGarden.prototype.onGardenMoreNewsTap = function (e) {
         for (var i = 0; i < 17; i++) {
             var news = new NewsList();
             if (i == 0) {
@@ -152,6 +183,32 @@ var MyGarden = (function (_super) {
             this.group_news_list.addChild(list);
         }
         this.panel_garden_news.visible = true;
+    };
+    MyGarden.prototype.onChangePasswordTap = function (e) {
+        this.panel_change_pass_word.visible = true;
+    };
+    MyGarden.prototype.onChangePassWordCloseTap = function (e) {
+        this.panel_change_pass_word.visible = false;
+    };
+    MyGarden.prototype.onNextStepTap = function (e) {
+        this.panel_change_pass_word.visible = false;
+        this.panel_set_pass_word.visible = true;
+    };
+    MyGarden.prototype.onSetPassWordCloseTap = function (e) {
+        this.panel_set_pass_word.visible = false;
+    };
+    MyGarden.prototype.onExtractPointTap = function (e) {
+        this.panel_extract_point.visible = true;
+    };
+    MyGarden.prototype.onExtractPointCloseTap = function (e) {
+        this.panel_extract_point.visible = false;
+    };
+    MyGarden.prototype.onCommitExtractPointTap = function (e) {
+        this.panel_extract_point.visible = false;
+    };
+    MyGarden.prototype.onInputFocus = function (e) {
+        console.log(EventTarget);
+        console.log(1);
     };
     return MyGarden;
 }(eui.Component));

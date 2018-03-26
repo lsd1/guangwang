@@ -78,23 +78,96 @@ class MyGarden extends eui.Component{
 	private group_news_list:eui.Group;
 	//更多动态按钮
 	private garden_more_news:any;
+
+	//我的果园弹框
+	private panel_garden_manger:eui.Group;
+	//关闭我的果园按钮
+	private garden_manger_close:eui.Button;
+	//激活时间
+	private active_date:eui.Label;
+	//用户帐号
+	private user_name:eui.Label;
+	//用户积分
+	private user_point:eui.Label;
+	//积分纪录列表
+	private group_point_list:eui.Group;
+	//提取积分按钮
+	private extract_point:eui.Group;
+	//修改密码按钮
+	private change_password:eui.Group;
+	//更多记录按钮
+	private more_point_log:eui.Label;
+
+	//修改密码弹框
+	private panel_change_pass_word:eui.Group;
+	//设置新密码弹框
+	private panel_set_pass_word:eui.Group;
+	//旧密码
+	private old_pass_word:eui.Label;
+	//下一步
+	private next_step:eui.Group;
+	//设置新密码
+	private new_pass_word:eui.Label;
+	//重复新密码
+	private repeat_new_pass_word:eui.Label;
+	//提交修改
+	private commit_change:eui.Group;
+	//关闭设置新密码按钮
+	private set_pass_word_close:eui.Button;	
+	//关闭验证旧密码按钮
+	private change_pass_word_close:eui.Button;
 	
+	//提取积分弹框
+	private panel_extract_point:eui.Group;
+	//关闭提取积分按钮
+	private extract_point_close:eui.Button;
+	//钱包地址
+	private wallet_address:eui.Label;
+	//提取数额
+	private point_number:eui.Label;
+	//提交请求
+	private commit_extract_point:eui.Group;	
+
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
+		
+		//道具列表
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
-		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
-		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
 		this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsCloseTap, this);
+		
+		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
+
+		//施用肥料
 		this.use_musk_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuskCloseTap, this);
 		this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
+		this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuskTap, this);
+
+		//道具使用
 		this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
 		this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
 		this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
 		this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
-		this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuskTap, this);
+
+		//我的果园
+		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
 		this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenInteractiveCloseTap, this);
 		this.garden_news_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenNewsCloseTap, this);
+		this.garden_manger_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMangerCloseTap, this);
+
+		//修改密码
+		this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePasswordTap, this);
+		this.next_step.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onNextStepTap, this);
+		this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSetPassWordCloseTap, this);
+		this.change_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePassWordCloseTap, this);
+		this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocus,this);
+
+		//提取积分
+		this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointTap, this);
+		this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointCloseTap, this);
+		this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
+
+	
 
 		//顶部果园用户头像、昵称信息
 		var topGrop:eui.Group = new eui.Group();
@@ -164,7 +237,25 @@ class MyGarden extends eui.Component{
 
 	//点击管理
 	private onManageTap(e:egret.TouchEvent){
-		
+
+		for(let i = 0; i < 40; i++){
+			let point_log:eui.Label = new eui.Label();
+			point_log.text = '提取积分-800 2018-03-05 14:00';
+			point_log.textColor = 0x673C13;
+			point_log.size = 25;
+			point_log.y = 40*i;
+			point_log.x = 50;
+			point_log.width = 650;
+			point_log.height = 80;
+			this.group_point_list.addChild(point_log);
+		}
+
+		this.panel_garden_manger.visible = true;
+	}
+
+	//关闭我的果园弹框
+	private onGardenMangerCloseTap(e:egret.TouchEvent){
+		this.panel_garden_manger.visible = false;
 	}
 
 	//关闭道具弹框
@@ -220,7 +311,7 @@ class MyGarden extends eui.Component{
 	}
 
 	//弹出果园动态框
-	private onGardenMoreNewsTap(){
+	private onGardenMoreNewsTap(e:egret.TouchEvent){
 		for(var i = 0; i < 17; i++){
 			let news = new NewsList();
 			if(i == 0){
@@ -234,5 +325,44 @@ class MyGarden extends eui.Component{
 		}
 		this.panel_garden_news.visible = true;		
 	}
+
+
+	private onChangePasswordTap(e:egret.TouchEvent){
+		this.panel_change_pass_word.visible = true;
+	}
+
+	private onChangePassWordCloseTap(e:egret.TouchEvent){
+		this.panel_change_pass_word.visible = false;
+
+	}
+
+	private onNextStepTap(e:egret.TouchEvent){
+		this.panel_change_pass_word.visible = false;
+		this.panel_set_pass_word.visible = true;
+
+	}
+
+	private onSetPassWordCloseTap(e:egret.TouchEvent){
+		this.panel_set_pass_word.visible = false;
+	}
+
+	private onExtractPointTap(e:egret.TouchEvent){
+		this.panel_extract_point.visible = true;
+	}
+
+	private onExtractPointCloseTap(e:egret.TouchEvent){
+		this.panel_extract_point.visible = false;
+	}
+
+	private onCommitExtractPointTap(e:egret.TouchEvent){
+		this.panel_extract_point.visible = false;
+	}
+
+	private onInputFocus(e:egret.FocusEvent){
+		console.log(EventTarget);
+		console.log(1);
+	}
+
+
 
 }

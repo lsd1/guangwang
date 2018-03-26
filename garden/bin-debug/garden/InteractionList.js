@@ -68,7 +68,6 @@ var InteractionList = (function () {
     InteractionList.prototype.onInteractionListTap = function (e) {
         MyGarden.Shared().parent.addChild(OthersGarden.Shared());
         MyGarden.Shared().parent.removeChild(MyGarden.Shared());
-        console.log(this.userInfo);
     };
     return InteractionList;
 }());

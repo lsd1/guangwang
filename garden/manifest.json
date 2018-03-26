@@ -9,7 +9,7 @@
 		"libs/modules/promise/promise.js"
 	],
 	"game": [
-		"bin-debug/garden/garden.js",
+		"bin-debug/garden/HttpReq.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
@@ -17,9 +17,8 @@
 		"bin-debug/garden/AvatarList.js",
 		"bin-debug/garden/Common.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/garden/HttpReq.js",
-		"bin-debug/garden/imageMask.js",
-		"bin-debug/garden/index.js",
+		"bin-debug/garden/ImageMask.js",
+		"bin-debug/garden/Index.js",
 		"bin-debug/garden/InteractionList.js",
 		"bin-debug/garden/MyGarden.js",
 		"bin-debug/garden/NewsList.js",

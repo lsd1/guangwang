@@ -65,7 +65,6 @@ class InteractionList {
 	public onInteractionListTap(e:egret.TouchEvent){
 		MyGarden.Shared().parent.addChild(OthersGarden.Shared());
 		MyGarden.Shared().parent.removeChild(MyGarden.Shared());
-		console.log(this.userInfo);
 	}
 
 }

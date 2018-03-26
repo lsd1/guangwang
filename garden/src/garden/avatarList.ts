@@ -90,7 +90,7 @@ class AvatarList extends eui.Component{
 				moreImage.source = "garden_interaction_more_png";
 				this.group.addChild(moreCircle);
 				this.group.addChild(moreImage);
-				this.group.addChild(moreLabel);				
+				this.group.addChild(moreLabel);		
 			
 		}
 		return this.group;
