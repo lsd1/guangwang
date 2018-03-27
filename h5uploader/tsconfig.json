@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outFile": "bin/h5uploader/h5uploader.js",
+        "allowJs": true
+    },
+    "files": [
+        "src/h5uploader.js",
+        "src/wxuploader.js"
+    ]
+}

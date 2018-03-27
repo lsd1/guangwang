@@ -42,8 +42,15 @@ var MyGarden = (function (_super) {
         _this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointTap, _this);
         _this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointCloseTap, _this);
         _this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitExtractPointTap, _this);
+        //修改头像
+        console.log(_this.change_avatar);
+        _this.change_avatar.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangeAvatarTap, _this);
+        //this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
+        _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.onCutAreaBegin, _this);
+        _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_MOVE, _this.onCutAreaMove, _this);
+        _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END, _this.onCutAreaEnd, _this);
+        _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, _this.onCutAreaEnd, _this);
         //顶部果园用户头像、昵称信息
-        var topGrop = new eui.Group();
         var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
         var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
         var label = new eui.Label();
@@ -54,12 +61,9 @@ var MyGarden = (function (_super) {
         label.size = 30;
         label.text = "Tammy";
         label.textColor = 0x000000;
-        topGrop.x = 0;
-        topGrop.y = 30;
-        topGrop.addChild(topAvatarBg);
-        topGrop.addChild(topAvatar);
-        topGrop.addChild(label);
-        _this.addChild(topGrop);
+        _this.group_top.addChild(topAvatarBg);
+        _this.group_top.addChild(topAvatar);
+        _this.group_top.addChild(label);
         //横线
         var line = new egret.Shape();
         line.graphics.lineStyle(2, 0x000000, 0.1);
@@ -208,7 +212,48 @@ var MyGarden = (function (_super) {
     };
     MyGarden.prototype.onInputFocus = function (e) {
         console.log(EventTarget);
-        console.log(1);
+    };
+    MyGarden.prototype.onChangeAvatarTap = function (e) {
+        console.log('select');
+        selectImage(this.selImg, this);
+    };
+    MyGarden.prototype.selImg = function (a, b, c) {
+        a.origin_image.source = b;
+        a.cut_image.visible = true;
+        // var mydisp:any = b;
+        // var rt: egret.RenderTexture = new egret.RenderTexture();   //建立缓冲画布
+        // rt.drawToTexture(mydisp, new egret.Rectangle(0, 0, mydisp.width, mydisp.height));  //将对象画到缓冲画布上（可指定画对象的某个区域，或画整个）
+        // this.my_avatar.texture = rt;
+        // var imageBase64:string = rt.toDataURL("image/png");  //转换为图片base64。  （对的你没看错！就这么3行。。。。）
+        // console.log(imageBase64); //弹出来看看
+        // var saveImage: HTMLImageElement = new Image;
+        // saveImage.onload = () => {   //图片加载完成事件（只有加载完成才能转换）
+        // 	saveImage.onload = null;
+        // 	var myBmp:egret.Bitmap = new egret.Bitmap(<any>saveImage);   //将image强转为egret.Texture即可，也可以将HTMLCanvasElement强转为egret.Texture
+        // 	this.addChild(myBmp);   //假设有一个容器叫myContainer，将建立的egret.Bitmap添加到容器
+        // }
+        // saveImage.src = imageBase64;  //使用上面生成的base64字符串开始加载图片
+    };
+    MyGarden.prototype.onCutAreaBegin = function (e) {
+        this.cut_area.width = this.cut_area.height = this.origin_image.height < this.origin_image.width ? this.origin_image.height : this.origin_image.width;
+        this.startX = e.localX;
+        this.startY = e.localY;
+    };
+    MyGarden.prototype.onCutAreaMove = function (e) {
+        var stepX = e.localX - this.startX;
+        var stepY = e.localY - this.startY;
+        console.log(stepX);
+        console.log(stepY);
+        this.cut_area.x += stepX;
+        this.cut_area.y += stepY;
+        this.startX = e.localX;
+        this.startY = e.localY;
+    };
+    MyGarden.prototype.onCutAreaEnd = function (e) {
+        // this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onCutAreaBegin,this);
+        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCutAreaMove,this);
+        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);
+        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);
     };
     return MyGarden;
 }(eui.Component));

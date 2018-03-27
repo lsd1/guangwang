@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="myGarden" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="mygarden_png" x="0" y="0" locked="true"/>
+	<e:Group id="group_top" width="750" height="1086" x="0" y="0">
+		<e:Image source="mygarden_png" x="0" y="0" scaleX="1" scaleY="1"/>
+	</e:Group>
 	<e:Group width="750" height="100" x="-2" y="984" locked="true">
 		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
 		<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 		<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 		<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
 	</e:Group>
+
+
 	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0" locked="true">
 		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
@@ -102,20 +106,21 @@
 
 	<e:Group id="panel_garden_manger" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
 
-		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
-		<e:Rect width="702" height="524" y="672" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
-		<e:Rect width="702" height="172" y="498" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
-		<e:Rect width="702" height="90" y="1198" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
-		<e:Rect width="702" height="210" y="287" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffefbd" ellipseWidth="15" horizontalCenter="0"/>
-		<e:Label id="user_point" text="888888" x="195" y="542" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="195" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label text="******" x="195" y="450" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label id="user_name" text="Tommy" x="195" y="382" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label id="active_date" text="2018-03-05 18:30" x="195" y="326" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="250" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label text="账户密码：" x="70" y="448" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label text="账户积分：" x="70" y="542" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label text="激活日期：" x="69" y="326" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Image y="224" horizontalCenter="0" anchorOffsetY="0" height="46" source="text_mygarden_png"/>
-		<e:Button id="garden_manger_close" label="" x="678" y="224" width="45" height="45" anchorOffsetY="0">
+		<e:Rect width="750" height="1204" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
+		<e:Rect width="702" height="210" y="207" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="15" horizontalCenter="0"/>
+		<e:Rect width="702" height="502" y="726" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
+		<e:Rect width="702" height="140" y="584" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
+		<e:Rect width="702" height="90" y="1230" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
+		<e:Rect width="702" height="154" y="425" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffefbd" ellipseWidth="15" horizontalCenter="0"/>
+		<e:Label id="user_point" text="888888" x="195" y="622" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="195" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label text="******" x="195" y="372" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label id="user_name" text="Tommy" x="195" y="304" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label id="active_date" text="2018-03-05 18:30" x="195" y="246" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="250" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label text="账户密码：" x="70" y="368" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label text="账户积分：" x="70" y="620" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label text="激活日期：" x="69" y="242" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Image y="142" horizontalCenter="0" anchorOffsetY="0" height="46" source="text_mygarden_png"/>
+		<e:Button id="garden_manger_close" label="" x="678" y="142" width="45" height="45" anchorOffsetY="0">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
@@ -123,20 +128,25 @@
 		</e:skinName>
 		</e:Button>
 
-		<e:Label text="账户昵称：" x="70" y="384" backgroundColor="0x000000" textColor="0x673c13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Group id="extract_point" width="158" height="56" x="536" y="532" anchorOffsetY="0">
+		<e:Label text="账户昵称：" x="70" y="302" backgroundColor="0x000000" textColor="0x673c13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Group id="extract_point" width="158" height="56" x="536" y="616" anchorOffsetY="0">
 			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xffa600"/>
-			<e:Label text="提取积分" horizontalCenter="0" verticalCenter="-1.5" size="23" fontFamily="Microsoft YaHei"/>
+			<e:Label text="提取积分" size="23" fontFamily="Microsoft YaHei" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
-		<e:Group id="change_password" width="158" height="56" x="536" y="426" anchorOffsetY="0">
+		<e:Group id="change_password" width="158" height="56" x="536" y="340" anchorOffsetY="0">
 			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xffa600"/>
 			<e:Label text="修改密码" horizontalCenter="0" verticalCenter="0" size="23" fontFamily="Microsoft YaHei"/>
 		</e:Group>
-		<e:Label text="积分纪录" y="618" textColor="0x673c13" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
-		<e:Scroller width="700" height="487" bottom="140" horizontalCenter="0" anchorOffsetY="0">
-			<e:Group id="group_point_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="391" x="0" y="186"/>
+		<e:Label text="积分纪录" y="672" textColor="0x673c13" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		<e:Scroller width="700" height="487" bottom="118" horizontalCenter="0" anchorOffsetY="0">
+			<e:Group id="group_point_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="391" x="0" y="16"/>
 		</e:Scroller>
-		<e:Label id="more_point_log" text="查看更多记录" y="1226" textColor="0x673c13" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		<e:Label id="more_point_log" text="查看更多记录" y="1256" textColor="0x673c13" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		<e:Group id="change_avatar" width="158" height="56" x="532" y="482" anchorOffsetY="0">
+			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xFFA600"/>
+			<e:Label text="修改头像" fontFamily="Microsoft YaHei" size="23" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
+		<e:Image id="my_avatar" x="70" y="433" anchorOffsetX="0" anchorOffsetY="0" source="othersgarden_icon_water_png"/>
 	</e:Group>
 
 	<e:Group id="panel_change_pass_word" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
@@ -203,6 +213,11 @@
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" x="0" y="0"/>
 			<e:Label text="确认" y="36.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="142"/>
 		</e:Group>
+	</e:Group>
+	<e:Group id="cut_image" width="750" height="1334" x="0" y="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x000000" fillAlpha="1"/>
+		<e:Image id="origin_image" horizontalCenter="0" verticalCenter="0"/>
+		<e:Rect id="cut_area" width="750" height="750" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.2" fillColor="0xffffff" horizontalCenter="0" verticalCenter="0"/>
 	</e:Group>
 
 

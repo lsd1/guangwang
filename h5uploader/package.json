@@ -1,0 +1,5 @@
+{
+	"name": "h5uploader",
+	"compilerVersion": "5.1.8",
+	"typings": "typings/h5uploader.d.ts"
+}
