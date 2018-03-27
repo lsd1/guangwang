@@ -216,8 +216,17 @@
 	</e:Group>
 	<e:Group id="cut_image" width="750" height="1334" x="0" y="0" visible="false">
 		<e:Rect width="750" height="1334" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x000000" fillAlpha="1"/>
-		<e:Image id="origin_image" horizontalCenter="0" verticalCenter="0"/>
-		<e:Rect id="cut_area" width="750" height="750" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.2" fillColor="0xffffff" horizontalCenter="0" verticalCenter="0"/>
+		<e:Image id="origin_image" x="0" y="0"/>
+		<e:Rect id="cut_area" width="750" height="750" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.2" fillColor="0xffffff" x="0" y="0"/>
+		<e:Button id="cut_commit" label="确认裁剪" x="544" y="1274" width="200" height="60" enabled="true">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="garden_data_bg_png" source.down="garden_data_bg_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image id="new_image" x="0" y="772"/>
 	</e:Group>
 
 

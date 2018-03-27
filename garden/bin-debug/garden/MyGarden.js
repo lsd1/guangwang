@@ -43,13 +43,13 @@ var MyGarden = (function (_super) {
         _this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointCloseTap, _this);
         _this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitExtractPointTap, _this);
         //修改头像
-        console.log(_this.change_avatar);
         _this.change_avatar.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangeAvatarTap, _this);
         //this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.onCutAreaBegin, _this);
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_MOVE, _this.onCutAreaMove, _this);
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END, _this.onCutAreaEnd, _this);
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, _this.onCutAreaEnd, _this);
+        _this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCutCommitTap, _this);
         //顶部果园用户头像、昵称信息
         var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
         var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
@@ -242,18 +242,39 @@ var MyGarden = (function (_super) {
     MyGarden.prototype.onCutAreaMove = function (e) {
         var stepX = e.localX - this.startX;
         var stepY = e.localY - this.startY;
-        console.log(stepX);
-        console.log(stepY);
-        this.cut_area.x += stepX;
-        this.cut_area.y += stepY;
+        var minX = this.origin_image.x;
+        var maxX = this.origin_image.width + this.origin_image.x - this.cut_area.width;
+        var minY = this.origin_image.y;
+        var maxY = this.origin_image.height + this.origin_image.y - this.cut_area.height;
+        var nowX = this.cut_area.x + stepX;
+        var nowY = this.cut_area.y + stepY;
+        if (nowX > maxX) {
+            nowX = maxX;
+        }
+        if (nowX < minX) {
+            nowX = minX;
+        }
+        if (nowY > maxY) {
+            nowY = maxY;
+        }
+        if (nowY < minY) {
+            nowY = minY;
+        }
+        this.cut_area.x = nowX;
+        this.cut_area.y = nowY;
         this.startX = e.localX;
         this.startY = e.localY;
     };
     MyGarden.prototype.onCutAreaEnd = function (e) {
-        // this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onCutAreaBegin,this);
-        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCutAreaMove,this);
-        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);
-        // this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);
+        console.log(1);
+        var rt = new egret.RenderTexture;
+        rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width, this.cut_area.height), 1);
+        this.new_image.texture = rt;
+    };
+    MyGarden.prototype.onCutCommitTap = function (e) {
+        var rt = new egret.RenderTexture;
+        rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width, this.cut_area.height), 1);
+        this.new_image.texture = rt;
     };
     return MyGarden;
 }(eui.Component));

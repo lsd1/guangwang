@@ -144,6 +144,10 @@ class MyGarden extends eui.Component{
 	private origin_image:eui.Image;
 	private startX:any;
 	private startY:any;
+	//确认裁剪
+	private cut_commit:eui.Button;
+	//裁剪后图片
+	private new_image:eui.Image;
 
 	public constructor() {
 		super();
@@ -185,15 +189,13 @@ class MyGarden extends eui.Component{
 		this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
 
 		//修改头像
-		console.log(this.change_avatar);
 		this.change_avatar.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangeAvatarTap, this);
 		//this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onCutAreaBegin, this);
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCutAreaMove,this);
-		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);
-		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);
-
-	
+		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);		
+		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);		
+		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
 
 		//顶部果园用户头像、昵称信息
 
@@ -419,19 +421,42 @@ class MyGarden extends eui.Component{
 
 		let stepX:number = e.localX-this.startX;
 		let stepY:number = e.localY-this.startY;
-		console.log(stepX);
-		console.log(stepY);
-		this.cut_area.x += stepX;
-		this.cut_area.y += stepY;
+		let minX = this.origin_image.x;
+		let maxX = this.origin_image.width + this.origin_image.x - this.cut_area.width;
+		let minY = this.origin_image.y;
+		let maxY = this.origin_image.height + this.origin_image.y - this.cut_area.height;
+		let nowX = this.cut_area.x + stepX;
+		let nowY = this.cut_area.y + stepY;
+		if(nowX > maxX){
+			nowX = maxX;
+		}
+		if(nowX < minX){
+			nowX = minX
+		}
+		if(nowY > maxY){
+			nowY = maxY;
+		}
+		if(nowY < minY){
+			nowY = minY
+		}
+
+		this.cut_area.x = nowX;
+		this.cut_area.y = nowY;
 		this.startX = e.localX;
 		this.startY = e.localY;
 	}
 
 	private onCutAreaEnd(e:egret.TouchEvent){
-		// this.cut_area.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onCutAreaBegin,this);
-		// this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCutAreaMove,this);
-		// this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);
-		// this.cut_area.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);
+		console.log(1);
+		var rt:egret.RenderTexture = new egret.RenderTexture;
+		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width,this.cut_area.height), 1 );
+		this.new_image.texture = rt;
+	}
+
+	private onCutCommitTap(e:egret.TouchEvent){
+		var rt:egret.RenderTexture = new egret.RenderTexture;
+		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width,this.cut_area.height), 1 );
+		this.new_image.texture = rt;
 	}
 
 }
