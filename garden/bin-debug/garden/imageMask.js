@@ -16,4 +16,4 @@ var imageCircleMask = (function (_super) {
     return imageCircleMask;
 }(eui.Component));
 __reflect(imageCircleMask.prototype, "imageCircleMask");
-//# sourceMappingURL=ImageMask.js.map
+//# sourceMappingURL=imageMask.js.map

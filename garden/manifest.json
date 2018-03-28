@@ -7,24 +7,26 @@
 		"libs/modules/tween/tween.js",
 		"libs/modules/game/game.js",
 		"libs/modules/promise/promise.js",
-		"libs/modules/h5uploader/h5uploader.js"
+		"libs/modules/h5uploader/h5uploader.js",
+		"libs/modules/md5/md5.js"
 	],
 	"game": [
-		"bin-debug/LoadingUI.js",
-		"bin-debug/garden/HttReqParam.js",
+		"bin-debug/garden/HttpReq.js",
+		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
-		"bin-debug/garden/AvatarList.js",
+		"bin-debug/garden/ActionParams.js",
+		"bin-debug/garden/avatarList.js",
 		"bin-debug/garden/Common.js",
-		"bin-debug/garden/HttpReq.js",
-		"bin-debug/AssetAdapter.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/garden/HttRspJson.js",
-		"bin-debug/garden/ImageMask.js",
-		"bin-debug/garden/Index.js",
+		"bin-debug/garden/imageMask.js",
+		"bin-debug/garden/index.js",
 		"bin-debug/garden/InteractionList.js",
 		"bin-debug/garden/MyGarden.js",
 		"bin-debug/garden/NewsList.js",
-		"bin-debug/garden/OthersGarden.js"
+		"bin-debug/garden/OthersGarden.js",
+		"bin-debug/garden/Params.js"
 	]
 }

@@ -59,6 +59,48 @@ var Common = (function () {
         image.source = source;
         return image;
     };
+    //设置cookie
+    Common.prototype.setCookie = function (cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + encodeURI(cvalue) + "; " + expires;
+    };
+    //读取cookie
+    Common.prototype.getCookie = function (name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return decodeURI(arr[2]);
+        else
+            return null;
+    };
+    //清空cookie
+    Common.prototype.delCookie = function (name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var val = this.getCookie(name);
+        if (val != null) {
+            document.cookie = name + "=" + val + ";expires=" + exp.toISOString();
+        }
+    };
+    //获取N位随机数
+    Common.prototype.getRndNum = function (n) {
+        var rnd = "";
+        n = n ? n : 1;
+        for (var i = 0; i < n; i++) {
+            rnd += Math.floor(Math.random() * 10);
+        }
+        return rnd;
+    };
+    //把objB对象属性合并到objA，相同属性以objB为准。
+    Common.prototype.mergeObj = function (objA, objB) {
+        for (var key in objA) {
+            if (objB.hasOwnProperty(key) === true) {
+                objA[key] = objB[key];
+            }
+        }
+        return objA;
+    };
     Common.share = null;
     return Common;
 }());
