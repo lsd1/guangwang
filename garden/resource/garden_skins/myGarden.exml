@@ -9,14 +9,12 @@
 		<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 		<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
 	</e:Group>
-
-
-	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0" locked="true">
+	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
 		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
 	</e:Group>
-	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0" locked="true" visible="false">
+	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4" locked="true"/>
 		<e:Rect width="580" height="544" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0" locked="true"/>
 		<e:Rect width="544" height="418" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2" locked="true"/>
@@ -55,7 +53,7 @@
 		</e:Group>
 	</e:Group>
 		
-	<e:Group id="panel_use_musk" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
+	<e:Group id="panel_use_musk" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
 		<e:Rect width="580" height="450" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
 		<e:Rect width="544" height="334" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
@@ -67,13 +65,33 @@
 			</e:skinName>
 		</e:Button>
 		<e:Image source="text_props_use01_png" y="414" horizontalCenter="0"/>
-		<e:Rect id="commit_use_musk" width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" verticalCenter="78" horizontalCenter="0"/>
-		<e:Label text="确定" y="730.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0"/>
 		<e:Label text="　　在施用肥料24小时后，可以结出果实20颗，是否确定使用？" y="502" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" horizontalCenter="0" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20"/>
+		<e:Group id="commit_use_musk" width="330" height="100" x="210" y="695">
+			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
+		</e:Group>
+	</e:Group>
+
+	<e:Group id="panel_active_musk" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="580" height="450" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
+		<e:Rect width="544" height="334" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
+		<e:Button id="active_musk_close" label="" x="594" y="420" width="45" height="45">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image source="text_props_use01_png" y="414" horizontalCenter="0"/>
+		<e:Label text="　　在施用肥料24小时后，可以结出果实20颗，是否确定使用？" y="502" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" horizontalCenter="0" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20"/>
+		<e:Group id="commit_active_musk" width="330" height="100" x="210" y="695">
+			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
+		</e:Group>
 	</e:Group>
 
 	<e:Group id="panel_garden_interactive" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
-
 		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
 		<e:Image y="224" horizontalCenter="0" anchorOffsetY="0" height="46" source="text_dynamic_png"/>
 		<e:Button id="garden_interactive_close" label="" x="678" y="224" width="45" height="45" anchorOffsetY="0">
@@ -89,7 +107,6 @@
 	</e:Group>
 
 	<e:Group id="panel_garden_news" width="750" height="1334" x="0" y="0" anchorOffsetY="0" locked="true" visible="false">
-
 		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
 		<e:Image y="224" horizontalCenter="0" source="text_interaction_png" anchorOffsetY="0" height="46"/>
 		<e:Button id="garden_news_close" label="" x="678" y="224" width="45" height="45" anchorOffsetY="0">
@@ -104,8 +121,7 @@
 		</e:Scroller>
 	</e:Group>
 
-	<e:Group id="panel_garden_manger" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
-
+	<e:Group id="panel_garden_manger" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
 		<e:Rect width="750" height="1204" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
 		<e:Rect width="702" height="210" y="207" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="15" horizontalCenter="0"/>
 		<e:Rect width="702" height="502" y="726" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
@@ -127,7 +143,6 @@
 			</e:Skin>
 		</e:skinName>
 		</e:Button>
-
 		<e:Label text="账户昵称：" x="70" y="302" backgroundColor="0x000000" textColor="0x673c13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Group id="extract_point" width="158" height="56" x="536" y="616" anchorOffsetY="0">
 			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xffa600"/>
@@ -146,7 +161,7 @@
 			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xFFA600"/>
 			<e:Label text="修改头像" fontFamily="Microsoft YaHei" size="23" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
-		<e:Image id="my_avatar" x="70" y="433" anchorOffsetX="0" anchorOffsetY="0" source="othersgarden_icon_water_png"/>
+		<e:Image id="my_avatar" x="48" y="427" anchorOffsetX="0" anchorOffsetY="0" source="othersgarden_icon_water_png" width="150" height="150"/>
 	</e:Group>
 
 	<e:Group id="panel_change_pass_word" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
@@ -161,7 +176,6 @@
 			</e:skinName>
 		</e:Button>
 		<e:Image y="414" horizontalCenter="0" source="text_password_png"/>
-
 		<e:Label text="为了您的账户安全,请输入旧密码验证:" y="526" anchorOffsetX="0" width="510" anchorOffsetY="0" height="64" horizontalCenter="0" textColor="0x7c3c03" size="25" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" textAlign="center"/>
 		<e:Rect width="424" height="86" y="612" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
 		<e:EditableText id="old_pass_word" width="394" height="62" y="626" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="8" text="请输入旧账户密码" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei"/>
@@ -214,20 +228,23 @@
 			<e:Label text="确认" y="36.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="142"/>
 		</e:Group>
 	</e:Group>
+
 	<e:Group id="cut_image" width="750" height="1334" x="0" y="0" visible="false">
 		<e:Rect width="750" height="1334" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x000000" fillAlpha="1"/>
-		<e:Image id="origin_image" x="0" y="0"/>
-		<e:Rect id="cut_area" width="750" height="750" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.2" fillColor="0xffffff" x="0" y="0"/>
-		<e:Button id="cut_commit" label="确认裁剪" x="544" y="1274" width="200" height="60" enabled="true">
+		<e:Group id="cut_area_group">
+			<e:Image id="origin_image" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0"/>
+			<e:Rect id="cut_area" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.2" fillColor="0xffffff" scaleX="1" scaleY="1" strokeAlpha="1" strokeColor="0xff0000" strokeWeight="2"/>
+		</e:Group>
+		<e:Group id="new_area_group" x="0" y="0">
+			<e:Image id="new_image" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0"/>
+		</e:Group>
+		<e:Button id="cut_commit" label="确认裁剪" width="200" height="60" enabled="true" bottom="0" right="0">
 			<e:skinName>
-				<e:Skin states="up,down,disabled">
+			<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="garden_data_bg_png" source.down="garden_data_bg_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
+			</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Image id="new_image" x="0" y="772"/>
 	</e:Group>
-
-
 </e:Skin>

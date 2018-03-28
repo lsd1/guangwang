@@ -53,7 +53,7 @@ class MyGarden extends eui.Component{
 	private group_protection:eui.Group;
 
 	//确认使用肥料按钮
-	private commit_use_musk:eui.Rect;
+	private commit_use_musk:eui.Group;
 	//施用肥料弹框按钮
 	private panel_use_musk:eui.Button;
 	//关闭施用肥料按钮
@@ -62,7 +62,7 @@ class MyGarden extends eui.Component{
 	//激活肥料弹框
 	private panel_active_musk:eui.Group;
 	//确认激活肥料按钮
-	private commit_active_musk:eui.Rect;
+	private commit_active_musk:eui.Group;
 	//关闭激活肥料按钮
 	private active_musk_close:eui.Button;
 
@@ -140,6 +140,10 @@ class MyGarden extends eui.Component{
 	private cut_image:eui.Group;
 	//裁剪区域
 	private cut_area:eui.Rect;
+	//裁剪区上半部分
+	private cut_area_group:eui.Group;
+	//裁剪区下半部分
+	private new_area_group:eui.Group;
 	//原始图片
 	private origin_image:eui.Image;
 	private startX:any;
@@ -387,14 +391,43 @@ class MyGarden extends eui.Component{
 	}
 
 	private onChangeAvatarTap(e:egret.TouchEvent){
-		console.log('select');
 		selectImage(this.selImg, this);
 	}
 
 	private selImg(a:any,b:any,c:any){
 		a.origin_image.source = b;
-		a.cut_image.visible = true;
-		
+		//裁剪区域范围，舞台上半部分
+		a.cut_area_group.width = a.stage.stageWidth;
+		a.cut_area_group.height = a.stage.stageHeight / 2;
+
+		//新图片的呈现区域范围，舞台下半部分
+		a.new_area_group.y =  a.stage.stageHeight / 2;
+		a.new_area_group.width = a.stage.stageWidth;
+		a.new_area_group.height = a.stage.stageHeight / 2;
+
+		a.origin_image.addEventListener(egret.Event.COMPLETE, ()=>{
+
+			//舞台和原始图片的宽高比
+			var stage_aspect_ratio = a.stage.stageWidth / a.stage.stageHeight;
+			var image_aspect_ratio = a.origin_image.width / a.origin_image.height;
+
+			//计算原始图片宽高比和舞台宽高比，然后等比缩放图片到舞台。
+			if(image_aspect_ratio > stage_aspect_ratio){
+				a.origin_image.width = a.stage.stageWidth / 2;
+				a.origin_image.height = a.stage.stageWidth / image_aspect_ratio / 2;
+			}else{
+				a.origin_image.height = a.stage.stageHeight / 2;
+				a.origin_image.width = a.stage.stageHeight * image_aspect_ratio / 2;
+			}
+
+			//裁剪区域为正方形。
+			a.cut_area.width = a.cut_area.height = a.origin_image.height < a.origin_image.width ? a.origin_image.height : a.origin_image.width
+			a.cut_area.x = a.stage.stageWidth / 2 - (a.cut_area.width / 2);
+			a.cut_area.y = a.stage.stageHeight / 4 - (a.cut_area.height / 2);
+			a.setImageTexture(a.new_image);			
+			a.cut_image.visible = true;
+		}, a);
+
 		// var mydisp:any = b;
 		// var rt: egret.RenderTexture = new egret.RenderTexture();   //建立缓冲画布
 		// rt.drawToTexture(mydisp, new egret.Rectangle(0, 0, mydisp.width, mydisp.height));  //将对象画到缓冲画布上（可指定画对象的某个区域，或画整个）
@@ -412,13 +445,11 @@ class MyGarden extends eui.Component{
 	}
 
 	private onCutAreaBegin(e:egret.TouchEvent){
-		this.cut_area.width = this.cut_area.height = this.origin_image.height < this.origin_image.width ? this.origin_image.height : this.origin_image.width
 		this.startX = e.localX;
 		this.startY = e.localY;
 	}
 
 	private onCutAreaMove(e:egret.TouchEvent){
-
 		let stepX:number = e.localX-this.startX;
 		let stepY:number = e.localY-this.startY;
 		let minX = this.origin_image.x;
@@ -427,18 +458,12 @@ class MyGarden extends eui.Component{
 		let maxY = this.origin_image.height + this.origin_image.y - this.cut_area.height;
 		let nowX = this.cut_area.x + stepX;
 		let nowY = this.cut_area.y + stepY;
-		if(nowX > maxX){
-			nowX = maxX;
-		}
-		if(nowX < minX){
-			nowX = minX
-		}
-		if(nowY > maxY){
-			nowY = maxY;
-		}
-		if(nowY < minY){
-			nowY = minY
-		}
+
+		//移动裁剪区域时，裁剪区域不能超过图片区域。
+		nowX = nowX > maxX ? maxX : nowX;
+		nowX = nowX < minX ? minX : nowX;
+		nowY = nowY > maxY ? maxY : nowY;
+		nowY = nowY < minY ? minY : nowY;
 
 		this.cut_area.x = nowX;
 		this.cut_area.y = nowY;
@@ -447,16 +472,19 @@ class MyGarden extends eui.Component{
 	}
 
 	private onCutAreaEnd(e:egret.TouchEvent){
-		console.log(1);
-		var rt:egret.RenderTexture = new egret.RenderTexture;
-		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width,this.cut_area.height), 1 );
-		this.new_image.texture = rt;
+		//停止移动时把裁剪区域更新到新图片区域
+		this.setImageTexture(this.new_image);
 	}
 
 	private onCutCommitTap(e:egret.TouchEvent){
-		var rt:egret.RenderTexture = new egret.RenderTexture;
-		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width,this.cut_area.height), 1 );
-		this.new_image.texture = rt;
+		//确定裁剪之后，更新头像。
+		this.setImageTexture(this.my_avatar);
+		this.cut_image.visible = false;
 	}
 
+	private setImageTexture(image:eui.Image){
+		var rt:egret.RenderTexture = new egret.RenderTexture;
+		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y , this.cut_area.width,this.cut_area.height), 1 );
+		image.texture = rt;
+	}
 }

@@ -16,8 +16,8 @@ class index extends eui.Component {
 	private group_log_reg:eui.Group;
 	private panel_log:eui.Group;
 	private panel_reg:eui.Group;
-	private commit_log:eui.Rect;
-	private commit_reg:eui.Rect;
+	private commit_log:eui.Group;
+	private commit_reg:eui.Group;
 	private log_user_name:eui.EditableText;
 	private log_pass_word:eui.EditableText;
 	private reg_user_name:eui.EditableText;

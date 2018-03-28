@@ -214,12 +214,37 @@ var MyGarden = (function (_super) {
         console.log(EventTarget);
     };
     MyGarden.prototype.onChangeAvatarTap = function (e) {
-        console.log('select');
         selectImage(this.selImg, this);
     };
     MyGarden.prototype.selImg = function (a, b, c) {
         a.origin_image.source = b;
-        a.cut_image.visible = true;
+        //裁剪区域范围，舞台上半部分
+        a.cut_area_group.width = a.stage.stageWidth;
+        a.cut_area_group.height = a.stage.stageHeight / 2;
+        //新图片的呈现区域范围，舞台下半部分
+        a.new_area_group.y = a.stage.stageHeight / 2;
+        a.new_area_group.width = a.stage.stageWidth;
+        a.new_area_group.height = a.stage.stageHeight / 2;
+        a.origin_image.addEventListener(egret.Event.COMPLETE, function () {
+            //舞台和原始图片的宽高比
+            var stage_aspect_ratio = a.stage.stageWidth / a.stage.stageHeight;
+            var image_aspect_ratio = a.origin_image.width / a.origin_image.height;
+            //计算原始图片宽高比和舞台宽高比，然后等比缩放图片到舞台。
+            if (image_aspect_ratio > stage_aspect_ratio) {
+                a.origin_image.width = a.stage.stageWidth / 2;
+                a.origin_image.height = a.stage.stageWidth / image_aspect_ratio / 2;
+            }
+            else {
+                a.origin_image.height = a.stage.stageHeight / 2;
+                a.origin_image.width = a.stage.stageHeight * image_aspect_ratio / 2;
+            }
+            //裁剪区域为正方形。
+            a.cut_area.width = a.cut_area.height = a.origin_image.height < a.origin_image.width ? a.origin_image.height : a.origin_image.width;
+            a.cut_area.x = a.stage.stageWidth / 2 - (a.cut_area.width / 2);
+            a.cut_area.y = a.stage.stageHeight / 4 - (a.cut_area.height / 2);
+            a.setImageTexture(a.new_image);
+            a.cut_image.visible = true;
+        }, a);
         // var mydisp:any = b;
         // var rt: egret.RenderTexture = new egret.RenderTexture();   //建立缓冲画布
         // rt.drawToTexture(mydisp, new egret.Rectangle(0, 0, mydisp.width, mydisp.height));  //将对象画到缓冲画布上（可指定画对象的某个区域，或画整个）
@@ -235,7 +260,6 @@ var MyGarden = (function (_super) {
         // saveImage.src = imageBase64;  //使用上面生成的base64字符串开始加载图片
     };
     MyGarden.prototype.onCutAreaBegin = function (e) {
-        this.cut_area.width = this.cut_area.height = this.origin_image.height < this.origin_image.width ? this.origin_image.height : this.origin_image.width;
         this.startX = e.localX;
         this.startY = e.localY;
     };
@@ -248,33 +272,29 @@ var MyGarden = (function (_super) {
         var maxY = this.origin_image.height + this.origin_image.y - this.cut_area.height;
         var nowX = this.cut_area.x + stepX;
         var nowY = this.cut_area.y + stepY;
-        if (nowX > maxX) {
-            nowX = maxX;
-        }
-        if (nowX < minX) {
-            nowX = minX;
-        }
-        if (nowY > maxY) {
-            nowY = maxY;
-        }
-        if (nowY < minY) {
-            nowY = minY;
-        }
+        //移动裁剪区域时，裁剪区域不能超过图片区域。
+        nowX = nowX > maxX ? maxX : nowX;
+        nowX = nowX < minX ? minX : nowX;
+        nowY = nowY > maxY ? maxY : nowY;
+        nowY = nowY < minY ? minY : nowY;
         this.cut_area.x = nowX;
         this.cut_area.y = nowY;
         this.startX = e.localX;
         this.startY = e.localY;
     };
     MyGarden.prototype.onCutAreaEnd = function (e) {
-        console.log(1);
-        var rt = new egret.RenderTexture;
-        rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width, this.cut_area.height), 1);
-        this.new_image.texture = rt;
+        //停止移动时把裁剪区域更新到新图片区域
+        this.setImageTexture(this.new_image);
     };
     MyGarden.prototype.onCutCommitTap = function (e) {
+        //确定裁剪之后，更新头像。
+        this.setImageTexture(this.my_avatar);
+        this.cut_image.visible = false;
+    };
+    MyGarden.prototype.setImageTexture = function (image) {
         var rt = new egret.RenderTexture;
-        rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x, this.cut_area.y, this.cut_area.width, this.cut_area.height), 1);
-        this.new_image.texture = rt;
+        rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y, this.cut_area.width, this.cut_area.height), 1);
+        image.texture = rt;
     };
     return MyGarden;
 }(eui.Component));

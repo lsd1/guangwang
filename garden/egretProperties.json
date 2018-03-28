@@ -36,6 +36,10 @@
 		{
 			"name": "h5uploader",
 			"path": "../h5uploader"
+		},
+		{
+			"name": "md5",
+			"path": "../md5"
 		}
 	]
 }
