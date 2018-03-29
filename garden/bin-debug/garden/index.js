@@ -69,13 +69,13 @@ var index = (function (_super) {
     };
     //登录
     index.prototype.onCommitLogClick = function () {
-        //this.parent.addChild(MyGarden.Shared())
-        //this.parent.removeChild(this);
         var httpReq = new HttpReq();
-        var url = 'v1.0/register';
+        var url = 'v1.0/login';
         var username = this.log_user_name.text;
-        var password = Md5(this.log_pass_word.text);
-        httpReq.GET({
+        var password = hex_md5(this.log_pass_word.text);
+        console.log(username);
+        console.log(password);
+        httpReq.POST({
             url: url,
             data: { username: username, password: password },
             success: function (res) {
@@ -109,6 +109,23 @@ var index = (function (_super) {
         console.log(this.reg_user_name.text);
         console.log(this.reg_pass_word.text);
         console.log(this.reg_rep_pass_word.text);
+        var httpReq = new HttpReq();
+        var url = 'v1.0/register';
+        var username = this.reg_user_name.text;
+        var password = hex_md5(this.reg_pass_word.text);
+        httpReq.POST({
+            url: url,
+            data: { username: username, password: password },
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (error) {
+                console.log(error);
+            },
+            progress: function () {
+                console.log('等待！');
+            }
+        });
     };
     index.prototype.onInputFocusOut = function (e) {
         e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
@@ -127,4 +144,4 @@ var index = (function (_super) {
     return index;
 }(eui.Component));
 __reflect(index.prototype, "index");
-//# sourceMappingURL=Index.js.map
+//# sourceMappingURL=index.js.map

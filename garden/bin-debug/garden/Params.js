@@ -10,11 +10,11 @@ var Params = (function () {
         this.clientType = clientType ? clientType : 0;
         this.network = network ? network : 0;
         this.version = version ? version : '';
-        this.token = this.common.getCookie('token');
+        this.token = this.common.getCookie('token') ? this.common.getCookie('token') : '';
         this.timestamp = new Date().getTime();
         this.uuid = this.timestamp.toString() + this.common.getRndNum(5).toString();
         this.params = "clientType=" + this.clientType + "&lang=" + this.lang + "&network=" + this.network + "&timestamp=" + this.timestamp + "&username=" + this.username + "&version=" + this.version;
-        this.sign = Md5(this.params + "token=" + this.token + "uuid=" + this.uuid + "action=" + this.action);
+        this.sign = hex_md5(this.params + "token=" + this.token + "uuid=" + this.uuid + "action=" + this.action);
     }
     Params.prototype.getParamsByJson = function () {
         return {

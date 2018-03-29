@@ -1,0 +1,1 @@
+declare function hex_md5(s:string): string;

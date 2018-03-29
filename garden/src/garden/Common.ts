@@ -92,10 +92,8 @@ class Common {
 
 	//把objB对象属性合并到objA，相同属性以objB为准。
 	public mergeObj(objA:{},objB:{}){
-		for(var key in objA){
-			if(objB.hasOwnProperty(key) === true){
-				objA[key] = objB[key];
-			}
+		for(var key in objB){
+			objA[key] = objB[key];
 		}
 		return objA;
 	}

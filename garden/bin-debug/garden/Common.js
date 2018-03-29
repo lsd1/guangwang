@@ -94,10 +94,8 @@ var Common = (function () {
     };
     //把objB对象属性合并到objA，相同属性以objB为准。
     Common.prototype.mergeObj = function (objA, objB) {
-        for (var key in objA) {
-            if (objB.hasOwnProperty(key) === true) {
-                objA[key] = objB[key];
-            }
+        for (var key in objB) {
+            objA[key] = objB[key];
         }
         return objA;
     };

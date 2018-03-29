@@ -89,13 +89,15 @@ class index extends eui.Component {
 
 	//登录
 	private onCommitLogClick(){
-		//this.parent.addChild(MyGarden.Shared())
-		//this.parent.removeChild(this);
 		var httpReq = new HttpReq();
-		var url:string = 'v1.0/register';
+		var url:string = 'v1.0/login';
+
 		var username = this.log_user_name.text;
 		var password = hex_md5(this.log_pass_word.text);
-		httpReq.GET({
+		
+		console.log(username);
+		console.log(password);
+		httpReq.POST({
 			url:url,
 			data:{username:username,password:password},
 			success:(res)=>{
@@ -130,6 +132,29 @@ class index extends eui.Component {
 		console.log(this.reg_user_name.text);
 		console.log(this.reg_pass_word.text);
 		console.log(this.reg_rep_pass_word.text);
+
+		var httpReq = new HttpReq();
+		var url:string = 'v1.0/register';
+
+		var username = this.reg_user_name.text;
+		var password = hex_md5(this.reg_pass_word.text);
+
+		httpReq.POST({
+			url:url,
+			data:{username:username,password:password},
+			success:(res)=>{
+				console.log(res);
+			},
+			error:(error)=>{
+				console.log(error);
+			},
+			progress:()=>{
+				console.log('等待！');
+			}
+		});
+
+
+
 	}
 
 	private onInputFocusOut(e:egret.FocusEvent){

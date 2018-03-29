@@ -27,10 +27,12 @@ class HttpReq extends egret.HttpRequest{
 
 	public GET(actionParams:ActionParams){
 		this.action = actionParams.url;
+		this.username =  actionParams.username;
 		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
 		this.url = this.api_domain + actionParams.url;
+		console.log(actionParams);
 		//合并参数
-		this.data = this.common.mergeObj(actionParams.data, this.params.getParamsByJson());
+		this.data = this.common.mergeObj(this.params.getParamsByJson(), actionParams.data);
 		this.success = actionParams.success;
 		this.error = actionParams.error;
 		this.progress = actionParams.progress;
@@ -52,10 +54,15 @@ class HttpReq extends egret.HttpRequest{
 		request.addEventListener(egret.ProgressEvent.PROGRESS,this.onGetProgress,this);
 	}
 
-	public POST(actionParams:ActionParams){
-		this.url = this.api_domain + actionParams.url;		
+	public POST(actionParams:any){
+		this.url = this.api_domain + actionParams.url;	
+		this.username = actionParams.data.username;
+		this.action = actionParams.url;		
+		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);		
 		//合并参数并将JSON对象转化为字符串。
-		this.data = JSON.stringify(this.common.mergeObj(actionParams.data, this.params.getParamsByJson()));
+		console.log(actionParams.data);
+		this.data = JSON.stringify(this.common.mergeObj(this.params.getParamsByJson(), actionParams.data));
+		console.log(this.data);
 		this.success = actionParams.success;
 		this.error = actionParams.error;
 		this.progress = actionParams.progress;
@@ -63,7 +70,8 @@ class HttpReq extends egret.HttpRequest{
 		request.responseType = egret.HttpResponseType.TEXT;
 		request.open(this.url,egret.HttpMethod.POST);
 		//设置响应头
-		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		request.setRequestHeader("Content-Type", "application/json");
+		//request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		//发送参数
 		request.send(this.data);
 		request.addEventListener(egret.Event.COMPLETE,this.onGetComplete,this);
