@@ -1,10 +1,18 @@
 class HttpReq extends egret.HttpRequest{
 	private common:Common = Common.Shared();
+	private api_domain:string = "http://api.test.com/";
 	private url:string;
 	private data;
 	private success:any;
 	private error:any;
 	private progress:any;
+
+	private lang:number;
+	private username:string;
+	private action:string;
+	private clientType:number;
+	private network:number;
+	private version:string;
 	private params:Params;
 
 	public constructor(username?:string, action?:string, lang?:number, clientType?:number, network?:number, version?:string) {
@@ -15,12 +23,12 @@ class HttpReq extends egret.HttpRequest{
 		var clientType = clientType ? clientType : 0;
 		var network = network ? network : 0;		
 		var version = version ? version : '';	
-		this.params = new Params(username, action, lang, clientType, network, version);
 	}
 
 	public GET(actionParams:ActionParams){
-		this.url = actionParams.url;
-
+		this.action = actionParams.url;
+		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
+		this.url = this.api_domain + actionParams.url;
 		//合并参数
 		this.data = this.common.mergeObj(actionParams.data, this.params.getParamsByJson());
 		this.success = actionParams.success;
@@ -28,9 +36,10 @@ class HttpReq extends egret.HttpRequest{
 		this.progress = actionParams.progress;
 
 		//拼接参数到url
-		this.url += Object.keys(this.data).map((key)=>{
+		this.url += '?'+ Object.keys(this.data).map((key)=>{
 			return encodeURIComponent(key) + "=" + encodeURIComponent(this.data[key]);
 		}).join("&");
+		console.log(this.url);
 		var request = new egret.HttpRequest();
 		request.responseType = egret.HttpResponseType.TEXT;
 		request.open(this.url, egret.HttpMethod.GET);
@@ -44,7 +53,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public POST(actionParams:ActionParams){
-		this.url = actionParams.url;
+		this.url = this.api_domain + actionParams.url;		
 		//合并参数并将JSON对象转化为字符串。
 		this.data = JSON.stringify(this.common.mergeObj(actionParams.data, this.params.getParamsByJson()));
 		this.success = actionParams.success;

@@ -93,4 +93,4 @@ var AvatarList = (function (_super) {
     return AvatarList;
 }(eui.Component));
 __reflect(AvatarList.prototype, "AvatarList");
-//# sourceMappingURL=avatarList.js.map
+//# sourceMappingURL=AvatarList.js.map

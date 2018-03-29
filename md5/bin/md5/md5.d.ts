@@ -1,1 +1,1 @@
-declare function Md5(sharedMemory:string): string;
+declare function hex_md5(s:string): string;

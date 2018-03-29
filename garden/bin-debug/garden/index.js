@@ -20,12 +20,18 @@ var index = (function (_super) {
         _this.log_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onLogCloseClick, _this);
         _this.reg_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onRegCloseClick, _this);
         //登录帐号、密码
-        // this.log_user_name.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
-        // this.log_pass_word.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
+        _this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
         //注册帐号、密码、确认密码
-        // this.reg_user_name.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
-        // this.reg_pass_word.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
-        // this.reg_rep_pass_word.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
+        _this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        //登录帐号、密码
+        _this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        _this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        //注册帐号、密码、确认密码
+        _this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        _this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
         //提交登录、注册
         _this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitLogClick, _this);
         _this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitRegClick, _this);
@@ -63,10 +69,25 @@ var index = (function (_super) {
     };
     //登录
     index.prototype.onCommitLogClick = function () {
-        this.parent.addChild(MyGarden.Shared());
-        this.parent.removeChild(this);
-        //var httpReq = new HttpReq();
-        //var url:string = 'http://httpbin.org/post';
+        //this.parent.addChild(MyGarden.Shared())
+        //this.parent.removeChild(this);
+        var httpReq = new HttpReq();
+        var url = 'v1.0/register';
+        var username = this.log_user_name.text;
+        var password = Md5(this.log_pass_word.text);
+        httpReq.GET({
+            url: url,
+            data: { username: username, password: password },
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (error) {
+                console.log(error);
+            },
+            progress: function () {
+                console.log('等待！');
+            }
+        });
         // httpReq.POST({
         // 	url:url,
         // 	data:{username:this.log_user_name.text,password:this.log_pass_word.text},
@@ -89,7 +110,21 @@ var index = (function (_super) {
         console.log(this.reg_pass_word.text);
         console.log(this.reg_rep_pass_word.text);
     };
+    index.prototype.onInputFocusOut = function (e) {
+        e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+        if (e.currentTarget.text == '') {
+            e.currentTarget.text = this.placeHolder;
+        }
+    };
+    index.prototype.onInputFocusIn = function (e) {
+        var patt = new RegExp('请输入');
+        if (patt.test(e.currentTarget.text)) {
+            this.placeHolder = e.currentTarget.text;
+        }
+        e.currentTarget.text = '';
+        e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+    };
     return index;
 }(eui.Component));
 __reflect(index.prototype, "index");
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=Index.js.map

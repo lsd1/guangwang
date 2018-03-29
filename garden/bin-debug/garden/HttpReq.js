@@ -13,27 +13,30 @@ var HttpReq = (function (_super) {
     function HttpReq(username, action, lang, clientType, network, version) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
+        _this.api_domain = "http://api.test.com/";
         var lang = lang ? lang : 0;
         var username = username ? username : _this.common.getCookie('username');
         var action = action ? action : '';
         var clientType = clientType ? clientType : 0;
         var network = network ? network : 0;
         var version = version ? version : '';
-        _this.params = new Params(username, action, lang, clientType, network, version);
         return _this;
     }
     HttpReq.prototype.GET = function (actionParams) {
         var _this = this;
-        this.url = actionParams.url;
+        this.action = actionParams.url;
+        this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
+        this.url = this.api_domain + actionParams.url;
         //合并参数
         this.data = this.common.mergeObj(actionParams.data, this.params.getParamsByJson());
         this.success = actionParams.success;
         this.error = actionParams.error;
         this.progress = actionParams.progress;
         //拼接参数到url
-        this.url += Object.keys(this.data).map(function (key) {
+        this.url += '?' + Object.keys(this.data).map(function (key) {
             return encodeURIComponent(key) + "=" + encodeURIComponent(_this.data[key]);
         }).join("&");
+        console.log(this.url);
         var request = new egret.HttpRequest();
         request.responseType = egret.HttpResponseType.TEXT;
         request.open(this.url, egret.HttpMethod.GET);
@@ -46,7 +49,7 @@ var HttpReq = (function (_super) {
         request.addEventListener(egret.ProgressEvent.PROGRESS, this.onGetProgress, this);
     };
     HttpReq.prototype.POST = function (actionParams) {
-        this.url = actionParams.url;
+        this.url = this.api_domain + actionParams.url;
         //合并参数并将JSON对象转化为字符串。
         this.data = JSON.stringify(this.common.mergeObj(actionParams.data, this.params.getParamsByJson()));
         this.success = actionParams.success;
