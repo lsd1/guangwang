@@ -23,7 +23,7 @@
 	</e:Group>
 	<e:Group id="group_log_reg" width="750" height="1334" x="0" y="0" visible="false">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.5" scaleX="1" scaleY="1"/>
-		<e:Group id="panel_log" width="642" height="798" y="304.5" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" locked="true" visible="false">
+		<e:Group id="panel_log" width="642" height="798" y="304.5" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" visible="false">
 			<e:Rect width="572" height="632" y="83" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="1" fillColor="0xffd778" ellipseWidth="100" ellipseHeight="100" x="35" scaleX="1" scaleY="1"/>
 			<e:Button id="log_close" label="" x="533.5" y="111" anchorOffsetY="0" height="45" anchorOffsetX="0" width="45" scaleX="1" scaleY="1">
 				<e:skinName>
@@ -74,4 +74,17 @@
 			</e:Group>
 		</e:Group>
 	</e:Group>
+
+	<e:Group id="group_tips" width="750" height="1334" x="0" y="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="478" height="444" y="329.5" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" horizontalCenter="0"/>
+		<e:Rect width="432" height="250" verticalCenter="-141" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0"/>
+		<e:Label text="温馨提示" y="354" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" horizontalCenter="0" size="35"/>
+		<e:Label id="tips_text" text="" x="204" y="442" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10"/>
+		<e:Group id="tips_close" width="222" height="82" y="672" horizontalCenter="0">
+			<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="知道了" fontFamily="Microsoft YaHei" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
+	</e:Group>
+
 </e:Skin>

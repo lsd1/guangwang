@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="myGarden" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="group_top" width="750" height="1086" x="0" y="0">
+	<e:Group id="group_top" width="750" height="1086" x="0" y="0" locked="true">
 		<e:Image source="mygarden_png" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Group width="200" height="200" x="208" y="424"/>
 	</e:Group>
 	<e:Group width="750" height="100" x="-2" y="984" locked="true">
 		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
@@ -9,7 +10,7 @@
 		<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 		<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
 	</e:Group>
-	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
+	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0" locked="true">
 		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
@@ -246,5 +247,16 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
+	</e:Group>
+	<e:Group id="group_tips" width="750" height="1334" x="0" y="0" visible="false">
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="478" height="444" y="329.5" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" horizontalCenter="0"/>
+		<e:Rect width="432" height="250" verticalCenter="-141" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0"/>
+		<e:Label text="温馨提示" y="354" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" horizontalCenter="0" size="35"/>
+		<e:Label id="tips_text" text="" x="204" y="442" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10"/>
+		<e:Group id="tips_close" width="222" height="82" y="672" horizontalCenter="0">
+			<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="知道了" fontFamily="Microsoft YaHei" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
 	</e:Group>
 </e:Skin>

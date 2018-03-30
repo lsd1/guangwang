@@ -28,7 +28,7 @@ class Common {
 	}
 
 	//创建圆形遮罩图片
-	public createCircleMask(width:number, height:number, source:string, x?:number, y?:number){
+	public createCircleMask(width:number, height:number, source:any, x?:number, y?:number){
 		var group:eui.Group = new eui.Group();
 		x =  x > 0 ? x : 0;
 		y =  y > 0 ? y : 0;
@@ -43,7 +43,7 @@ class Common {
 	}
 
 	//创建一张图片
-	public createImage(width:number, height:number, source:string, x?:number, y?:number){
+	public createImage(width:number, height:number, source:any, x?:number, y?:number){
 		var image:eui.Image = new eui.Image();
 		image.width = width;
 		image.height = height;

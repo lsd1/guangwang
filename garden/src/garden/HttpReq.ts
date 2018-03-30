@@ -25,7 +25,7 @@ class HttpReq extends egret.HttpRequest{
 		var version = version ? version : '';	
 	}
 
-	public GET(actionParams:ActionParams){
+	public GET(actionParams:any){
 		this.action = actionParams.url;
 		this.username =  actionParams.username;
 		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
@@ -43,6 +43,7 @@ class HttpReq extends egret.HttpRequest{
 		}).join("&");
 		console.log(this.url);
 		var request = new egret.HttpRequest();
+		request.withCredentials = true;
 		request.responseType = egret.HttpResponseType.TEXT;
 		request.open(this.url, egret.HttpMethod.GET);
 		//设置响应头
@@ -67,6 +68,7 @@ class HttpReq extends egret.HttpRequest{
 		this.error = actionParams.error;
 		this.progress = actionParams.progress;
 		var request = new egret.HttpRequest();
+		request.withCredentials = true;		
 		request.responseType = egret.HttpResponseType.TEXT;
 		request.open(this.url,egret.HttpMethod.POST);
 		//设置响应头

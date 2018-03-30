@@ -12,6 +12,7 @@ var index = (function (_super) {
     __extends(index, _super);
     function index() {
         var _this = _super.call(this) || this;
+        _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/Index.exml";
         //打开登录、注册弹框
         _this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBtnLogClick, _this);
@@ -35,6 +36,8 @@ var index = (function (_super) {
         //提交登录、注册
         _this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitLogClick, _this);
         _this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitRegClick, _this);
+        //关闭提示弹框
+        _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { _this.group_tips.visible = false; }, _this);
         return _this;
     }
     index.Shared = function () {
@@ -69,17 +72,29 @@ var index = (function (_super) {
     };
     //登录
     index.prototype.onCommitLogClick = function () {
+        var _this = this;
         var httpReq = new HttpReq();
         var url = 'v1.0/login';
         var username = this.log_user_name.text;
         var password = hex_md5(this.log_pass_word.text);
-        console.log(username);
-        console.log(password);
         httpReq.POST({
             url: url,
             data: { username: username, password: password },
             success: function (res) {
-                console.log(res);
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    _this.common.setCookie('username', res.data.userInfo.username, 30);
+                    _this.common.setCookie('uid', res.data.userInfo.id, 30);
+                    //this.common.setCookie('avatar', res.data.userInfo.avatar, 30);
+                    _this.common.setCookie('avatar', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1373411777,3992091759&fm=27&gp=0.jpg', 30);
+                    _this.common.setCookie('token', res.token, 30);
+                    _this.parent.addChild(MyGarden.Shared());
+                    _this.parent.removeChild(_this);
+                }
+                else {
+                    _this.tips_text.text = res.msg;
+                    _this.group_tips.visible = true;
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -105,10 +120,16 @@ var index = (function (_super) {
         // });
     };
     //注册
-    index.prototype.onCommitRegClick = function () {
+    index.prototype.onCommitRegClick = function (e) {
+        var _this = this;
         console.log(this.reg_user_name.text);
         console.log(this.reg_pass_word.text);
         console.log(this.reg_rep_pass_word.text);
+        if (this.reg_pass_word.text != this.reg_rep_pass_word.text) {
+            this.tips_text.text = '两次输入密码不一致';
+            this.group_tips.visible = true;
+            return false;
+        }
         var httpReq = new HttpReq();
         var url = 'v1.0/register';
         var username = this.reg_user_name.text;
@@ -117,6 +138,23 @@ var index = (function (_super) {
             url: url,
             data: { username: username, password: password },
             success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    _this.tips_text.text = '恭喜你注册成功！';
+                    _this.group_tips.visible = true;
+                    setTimeout(function () {
+                        _this.group_tips.visible = false;
+                        _this.panel_reg.visible = false;
+                        _this.panel_log.visible = true;
+                    }, 2000);
+                }
+                else {
+                    _this.tips_text.text = res.msg;
+                    _this.group_tips.visible = true;
+                    setTimeout(function () {
+                        _this.group_tips.visible = false;
+                    }, 2000);
+                }
                 console.log(res);
             },
             error: function (error) {
@@ -134,11 +172,11 @@ var index = (function (_super) {
         }
     };
     index.prototype.onInputFocusIn = function (e) {
-        var patt = new RegExp('请输入');
+        var patt = new RegExp('(请输入|请设置|请充值|请确认)');
         if (patt.test(e.currentTarget.text)) {
             this.placeHolder = e.currentTarget.text;
+            e.currentTarget.text = '';
         }
-        e.currentTarget.text = '';
         e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
     };
     return index;

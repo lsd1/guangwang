@@ -14,6 +14,8 @@ var MyGarden = (function (_super) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/MyGarden.exml";
+        //关闭提示弹框
+        _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { _this.group_tips.visible = false; }, _this);
         //道具列表
         _this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsTap, _this);
         _this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsCloseTap, _this);
@@ -51,7 +53,7 @@ var MyGarden = (function (_super) {
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, _this.onCutAreaEnd, _this);
         _this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCutCommitTap, _this);
         //顶部果园用户头像、昵称信息
-        var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
+        var topAvatar = _this.common.createCircleMask(100, 100, _this.common.getCookie('avatar'), 20, 20);
         var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
         var label = new eui.Label();
         label.width = 380;
@@ -59,7 +61,7 @@ var MyGarden = (function (_super) {
         label.textAlign = "center";
         label.verticalAlign = "middle";
         label.size = 30;
-        label.text = "Tammy";
+        label.text = _this.common.getCookie('username');
         label.textColor = 0x000000;
         _this.group_top.addChild(topAvatarBg);
         _this.group_top.addChild(topAvatar);

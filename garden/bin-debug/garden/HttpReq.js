@@ -40,6 +40,7 @@ var HttpReq = (function (_super) {
         }).join("&");
         console.log(this.url);
         var request = new egret.HttpRequest();
+        request.withCredentials = true;
         request.responseType = egret.HttpResponseType.TEXT;
         request.open(this.url, egret.HttpMethod.GET);
         //设置响应头
@@ -63,6 +64,7 @@ var HttpReq = (function (_super) {
         this.error = actionParams.error;
         this.progress = actionParams.progress;
         var request = new egret.HttpRequest();
+        request.withCredentials = true;
         request.responseType = egret.HttpResponseType.TEXT;
         request.open(this.url, egret.HttpMethod.POST);
         //设置响应头

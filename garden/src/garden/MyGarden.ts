@@ -152,10 +152,19 @@ class MyGarden extends eui.Component{
 	private cut_commit:eui.Button;
 	//裁剪后图片
 	private new_image:eui.Image;
+	//提示弹框
+	private group_tips:eui.Group;
+	//关闭提示弹框
+	private tips_close:eui.Group;
+	//提示内容
+	private tips_text:eui.Label;
 
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
+
+		//关闭提示弹框
+		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
 		
 		//道具列表
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
@@ -202,8 +211,8 @@ class MyGarden extends eui.Component{
 		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
 
 		//顶部果园用户头像、昵称信息
-
-		var topAvatar = this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
+		
+		var topAvatar = this.common.createCircleMask(100, 100, this.common.getCookie('avatar'), 20, 20);
 		var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
 		var label:eui.Label = new eui.Label();
 		label.width = 380;
@@ -211,7 +220,7 @@ class MyGarden extends eui.Component{
 		label.textAlign = "center";
 		label.verticalAlign = "middle";
 		label.size = 30;
-		label.text = "Tammy";
+		label.text = this.common.getCookie('username');
 		label.textColor = 0x000000;
 		this.group_top.addChild(topAvatarBg);		
 		this.group_top.addChild(topAvatar);

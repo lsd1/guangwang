@@ -8,7 +8,7 @@ class index extends eui.Component {
 		}
 		return this.shared;
 	}
-
+	private common:Common = Common.Shared();
 	private btn_log:eui.Button;
 	private btn_reg:eui.Button;
 	private log_close:eui.Button;
@@ -24,6 +24,13 @@ class index extends eui.Component {
 	private reg_pass_word:eui.EditableText;
 	private reg_rep_pass_word:eui.EditableText;
 	private placeHolder:string;
+	//提示弹框
+	private group_tips:eui.Group;
+	//关闭提示弹框
+	private tips_close:eui.Group;
+	//提示内容
+	private tips_text:eui.Label;
+
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/Index.exml";
@@ -57,6 +64,9 @@ class index extends eui.Component {
 		//提交登录、注册
 		this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
 		this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
+
+		//关闭提示弹框
+		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
 	}
 
 	//弹出登录框 
@@ -91,17 +101,25 @@ class index extends eui.Component {
 	private onCommitLogClick(){
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/login';
-
 		var username = this.log_user_name.text;
 		var password = hex_md5(this.log_pass_word.text);
-		
-		console.log(username);
-		console.log(password);
 		httpReq.POST({
 			url:url,
 			data:{username:username,password:password},
 			success:(res)=>{
-				console.log(res);
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.common.setCookie('username', res.data.userInfo.username, 30);
+					this.common.setCookie('uid', res.data.userInfo.id, 30);
+					//this.common.setCookie('avatar', res.data.userInfo.avatar, 30);
+					this.common.setCookie('avatar', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1373411777,3992091759&fm=27&gp=0.jpg', 30);
+					this.common.setCookie('token', res.token, 30);
+					this.parent.addChild(MyGarden.Shared())
+					this.parent.removeChild(this);
+				}else{
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
+				}
 			},
 			error:(error)=>{
 				console.log(error);
@@ -128,10 +146,16 @@ class index extends eui.Component {
 	}
 
 	//注册
-	private onCommitRegClick(){
+	private onCommitRegClick(e:egret.TouchEvent){
 		console.log(this.reg_user_name.text);
 		console.log(this.reg_pass_word.text);
 		console.log(this.reg_rep_pass_word.text);
+
+		if(this.reg_pass_word.text != this.reg_rep_pass_word.text){
+			this.tips_text.text = '两次输入密码不一致';
+			this.group_tips.visible = true;
+			return false;
+		}
 
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/register';
@@ -143,6 +167,22 @@ class index extends eui.Component {
 			url:url,
 			data:{username:username,password:password},
 			success:(res)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.tips_text.text = '恭喜你注册成功！';
+					this.group_tips.visible = true;
+					setTimeout(()=>{
+						this.group_tips.visible = false;
+						this.panel_reg.visible = false;
+						this.panel_log.visible = true;
+					} ,2000)
+				} else {
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
+					setTimeout(()=>{
+						this.group_tips.visible = false;
+					} ,2000)
+				}
 				console.log(res);
 			},
 			error:(error)=>{
@@ -165,11 +205,12 @@ class index extends eui.Component {
 	}
 
 	private onInputFocusIn(e:egret.FocusEvent){
-		var patt = new RegExp('请输入');
+		var patt = new RegExp('(请输入|请设置|请充值|请确认)');
 		if(patt.test(e.currentTarget.text)){
 			this.placeHolder = e.currentTarget.text;
+			e.currentTarget.text = '';	
 		}
-		e.currentTarget.text = '';
+
 		e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
 	}
 }

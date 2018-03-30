@@ -98,7 +98,13 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
+        var common = Common.Shared();
         this.addChild(index.Shared());
+        // if(common.getCookie('token') && common.getCookie('username')){
+		// 	this.addChild(MyGarden.Shared());
+		// }else{
+        //     this.addChild(index.Shared());
+        // }
     }
 
 }
