@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-03-29 18:36:26
+Date: 2018-03-30 17:25:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `gd_config` (
   `content` varchar(255) NOT NULL COMMENT '值',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
 
 -- ----------------------------
 -- Records of gd_config
@@ -46,6 +46,8 @@ INSERT INTO `gd_config` VALUES ('12', 'PackageStealMaxNum', '激活用户偷取�
 INSERT INTO `gd_config` VALUES ('13', 'FruitMaxStealRate', '果子可偷取最大比例', '0.1');
 INSERT INTO `gd_config` VALUES ('14', 'NoWater2Dry', '多长时间不浇水会导致干旱 单位(秒)', '172800');
 INSERT INTO `gd_config` VALUES ('15', 'ActiveWaterMinTime', '被浇水最小间隔时间 单位(秒)', '14400');
+INSERT INTO `gd_config` VALUES ('16', 'NightStart', '夜晚开始时间', '18');
+INSERT INTO `gd_config` VALUES ('17', 'NightEnd', '夜晚结束时间', '6');
 
 -- ----------------------------
 -- Table structure for gd_tool_cn
@@ -111,7 +113,7 @@ CREATE TABLE `gd_user` (
   `datetime` datetime NOT NULL COMMENT '注册时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_username` (`username`) USING BTREE COMMENT '唯一用户名'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
 
 -- ----------------------------
 -- Records of gd_user
@@ -120,6 +122,9 @@ INSERT INTO `gd_user` VALUES ('1', 'h280338871', '09c6537cedf5b85d6b2c5d84d120d6
 INSERT INTO `gd_user` VALUES ('2', 'h28033887', '09c6537cedf5b85d6b2c5d84d120d6a5', 'RbeQDF', '2018-03-26 17:29:32');
 INSERT INTO `gd_user` VALUES ('3', 'h2803388', '09c6537cedf5b85d6b2c5d84d120d6a5', 'RbeQDF', '2018-03-26 17:29:32');
 INSERT INTO `gd_user` VALUES ('4', 'h280338', '09c6537cedf5b85d6b2c5d84d120d6a5', 'RbeQDF', '2018-03-26 17:29:32');
+INSERT INTO `gd_user` VALUES ('5', '1111111111', '879dc76a2c87eb025c3917d395abd211', '4j16Uu', '2018-03-30 10:09:48');
+INSERT INTO `gd_user` VALUES ('6', 'lsdlsd111', '4820ff8638fc57327175a4175dacdfda', 'I04vip', '2018-03-30 10:16:05');
+INSERT INTO `gd_user` VALUES ('7', 'qqqqqqqq', 'bcc0b333f84f86c27a2744497b6da7ee', 'JGQ1qR', '2018-03-30 11:44:12');
 
 -- ----------------------------
 -- Table structure for gd_user_attach
@@ -157,6 +162,26 @@ CREATE TABLE `gd_user_count` (
 -- Records of gd_user_count
 -- ----------------------------
 INSERT INTO `gd_user_count` VALUES ('1', '1', '0');
+
+-- ----------------------------
+-- Table structure for gd_user_log
+-- ----------------------------
+DROP TABLE IF EXISTS `gd_user_log`;
+CREATE TABLE `gd_user_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` int(10) unsigned NOT NULL COMMENT '关联 uesr 表中的id',
+  `joinUserId` int(10) unsigned NOT NULL COMMENT '关联 uesr 表中的id',
+  `content` varchar(50) NOT NULL COMMENT '描述',
+  `datetime` datetime NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户日志信息表';
+
+-- ----------------------------
+-- Records of gd_user_log
+-- ----------------------------
+INSERT INTO `gd_user_log` VALUES ('1', '4', '1', 'user.user_water_tree', '2018-03-30 15:39:11');
+INSERT INTO `gd_user_log` VALUES ('2', '4', '1', 'user.user_water_tree', '2018-03-30 16:04:26');
 
 -- ----------------------------
 -- Table structure for gd_user_profile
@@ -253,12 +278,13 @@ CREATE TABLE `gd_user_token` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_userId` (`userId`) USING BTREE,
   UNIQUE KEY `idx_token` (`token`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户 token 信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户 token 信息表';
 
 -- ----------------------------
 -- Records of gd_user_token
 -- ----------------------------
 INSERT INTO `gd_user_token` VALUES ('1', '1', '1.0.0', '0', '4', '0', '4120c568e2242a0b2b5c3e9dc1061ae5', '2018-03-26 18:25:41');
+INSERT INTO `gd_user_token` VALUES ('2', '6', '', '0', '0', '0', '59ae1f3af484cdb017cdb75150dcbe88', '2018-03-30 16:32:35');
 
 -- ----------------------------
 -- Table structure for gd_user_tool_count
@@ -296,7 +322,7 @@ CREATE TABLE `gd_user_tree` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_userId` (`userId`),
   KEY `idx_matureTime` (`matureTime`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户果树信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户果树信息表';
 
 -- ----------------------------
 -- Records of gd_user_tree
@@ -304,4 +330,28 @@ CREATE TABLE `gd_user_tree` (
 INSERT INTO `gd_user_tree` VALUES ('1', '1', '2018-03-29 18:24:54', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO `gd_user_tree` VALUES ('2', '2', '2018-03-29 18:24:51', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
 INSERT INTO `gd_user_tree` VALUES ('3', '3', '2018-03-29 18:24:51', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO `gd_user_tree` VALUES ('4', '4', '0000-00-00 00:00:00', '2018-03-30 16:04:26', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO `gd_user_tree` VALUES ('5', '5', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO `gd_user_tree` VALUES ('6', '6', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
+INSERT INTO `gd_user_tree` VALUES ('7', '7', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0');
+
+-- ----------------------------
+-- Table structure for gd_user_tree_fruit
+-- ----------------------------
+DROP TABLE IF EXISTS `gd_user_tree_fruit`;
+CREATE TABLE `gd_user_tree_fruit` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` int(10) unsigned NOT NULL COMMENT '关联 uesr 表中的id',
+  `fertTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '果树施肥时间',
+  `isMature` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已成熟 1 已成熟 0 未成熟',
+  `matureTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '果树成熟时间',
+  `matureFruit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '果树成熟果子',
+  PRIMARY KEY (`id`),
+  KEY `idx_userId_isMature` (`userId`,`isMature`) USING BTREE,
+  KEY `idx_isMature_matureTime` (`isMature`,`matureTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='果树果子信息表';
+
+-- ----------------------------
+-- Records of gd_user_tree_fruit
+-- ----------------------------
 SET FOREIGN_KEY_CHECKS=1;
