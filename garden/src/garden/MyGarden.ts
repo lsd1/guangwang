@@ -26,6 +26,21 @@ class MyGarden extends eui.Component{
 	//防偷数量
 	private protextion_num:eui.Label;
 
+	//肥料名称
+	private muck_text:eui.Label;
+
+	//驱虫剂名称
+	private insecticide_text:eui.Label;
+
+	//药剂名称
+	private medicine_text:eui.Label;
+
+	//催熟剂名称
+	private ripening_text:eui.Label;
+
+	//防偷名称
+	private protextion_text:eui.Label;
+
 	//尾部互动信息列表
 	private group_avatar:eui.Group;
 	
@@ -53,18 +68,18 @@ class MyGarden extends eui.Component{
 	private group_protection:eui.Group;
 
 	//确认使用肥料按钮
-	private commit_use_musk:eui.Group;
+	private commit_use_muck:eui.Group;
 	//施用肥料弹框按钮
-	private panel_use_musk:eui.Button;
+	private panel_use_muck:eui.Button;
 	//关闭施用肥料按钮
-	private use_musk_close:eui.Button;
+	private use_muck_close:eui.Button;
 
 	//激活肥料弹框
-	private panel_active_musk:eui.Group;
+	private panel_active_muck:eui.Group;
 	//确认激活肥料按钮
-	private commit_active_musk:eui.Group;
+	private commit_active_muck:eui.Group;
 	//关闭激活肥料按钮
-	private active_musk_close:eui.Button;
+	private active_muck_close:eui.Button;
 
 	//果园互动弹框
 	private panel_garden_interactive:eui.Group;
@@ -173,9 +188,9 @@ class MyGarden extends eui.Component{
 		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
 
 		//施用肥料
-		this.use_musk_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuskCloseTap, this);
+		this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
 		this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
-		this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuskTap, this);
+		this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
 
 		//道具使用
 		this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
@@ -252,7 +267,62 @@ class MyGarden extends eui.Component{
 
 	//点击道具
 	private onPropsTap(e:egret.TouchEvent){
-		this.panel_props.visible = true;
+		var httpReq = new HttpReq();
+		var url:string = 'v1.0/tool/show';
+		console.log('show tool');
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					var toolList = res.data.toolList;
+					for(var i in toolList){
+						let tool = toolList[i];
+						switch(tool.toolId){
+							case 1:
+							this.muck_num.text = tool.count;
+							this.muck_text.text = tool.toolname;
+
+							break;
+							case 2:
+							this.insecticide_num.text = tool.count;
+							this.insecticide_text.text = tool.toolname;
+							
+							break;
+							case 3:
+							this.ripening_num.text = tool.count;
+							this.ripening_text.text = tool.toolname;
+							
+							break;
+							case 4:
+							this.protextion_num.text = tool.count;
+							this.protextion_text.text = tool.toolname;
+							
+							break;							
+							case 5:
+							this.medicine_num.text = tool.count;
+							this.medicine_text.text = tool.toolname;
+							
+							break;
+
+						}
+					}
+
+					this.panel_props.visible = true;
+				}else{
+					this.tips_text = res.msg;
+					this.group_tips.visible = true;
+				}
+
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 	}
 
 	//点击互动
@@ -302,17 +372,17 @@ class MyGarden extends eui.Component{
 
 	//点击肥料图标
 	private onGroupMuckTap(e:egret.TouchEvent){
-		this.panel_use_musk.visible = true;
+		this.panel_use_muck.visible = true;
 	}
 
 	//关闭施用肥料弹框
-	private onUseMuskCloseTap(e:egret.TouchEvent){
-		this.panel_use_musk.visible = false;
+	private onUseMuckCloseTap(e:egret.TouchEvent){
+		this.panel_use_muck.visible = false;
 	}
 
 	//确认施用肥料
-	private onCommitUseMuskTap(e:egret.TouchEvent){
-		this.panel_use_musk.visible = false;
+	private onCommitUseMuckTap(e:egret.TouchEvent){
+		this.panel_use_muck.visible = false;
 		this.muck_num.text = 'X887';
 		console.log("施用肥料");
 	}

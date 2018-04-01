@@ -166,12 +166,13 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         var common = Common.Shared();
-        this.addChild(index.Shared());
-        // if(common.getCookie('token') && common.getCookie('username')){
-        // 	this.addChild(MyGarden.Shared());
-        // }else{
-        //     this.addChild(index.Shared());
-        // }
+        //this.addChild(index.Shared());
+        if (common.getCookie('token') && common.getCookie('username')) {
+            this.addChild(MyGarden.Shared());
+        }
+        else {
+            this.addChild(index.Shared());
+        }
     };
     return Main;
 }(eui.UILayer));

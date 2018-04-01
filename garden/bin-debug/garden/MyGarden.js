@@ -21,9 +21,9 @@ var MyGarden = (function (_super) {
         _this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsCloseTap, _this);
         _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
         //施用肥料
-        _this.use_musk_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onUseMuskCloseTap, _this);
+        _this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onUseMuckCloseTap, _this);
         _this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMuckTap, _this);
-        _this.commit_use_musk.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuskTap, _this);
+        _this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuckTap, _this);
         //道具使用
         _this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupInsecticideTap, _this);
         _this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMedicineTap, _this);
@@ -97,7 +97,56 @@ var MyGarden = (function (_super) {
     };
     //点击道具
     MyGarden.prototype.onPropsTap = function (e) {
-        this.panel_props.visible = true;
+        var _this = this;
+        var httpReq = new HttpReq();
+        var url = 'v1.0/tool/show';
+        console.log('show tool');
+        httpReq.GET({
+            url: url,
+            data: {},
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    var toolList = res.data.toolList;
+                    for (var i in toolList) {
+                        var tool = toolList[i];
+                        switch (tool.toolId) {
+                            case 1:
+                                _this.muck_num.text = tool.count;
+                                _this.muck_text.text = tool.toolname;
+                                break;
+                            case 2:
+                                _this.insecticide_num.text = tool.count;
+                                _this.insecticide_text.text = tool.toolname;
+                                break;
+                            case 3:
+                                _this.ripening_num.text = tool.count;
+                                _this.ripening_text.text = tool.toolname;
+                                break;
+                            case 4:
+                                _this.protextion_num.text = tool.count;
+                                _this.protextion_text.text = tool.toolname;
+                                break;
+                            case 5:
+                                _this.medicine_num.text = tool.count;
+                                _this.medicine_text.text = tool.toolname;
+                                break;
+                        }
+                    }
+                    _this.panel_props.visible = true;
+                }
+                else {
+                    _this.tips_text = res.msg;
+                    _this.group_tips.visible = true;
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
     };
     //点击互动
     MyGarden.prototype.onInteractionTap = function (e) {
@@ -141,15 +190,15 @@ var MyGarden = (function (_super) {
     };
     //点击肥料图标
     MyGarden.prototype.onGroupMuckTap = function (e) {
-        this.panel_use_musk.visible = true;
+        this.panel_use_muck.visible = true;
     };
     //关闭施用肥料弹框
-    MyGarden.prototype.onUseMuskCloseTap = function (e) {
-        this.panel_use_musk.visible = false;
+    MyGarden.prototype.onUseMuckCloseTap = function (e) {
+        this.panel_use_muck.visible = false;
     };
     //确认施用肥料
-    MyGarden.prototype.onCommitUseMuskTap = function (e) {
-        this.panel_use_musk.visible = false;
+    MyGarden.prototype.onCommitUseMuckTap = function (e) {
+        this.panel_use_muck.visible = false;
         this.muck_num.text = 'X887';
         console.log("施用肥料");
     };
