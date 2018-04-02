@@ -14,6 +14,25 @@ var MyGarden = (function (_super) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/MyGarden.exml";
+        //获取果园信息
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/show_garden';
+        httpReq.GET({
+            url: url,
+            data: {},
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    console.log(res);
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
         //关闭提示弹框
         _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { _this.group_tips.visible = false; }, _this);
         //道具列表
@@ -31,6 +50,7 @@ var MyGarden = (function (_super) {
         // this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
         // this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
         // this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
+        _this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitToolTipsTap, _this);
         //我的果园
         _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
         _this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenInteractiveCloseTap, _this);
@@ -55,6 +75,8 @@ var MyGarden = (function (_super) {
         _this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, _this.onCutAreaEnd, _this);
         _this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCutCommitTap, _this);
         //顶部果园用户头像、昵称信息
+        _this.my_avatar.source = _this.common.getCookie('avatar');
+        _this.user_name.text = _this.common.getCookie('username');
         var topAvatar = _this.common.createCircleMask(100, 100, _this.common.getCookie('avatar'), 20, 20);
         var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
         var label = new eui.Label();
@@ -102,7 +124,6 @@ var MyGarden = (function (_super) {
         var _this = this;
         var httpReq = new HttpReq();
         var url = 'v1.0/tool/show';
-        console.log('show tool');
         httpReq.GET({
             url: url,
             data: {},
@@ -160,34 +181,72 @@ var MyGarden = (function (_super) {
     };
     //点击互动
     MyGarden.prototype.onInteractionTap = function (e) {
-        for (var i = 0; i < 17; i++) {
-            var interaction = new InteractionList(i);
-            if (i == 0) {
-                var list = interaction.createList('mygarden_png', '曲终人散', [1, 2], [], 0, i * 122);
+        var _this = this;
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/pick_list';
+        httpReq.GET({
+            url: url,
+            data: {},
+            success: function (res) {
+                var res = JSON.parse(res);
+                console.log(res);
+                if (res.code == 0) {
+                    var pickList = res.data.pickList;
+                    console.log(pickList);
+                    for (var i = 0; i < pickList.length; i++) {
+                        var interaction = new InteractionList(pickList[i].id, pickList[i].username);
+                        var typeArr = [];
+                        if (pickList[i].countdown > 0) {
+                            typeArr.push(3);
+                            var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [pickList[i].countdown], 0, i * 122);
+                        }
+                        else {
+                            pickList[i].isMature > 0 ? typeArr.push(2) : null;
+                            pickList[i].isWater > 0 ? typeArr.push(1) : null;
+                            //var list = interaction.createList(pickList[i].avatar, pickList[i].username, typeArr, [], 0, i * 122);
+                            var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [], 0, i * 122);
+                        }
+                        _this.group_interactive_list.addChild(list);
+                    }
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
             }
-            else if (i < 2 && i > 0) {
-                var list = interaction.createList('mygarden_png', '曲终人散', [i], [], 0, i * 122);
-            }
-            else {
-                var list = interaction.createList('mygarden_png', '曲终人散', [3], [i * 120], 0, i * 122);
-            }
-            this.group_interactive_list.addChild(list);
-        }
+        });
         this.panel_garden_interactive.visible = true;
     };
     //点击管理
     MyGarden.prototype.onManageTap = function (e) {
-        for (var i = 0; i < 40; i++) {
-            var point_log = new eui.Label();
-            point_log.text = '提取积分-800 2018-03-05 14:00';
-            point_log.textColor = 0x673C13;
-            point_log.size = 25;
-            point_log.y = 40 * i;
-            point_log.x = 50;
-            point_log.width = 650;
-            point_log.height = 80;
-            this.group_point_list.addChild(point_log);
-        }
+        var _this = this;
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/score_logs';
+        httpReq.GET({
+            url: url,
+            data: {},
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    var scoreLogList = res.data.scoreLogList;
+                    for (var i = 0; i < scoreLogList.length; i++) {
+                        var score_log = new ScoreList(10, 10 + 40 * i);
+                        score_log.score_desc.text = scoreLogList[i].content;
+                        score_log.score_change.text = scoreLogList[i].changeScore;
+                        score_log.score_date.text = scoreLogList[i].datetime;
+                        _this.group_point_list.addChild(score_log);
+                    }
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
         this.panel_garden_manger.visible = true;
     };
     //关闭我的果园弹框
@@ -197,32 +256,6 @@ var MyGarden = (function (_super) {
     //关闭道具弹框
     MyGarden.prototype.onPropsCloseTap = function (e) {
         this.panel_props.visible = false;
-    };
-    //点击肥料图标
-    MyGarden.prototype.onGroupMuckTap = function (e) {
-        this.panel_use_muck.visible = true;
-    };
-    //关闭施用肥料弹框
-    MyGarden.prototype.onUseMuckCloseTap = function (e) {
-        this.panel_use_muck.visible = false;
-    };
-    //确认施用肥料
-    MyGarden.prototype.onCommitUseMuckTap = function (e) {
-        this.panel_use_muck.visible = false;
-        this.muck_num.text = 'X887';
-        console.log("施用肥料");
-    };
-    //点击驱虫图标
-    MyGarden.prototype.onGroupInsecticideTap = function (e) {
-    };
-    //点击药剂图标
-    MyGarden.prototype.onGroupMedicineTap = function (e) {
-    };
-    //点击催熟图标
-    MyGarden.prototype.onGroupRipeningTap = function (e) {
-    };
-    //点击保护图标
-    MyGarden.prototype.onGroupProtectionTap = function (e) {
     };
     //关闭果园互动
     MyGarden.prototype.onGardenInteractiveCloseTap = function (e) {
@@ -268,7 +301,26 @@ var MyGarden = (function (_super) {
     MyGarden.prototype.onExtractPointCloseTap = function (e) {
         this.panel_extract_point.visible = false;
     };
+    //提取积分
     MyGarden.prototype.onCommitExtractPointTap = function (e) {
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/draw_score';
+        var score = 1;
+        httpReq.POST({
+            url: url,
+            data: { score: score },
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
         this.panel_extract_point.visible = false;
     };
     MyGarden.prototype.onInputFocus = function (e) {
@@ -361,18 +413,9 @@ var MyGarden = (function (_super) {
         this.panel_tool_tips.visible = false;
     };
     MyGarden.prototype.onCommitToolTipsTap = function (e) {
-        switch (this.useToolId) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-        }
+        console.log(this.useToolGroup.tool_num.text);
+        console.log(this.useToolGroup.tool_id);
+        this.useToolGroup.tool_num.text--;
         this.panel_tool_tips.visible = false;
     };
     return MyGarden;

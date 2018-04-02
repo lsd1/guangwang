@@ -28,7 +28,6 @@ var HttpReq = (function (_super) {
         this.username = actionParams.username;
         this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
         this.url = this.api_domain + actionParams.url;
-        console.log(actionParams);
         //合并参数
         this.data = this.common.mergeObj(this.params.getParamsByJson(), actionParams.data);
         this.success = actionParams.success;
@@ -38,7 +37,6 @@ var HttpReq = (function (_super) {
         this.url += '?' + Object.keys(this.data).map(function (key) {
             return encodeURIComponent(key) + "=" + encodeURIComponent(_this.data[key]);
         }).join("&");
-        console.log(this.url);
         var request = new egret.HttpRequest();
         request.withCredentials = true;
         request.responseType = egret.HttpResponseType.TEXT;
@@ -57,9 +55,7 @@ var HttpReq = (function (_super) {
         this.action = actionParams.url;
         this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
         //合并参数并将JSON对象转化为字符串。
-        console.log(actionParams.data);
         this.data = JSON.stringify(this.common.mergeObj(this.params.getParamsByJson(), actionParams.data));
-        console.log(this.data);
         this.success = actionParams.success;
         this.error = actionParams.error;
         this.progress = actionParams.progress;

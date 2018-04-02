@@ -63,7 +63,6 @@ class Main extends eui.UILayer {
         const result = await RES.getResAsync("description_json")
         await platform.login();
         const userInfo = await platform.getUserInfo();
-        console.log(userInfo);
 
     }
 

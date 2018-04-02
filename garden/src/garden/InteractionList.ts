@@ -1,9 +1,10 @@
 class InteractionList {
 	private common = Common.Shared();
-	private userInfo:any;
-	public constructor(userInfo) {
-		this.userInfo = userInfo;
-		console.log(this.userInfo);
+	private id:number;
+	private usernme:string;
+	public constructor(id:number, username:string) {
+		this.id = id;
+		this.usernme = username;
 	}
 
 	//生成互动列表
@@ -63,7 +64,7 @@ class InteractionList {
 	}
 
 	public onInteractionListTap(e:egret.TouchEvent){
-		MyGarden.Shared().parent.addChild(OthersGarden.Shared());
+		MyGarden.Shared().parent.addChild(new OthersGarden(this.usernme));
 		MyGarden.Shared().parent.removeChild(MyGarden.Shared());
 	}
 

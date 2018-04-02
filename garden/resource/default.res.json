@@ -1,11 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "btn_close_nor_png,btn_close_pre_png,btn_login_nor_png,btn_login_pre_png,btn_logon_nor_png,btn_logon_pre_png,interaction_take_png,interaction_water_png,mygarden_icon_interaction_png,mygarden_icon_manage_png,mygarden_icon_props_png,othersgarden_icon_back_png,othersgarden_icon_water_png,props_icon01_png,props_icon02_png,props_icon03_png,props_icon04_png,props_icon05_png,text_dynamic_png,text_integral_record_png,text_integral_png,text_interaction_png,text_login_png,text_logon_png,text_mygarden_png,text_password_png,text_props_activate01_png,text_props_activate02_png,text_props_activate03_png,text_props_activate04_png,text_props_activate05_png,text_props_use01_png,text_props_use02_png,text_props_use03_png,text_props_use04_png,text_props_use05_png,text_props_png,garden_png,mygarden_png,123_jpg",
+			"keys": "btn_close_nor_png,btn_close_pre_png,btn_login_nor_png,btn_login_pre_png,btn_logon_nor_png,btn_logon_pre_png,interaction_take_png,interaction_water_png,mygarden_icon_interaction_png,mygarden_icon_manage_png,mygarden_icon_props_png,othersgarden_icon_back_png,othersgarden_icon_water_png,props_icon01_png,props_icon02_png,props_icon03_png,props_icon04_png,props_icon05_png,text_dynamic_png,text_integral_record_png,text_integral_png,text_interaction_png,text_login_png,text_logon_png,text_mygarden_png,text_password_png,text_props_activate01_png,text_props_activate02_png,text_props_activate03_png,text_props_activate04_png,text_props_activate05_png,text_props_use01_png,text_props_use02_png,text_props_use03_png,text_props_use04_png,text_props_use05_png,text_props_png,garden_png,mygarden_png,123_jpg,jiaoshui_ske_mc_json,jiaoshui_ske_tex_png",
 			"name": "garden"
 		},
 		{
-			"keys": "garden_interaction_more_png,garden_data_bg_png",
+			"keys": "garden_interaction_more_png,garden_data_bg_png,jiaoshui_ske_tex_png,jiaoshui_ske_mc_json",
 			"name": "preload"
 		}
 	],
@@ -224,6 +224,16 @@
 			"url": "assets/garden/123.jpg",
 			"type": "image",
 			"name": "123_jpg"
+		},
+		{
+			"url": "assets/garden/jiaoshui_ske_tex.png",
+			"type": "image",
+			"name": "jiaoshui_ske_tex_png"
+		},
+		{
+			"url": "jiaoshui_ske_mc.json",
+			"type": "json",
+			"name": "jiaoshui_ske_mc_json"
 		}
 	]
 }

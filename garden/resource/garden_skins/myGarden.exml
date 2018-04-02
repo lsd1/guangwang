@@ -15,7 +15,7 @@
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
 	</e:Group>
-	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0">
+	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
 		<e:Rect width="580" height="544" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
 		<e:Rect width="544" height="418" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
@@ -29,7 +29,7 @@
 		<e:Image source="text_props_png" y="414" horizontalCenter="0"/>
 	</e:Group>
 		
-	<e:Group id="panel_use_muck" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
+	<e:Group id="panel_use_muck" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
 		<e:Rect width="580" height="450" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
 		<e:Rect width="544" height="334" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
@@ -48,7 +48,7 @@
 		</e:Group>
 	</e:Group>
 
-	<e:Group id="panel_tool_tips" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
+	<e:Group id="panel_tool_tips" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
 		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
 		<e:Rect width="580" height="450" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
 		<e:Rect width="544" height="334" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
@@ -59,12 +59,13 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Image source="text_props_use01_png" y="414" horizontalCenter="0"/>
+
 		<e:Label id="tool_tips" text="　　在施用肥料24小时后，可以结出果实20颗，是否确定使用？" y="502" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" horizontalCenter="0" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20"/>
 		<e:Group id="commit_tool_tips" width="330" height="100" x="210" y="695">
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
 			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
 		</e:Group>
+		<e:Label id="tips_title" text="" y="422" horizontalCenter="0" textColor="0x7c3c03" bold="true" fontFamily="Microsoft YaHei" size="42"/>
 	</e:Group>
 
 	<e:Group id="panel_garden_interactive" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
@@ -97,7 +98,7 @@
 		</e:Scroller>
 	</e:Group>
 
-	<e:Group id="panel_garden_manger" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false" locked="true">
+	<e:Group id="panel_garden_manger" width="750" height="1334" x="0" y="0" anchorOffsetY="0" visible="false">
 		<e:Rect width="750" height="1204" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
 		<e:Rect width="702" height="210" y="207" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="15" horizontalCenter="0"/>
 		<e:Rect width="702" height="502" y="726" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
@@ -130,7 +131,8 @@
 		</e:Group>
 		<e:Label text="积分纪录" y="672" textColor="0x673c13" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 		<e:Scroller width="700" height="487" bottom="118" horizontalCenter="0" anchorOffsetY="0">
-			<e:Group id="group_point_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="391" x="0" y="16"/>
+			<e:Group id="group_point_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="391" x="0" y="16">
+			</e:Group>
 		</e:Scroller>
 		<e:Label id="more_point_log" text="查看更多记录" y="1256" textColor="0x673c13" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 		<e:Group id="change_avatar" width="158" height="56" x="532" y="482" anchorOffsetY="0">

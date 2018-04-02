@@ -11,36 +11,6 @@ class MyGarden extends eui.Component{
 	//主界面上部分
 	private group_top:eui.Group;
 
-	//肥料数量
-	private muck_num:eui.Label;
-
-	//驱虫剂数量
-	private insecticide_num:eui.Label;
-
-	//药剂数量
-	private medicine_num:eui.Label;
-
-	//催熟剂数量
-	private ripening_num:eui.Label;
-
-	//防偷数量
-	private protextion_num:eui.Label;
-
-	//肥料名称
-	private muck_text:eui.Label;
-
-	//驱虫剂名称
-	private insecticide_text:eui.Label;
-
-	//药剂名称
-	private medicine_text:eui.Label;
-
-	//催熟剂名称
-	private ripening_text:eui.Label;
-
-	//防偷名称
-	private protextion_text:eui.Label;
-
 	//尾部互动信息列表
 	private group_avatar:eui.Group;
 	
@@ -55,35 +25,19 @@ class MyGarden extends eui.Component{
 	private panel_props:eui.Group;
 	//关闭道具弹框按钮
 	private props_close:eui.Button;
-	
-	//肥料图标
-	private group_muck:eui.Group;
-	//驱虫图标
-	private group_insecticide:eui.Group;
-	//药剂图标
-	private group_medicine:eui.Group;
-	//催熟图标
-	private group_ripening:eui.Group;
-	//防偷图标
-	private group_protection:eui.Group;
 
-	//确认使用肥料按钮
-	private commit_use_muck:eui.Group;
-	//施用肥料弹框按钮
-	private panel_use_muck:eui.Button;
-	//关闭施用肥料按钮
-	private use_muck_close:eui.Button;
-
-	//使用道具的id
-	private useToolId:number;
+	//当前点击的道具
+	public useToolGroup:any;
 	//道具使用提示弹框
-	private panel_tool_tips:eui.Group;
+	public panel_tool_tips:eui.Group;
+	//弹框tips_title
+	public tips_title:eui.Label;
 	//确认使用道具按钮
-	private commit_tool_tips:eui.Group;
+	public commit_tool_tips:eui.Group;
 	//关闭道具使用提示按钮
-	private tool_tips_close:eui.Button;
+	public tool_tips_close:eui.Button;
 	//提示内容
-	private tool_tips:eui.Label;
+	public tool_tips:eui.Label;
 
 	//果园互动弹框
 	private panel_garden_interactive:eui.Group;
@@ -181,6 +135,25 @@ class MyGarden extends eui.Component{
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
+		//获取果园信息
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/show_garden';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					console.log(res);
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 
 		//关闭提示弹框
 		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
@@ -204,6 +177,9 @@ class MyGarden extends eui.Component{
 		// this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
 		// this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
 		// this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
+
+		this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitToolTipsTap, this);
+
 
 		//我的果园
 		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
@@ -233,7 +209,8 @@ class MyGarden extends eui.Component{
 		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
 
 		//顶部果园用户头像、昵称信息
-		
+		this.my_avatar.source = this.common.getCookie('avatar');
+		this.user_name.text = this.common.getCookie('username');
 		var topAvatar = this.common.createCircleMask(100, 100, this.common.getCookie('avatar'), 20, 20);
 		var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
 		var label:eui.Label = new eui.Label();
@@ -276,7 +253,6 @@ class MyGarden extends eui.Component{
 	private onPropsTap(e:egret.TouchEvent){
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/tool/show';
-		console.log('show tool');
 		httpReq.GET({
 			url:url,
 			data:{},
@@ -339,36 +315,73 @@ class MyGarden extends eui.Component{
 
 	//点击互动
 	private onInteractionTap(e:egret.TouchEvent){
-		for(var i = 0; i < 17; i++){
-			let interaction = new InteractionList(i);
-			if(i == 0){
-				var list = interaction.createList('mygarden_png', '曲终人散', [1,2], [], 0, i * 122);
-			}else if(i < 2 && i > 0){
-				var list = interaction.createList('mygarden_png', '曲终人散', [i], [], 0, i * 122);
-			}else{
-				var list = interaction.createList('mygarden_png', '曲终人散', [3], [i*120], 0, i * 122);
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/pick_list';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				console.log(res);
+				if(res.code == 0){
+					var pickList = res.data.pickList;
+					console.log(pickList);					
+					for(var i = 0; i < pickList.length; i++){
+						let interaction = new InteractionList(pickList[i].id, pickList[i].username);
+						let typeArr = [];
+
+						if(pickList[i].countdown > 0){
+							typeArr.push(3);
+							var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [pickList[i].countdown], 0, i * 122);
+						}else{
+							pickList[i].isMature > 0 ? typeArr.push(2) : null;
+							pickList[i].isWater > 0 ? typeArr.push(1) : null;
+							//var list = interaction.createList(pickList[i].avatar, pickList[i].username, typeArr, [], 0, i * 122);
+							var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [], 0, i * 122);
+						}
+						this.group_interactive_list.addChild(list);
+					}
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
 			}
-			
-			this.group_interactive_list.addChild(list);
-		}
+		});
+
+
 		this.panel_garden_interactive.visible = true;
 	}
 
 	//点击管理
 	private onManageTap(e:egret.TouchEvent){
-
-		for(let i = 0; i < 40; i++){
-			let point_log:eui.Label = new eui.Label();
-			point_log.text = '提取积分-800 2018-03-05 14:00';
-			point_log.textColor = 0x673C13;
-			point_log.size = 25;
-			point_log.y = 40*i;
-			point_log.x = 50;
-			point_log.width = 650;
-			point_log.height = 80;
-			this.group_point_list.addChild(point_log);
-		}
-
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/score_logs';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					var scoreLogList = res.data.scoreLogList;
+					for(let i = 0; i < scoreLogList.length; i++){
+						let score_log = new ScoreList(10, 10 + 40 *i);
+						score_log.score_desc.text = scoreLogList[i].content;
+						score_log.score_change.text	= scoreLogList[i].changeScore;
+						score_log.score_date.text	= scoreLogList[i].datetime;
+						this.group_point_list.addChild(score_log);
+					}
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 		this.panel_garden_manger.visible = true;
 	}
 
@@ -380,43 +393,6 @@ class MyGarden extends eui.Component{
 	//关闭道具弹框
 	private onPropsCloseTap(e:egret.TouchEvent){
 		this.panel_props.visible = false;
-	}
-
-	//点击肥料图标
-	private onGroupMuckTap(e:egret.TouchEvent){
-		this.panel_use_muck.visible = true;
-	}
-
-	//关闭施用肥料弹框
-	private onUseMuckCloseTap(e:egret.TouchEvent){
-		this.panel_use_muck.visible = false;
-	}
-
-	//确认施用肥料
-	private onCommitUseMuckTap(e:egret.TouchEvent){
-		this.panel_use_muck.visible = false;
-		this.muck_num.text = 'X887';
-		console.log("施用肥料");
-	}
-
-	//点击驱虫图标
-	private onGroupInsecticideTap(e:egret.TouchEvent){
-
-	}
-
-	//点击药剂图标
-	private onGroupMedicineTap(e:egret.TouchEvent){
-
-	}
-
-	//点击催熟图标
-	private onGroupRipeningTap(e:egret.TouchEvent){
-
-	}
-
-	//点击保护图标
-	private onGroupProtectionTap(e:egret.TouchEvent){
-
 	}
 
 	//关闭果园互动
@@ -473,7 +449,28 @@ class MyGarden extends eui.Component{
 		this.panel_extract_point.visible = false;
 	}
 
+	//提取积分
 	private onCommitExtractPointTap(e:egret.TouchEvent){
+		
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/draw_score';
+		var score = 1;
+		httpReq.POST({
+			url:url,
+			data:{score:score},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 		this.panel_extract_point.visible = false;
 	}
 
@@ -584,18 +581,9 @@ class MyGarden extends eui.Component{
 	}
 
 	private onCommitToolTipsTap(e:egret.TouchEvent){
-		switch(this.useToolId){
-			case 1:
-			break;
-			case 2:
-			break;
-			case 3:
-			break;
-			case 4:
-			break;
-			case 5:
-			break;
-		}
+		console.log(this.useToolGroup.tool_num.text);
+		console.log(this.useToolGroup.tool_id);
+		this.useToolGroup.tool_num.text--;
 		this.panel_tool_tips.visible = false;
 	}
 }

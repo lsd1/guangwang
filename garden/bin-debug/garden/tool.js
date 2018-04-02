@@ -16,8 +16,54 @@ var tools = (function (_super) {
         _this.group_tool.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onToolGroupTap, _this);
         return _this;
     }
+    //点击使用道具
     tools.prototype.onToolGroupTap = function (e) {
-        console.log(this.tool_id + 'touch!');
+        if (parseInt(this.tool_num.text) < 1) {
+        }
+        else {
+            MyGarden.Shared().useToolGroup = this;
+            var httpReq = new HttpReq();
+            var url = 'v1.0/tool/show_tips';
+            httpReq.GET({
+                url: url,
+                data: { toolId: this.tool_id },
+                success: function (res) {
+                    var res = JSON.parse(res);
+                    if (res.code == 0) {
+                        var toolInfo = res.data.toolInfo;
+                        console.log(toolInfo);
+                        MyGarden.Shared().tool_tips.text = toolInfo.tooltips;
+                        MyGarden.Shared().tips_title.text = '使用' + toolInfo.toolname;
+                        MyGarden.Shared().panel_tool_tips.visible = true;
+                    }
+                },
+                error: function () {
+                    console.log('error');
+                },
+                progress: function () {
+                    console.log('waiting......');
+                }
+            });
+        }
+        // tool/show_tips
+        //toolId
+        // var httpReq = new HttpReq();
+        // var url = 'v1.0/tool/show_tips';
+        // httpReq.GET({
+        // 	url:url,
+        // 	data:{toolId:this.tool_id},
+        // 	success:(res:any)=>{
+        // 		var res = JSON.parse(res);
+        // 		if(res.code == 0){
+        // 		}
+        // 	},
+        // 	error:()=>{
+        // 		console.log('error');
+        // 	},
+        // 	progress:()=>{
+        // 		console.log('waiting......');
+        // 	}
+        // });
     };
     return tools;
 }(eui.Component));

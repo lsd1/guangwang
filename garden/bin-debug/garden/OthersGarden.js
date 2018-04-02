@@ -10,29 +10,48 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var OthersGarden = (function (_super) {
     __extends(OthersGarden, _super);
-    function OthersGarden() {
+    function OthersGarden(other_user_name) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/OthersGarden.exml";
         //顶部果园用户头像、昵称信息
+        _this.other_user_name = other_user_name;
+        //获取果园信息
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/show_garden';
+        httpReq.GET({
+            url: url,
+            data: { toUsername: _this.other_user_name },
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    var topGrop = new eui.Group();
+                    var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
+                    var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
+                    var label = new eui.Label();
+                    label.width = 380;
+                    label.height = 140;
+                    label.textAlign = "center";
+                    label.verticalAlign = "middle";
+                    label.size = 30;
+                    label.text = other_user_name;
+                    label.textColor = 0x000000;
+                    topGrop.x = 0;
+                    topGrop.y = 30;
+                    topGrop.addChild(topAvatarBg);
+                    topGrop.addChild(topAvatar);
+                    topGrop.addChild(label);
+                    _this.addChild(topGrop);
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
         _this.back.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBackTap, _this);
-        var topGrop = new eui.Group();
-        var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
-        var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
-        var label = new eui.Label();
-        label.width = 380;
-        label.height = 140;
-        label.textAlign = "center";
-        label.verticalAlign = "middle";
-        label.size = 30;
-        label.text = "Tammy";
-        label.textColor = 0x000000;
-        topGrop.x = 0;
-        topGrop.y = 30;
-        topGrop.addChild(topAvatarBg);
-        topGrop.addChild(topAvatar);
-        topGrop.addChild(label);
-        _this.addChild(topGrop);
         //横线
         var line = new egret.Shape();
         line.graphics.lineStyle(2, 0x000000, 0.1);
@@ -47,19 +66,46 @@ var OthersGarden = (function (_super) {
             var avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
             _this.group_avatar.addChild(avatar_cell);
         }
+        //点击浇水
+        _this.water.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onWaterTap, _this);
+        var data = RES.getRes("jiaoshui_ske_mc_json");
+        var txtr = RES.getRes("jiaoshui_ske_tex_png");
+        var mcFactory = new egret.MovieClipDataFactory(data, txtr);
+        _this.jiaoshui_ske = new egret.MovieClip(mcFactory.generateMovieClipData("jiaoshui_ske"));
+        _this.jiaoshui_ske.x = 350;
+        _this.jiaoshui_ske.y = 750;
+        _this.jiaoshui_ske.addEventListener(egret.Event.COMPLETE, function (e) {
+            _this.removeChild(_this.jiaoshui_ske);
+        }, _this);
         return _this;
     }
-    OthersGarden.Shared = function () {
-        if (this.shared == null) {
-            this.shared = new OthersGarden();
-        }
-        return this.shared;
-    };
     OthersGarden.prototype.onBackTap = function (e) {
         this.parent.addChild(MyGarden.Shared());
         this.parent.removeChild(this);
     };
-    OthersGarden.shared = null;
+    OthersGarden.prototype.onWaterTap = function (e) {
+        var _this = this;
+        var httpReq = new HttpReq();
+        var url = 'v1.0/user/put_water';
+        httpReq.POST({
+            url: url,
+            data: { toUsername: this.other_user_name },
+            success: function (res) {
+                var res = JSON.parse(res);
+                if (res.code == 0) {
+                    console.log(res);
+                    _this.addChild(_this.jiaoshui_ske);
+                    _this.jiaoshui_ske.gotoAndPlay(1, 2);
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            progress: function () {
+                console.log('waiting......');
+            }
+        });
+    };
     return OthersGarden;
 }(eui.Component));
 __reflect(OthersGarden.prototype, "OthersGarden");

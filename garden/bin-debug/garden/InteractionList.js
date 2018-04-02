@@ -2,10 +2,10 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
 var InteractionList = (function () {
-    function InteractionList(userInfo) {
+    function InteractionList(id, username) {
         this.common = Common.Shared();
-        this.userInfo = userInfo;
-        console.log(this.userInfo);
+        this.id = id;
+        this.usernme = username;
     }
     //生成互动列表
     InteractionList.prototype.createList = function (resource, username, type, typeResource, x, y) {
@@ -66,7 +66,7 @@ var InteractionList = (function () {
         return group;
     };
     InteractionList.prototype.onInteractionListTap = function (e) {
-        MyGarden.Shared().parent.addChild(OthersGarden.Shared());
+        MyGarden.Shared().parent.addChild(new OthersGarden(this.usernme));
         MyGarden.Shared().parent.removeChild(MyGarden.Shared());
     };
     return InteractionList;
