@@ -20,15 +20,17 @@ var MyGarden = (function (_super) {
         _this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsTap, _this);
         _this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsCloseTap, _this);
         _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
+        //道具使用提示
+        _this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onToolTipsCloseTap, _this);
         //施用肥料
-        _this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onUseMuckCloseTap, _this);
-        _this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMuckTap, _this);
-        _this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitUseMuckTap, _this);
+        // this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
+        // this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
+        // this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
         //道具使用
-        _this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupInsecticideTap, _this);
-        _this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupMedicineTap, _this);
-        _this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupRipeningTap, _this);
-        _this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGroupProtectionTap, _this);
+        // this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
+        // this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
+        // this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
+        // this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
         //我的果园
         _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
         _this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenInteractiveCloseTap, _this);
@@ -109,29 +111,12 @@ var MyGarden = (function (_super) {
                 if (res.code == 0) {
                     var toolList = res.data.toolList;
                     for (var i in toolList) {
-                        var tool = toolList[i];
-                        switch (tool.toolId) {
-                            case 1:
-                                _this.muck_num.text = tool.count;
-                                _this.muck_text.text = tool.toolname;
-                                break;
-                            case 2:
-                                _this.insecticide_num.text = tool.count;
-                                _this.insecticide_text.text = tool.toolname;
-                                break;
-                            case 3:
-                                _this.ripening_num.text = tool.count;
-                                _this.ripening_text.text = tool.toolname;
-                                break;
-                            case 4:
-                                _this.protextion_num.text = tool.count;
-                                _this.protextion_text.text = tool.toolname;
-                                break;
-                            case 5:
-                                _this.medicine_num.text = tool.count;
-                                _this.medicine_text.text = tool.toolname;
-                                break;
-                        }
+                        var toolInfo = toolList[i];
+                        var myTool = new tools();
+                        myTool.tool_num.text = toolInfo.count;
+                        myTool.tool_name.text = toolInfo.toolname;
+                        myTool.tool_id = toolInfo.toolId;
+                        _this.panel_props.addChild(myTool);
                     }
                     _this.panel_props.visible = true;
                 }
@@ -346,6 +331,24 @@ var MyGarden = (function (_super) {
         var rt = new egret.RenderTexture;
         rt.drawToTexture(this.origin_image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y, this.cut_area.width, this.cut_area.height), 1);
         image.texture = rt;
+    };
+    MyGarden.prototype.onToolTipsCloseTap = function (e) {
+        this.panel_tool_tips.visible = false;
+    };
+    MyGarden.prototype.onCommitToolTipsTap = function (e) {
+        switch (this.useToolId) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+        this.panel_tool_tips.visible = false;
     };
     return MyGarden;
 }(eui.Component));

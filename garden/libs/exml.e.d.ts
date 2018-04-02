@@ -56,3 +56,5 @@ declare class interactionList extends eui.Skin{
 }
 declare class myGarden extends eui.Skin{
 }
+declare class tool extends eui.Skin{
+}

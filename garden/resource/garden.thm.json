@@ -2,12 +2,14 @@
   "skins": {
     "index":"resource/garden_skins/Index.exml",
     "myGarden":"resource/garden_skins/MyGarden.exml",
-    "myGarden":"resource/garden_skins/OthersGarden.exml"
+    "othersGarden":"resource/garden_skins/OthersGarden.exml",
+    "tool":"resource/garden_skins/tool.exml"
   },
   "autoGenerateExmlsList": true,
   "exmls": [
     "resource/garden_skins/Index.exml",
     "resource/garden_skins/MyGarden.exml",
-    "resource/garden_skins/OthersGarden.exml"
+    "resource/garden_skins/OthersGarden.exml",
+    "resource/garden_skins/tool.exml"
   ]
 }

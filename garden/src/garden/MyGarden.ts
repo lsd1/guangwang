@@ -74,12 +74,16 @@ class MyGarden extends eui.Component{
 	//关闭施用肥料按钮
 	private use_muck_close:eui.Button;
 
-	//激活肥料弹框
-	private panel_active_muck:eui.Group;
-	//确认激活肥料按钮
-	private commit_active_muck:eui.Group;
-	//关闭激活肥料按钮
-	private active_muck_close:eui.Button;
+	//使用道具的id
+	private useToolId:number;
+	//道具使用提示弹框
+	private panel_tool_tips:eui.Group;
+	//确认使用道具按钮
+	private commit_tool_tips:eui.Group;
+	//关闭道具使用提示按钮
+	private tool_tips_close:eui.Button;
+	//提示内容
+	private tool_tips:eui.Label;
 
 	//果园互动弹框
 	private panel_garden_interactive:eui.Group;
@@ -187,16 +191,19 @@ class MyGarden extends eui.Component{
 		
 		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
 
+		//道具使用提示
+		this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolTipsCloseTap, this);
+
 		//施用肥料
-		this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
-		this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
-		this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
+		// this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
+		// this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
+		// this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
 
 		//道具使用
-		this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
-		this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
-		this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
-		this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
+		// this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
+		// this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
+		// this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
+		// this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
 
 		//我的果园
 		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
@@ -278,35 +285,12 @@ class MyGarden extends eui.Component{
 				if(res.code == 0){
 					var toolList = res.data.toolList;
 					for(var i in toolList){
-						let tool = toolList[i];
-						switch(tool.toolId){
-							case 1:
-							this.muck_num.text = tool.count;
-							this.muck_text.text = tool.toolname;
-
-							break;
-							case 2:
-							this.insecticide_num.text = tool.count;
-							this.insecticide_text.text = tool.toolname;
-							
-							break;
-							case 3:
-							this.ripening_num.text = tool.count;
-							this.ripening_text.text = tool.toolname;
-							
-							break;
-							case 4:
-							this.protextion_num.text = tool.count;
-							this.protextion_text.text = tool.toolname;
-							
-							break;							
-							case 5:
-							this.medicine_num.text = tool.count;
-							this.medicine_text.text = tool.toolname;
-							
-							break;
-
-						}
+						let toolInfo = toolList[i];
+						let myTool = new tools();
+						myTool.tool_num.text = toolInfo.count;
+						myTool.tool_name.text = toolInfo.toolname;
+						myTool.tool_id = toolInfo.toolId;
+						this.panel_props.addChild(myTool);
 					}
 
 					this.panel_props.visible = true;
@@ -565,5 +549,25 @@ class MyGarden extends eui.Component{
 		var rt:egret.RenderTexture = new egret.RenderTexture;
 		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y , this.cut_area.width,this.cut_area.height), 1 );
 		image.texture = rt;
+	}
+
+	private onToolTipsCloseTap(e:egret.TouchEvent){
+		this.panel_tool_tips.visible = false;
+	}
+
+	private onCommitToolTipsTap(e:egret.TouchEvent){
+		switch(this.useToolId){
+			case 1:
+			break;
+			case 2:
+			break;
+			case 3:
+			break;
+			case 4:
+			break;
+			case 5:
+			break;
+		}
+		this.panel_tool_tips.visible = false;
 	}
 }

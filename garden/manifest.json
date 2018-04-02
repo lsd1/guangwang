@@ -25,6 +25,7 @@
 		"bin-debug/garden/MyGarden.js",
 		"bin-debug/garden/NewsList.js",
 		"bin-debug/garden/OthersGarden.js",
-		"bin-debug/garden/Params.js"
+		"bin-debug/garden/Params.js",
+		"bin-debug/garden/tool.js"
 	]
 }

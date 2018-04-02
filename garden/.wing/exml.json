@@ -8,5 +8,9 @@
     "useBgImage": true,
     "useBgColor": true,
     "backgroundAlpha": 100
+  },
+  "global": {
+    "globalAdsorbEnable": false,
+    "globalRulerEnable": true
   }
 }

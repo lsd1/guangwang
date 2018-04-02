@@ -18,7 +18,8 @@
 		"resource/garden_skins/index.exml",
 		"resource/garden_skins/InteractionList.exml",
 		"resource/garden_skins/myGarden.exml",
-		"resource/garden_skins/OthersGarden.exml"
+		"resource/garden_skins/OthersGarden.exml",
+		"resource/garden_skins/tool.exml"
 	],
 	"path": "resource/default.thm.json"
 }
