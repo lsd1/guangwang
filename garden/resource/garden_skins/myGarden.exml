@@ -16,9 +16,9 @@
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
 	</e:Group>
 	<e:Group id="panel_props" width="750" height="1334" x="0" y="0" anchorOffsetY="0">
-		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4" locked="true"/>
-		<e:Rect width="580" height="544" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0" locked="true"/>
-		<e:Rect width="544" height="418" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2" locked="true"/>
+		<e:Rect width="750" height="1334" x="0" y="0" fillAlpha="0.4"/>
+		<e:Rect width="580" height="544" y="394" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" horizontalCenter="0"/>
+		<e:Rect width="544" height="418" y="494" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="-2"/>
 		<e:Button id="props_close" label="" x="594" y="420" width="45" height="45">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">

@@ -11,15 +11,15 @@
 		"libs/modules/md5/md5.js"
 	],
 	"game": [
+		"bin-debug/garden/HttpReq.js",
 		"bin-debug/AssetAdapter.js",
-		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/garden/ActionParams.js",
 		"bin-debug/garden/AvatarList.js",
 		"bin-debug/garden/Common.js",
-		"bin-debug/garden/HttpReq.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/garden/index.js",
 		"bin-debug/garden/InteractionList.js",
 		"bin-debug/garden/MyGarden.js",

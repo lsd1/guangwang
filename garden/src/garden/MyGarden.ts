@@ -284,9 +284,37 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					var toolList = res.data.toolList;
-					for(var i in toolList){
+					for(var i = 0; i < toolList.length; i++){
 						let toolInfo = toolList[i];
 						let myTool = new tools();
+						if(i<3){
+							myTool.x = 101+180*(i);	
+							myTool.y = 494;	
+						}else{
+							myTool.x = 101+180*(i-3);	
+							myTool.y = 494+209;	
+						}
+						switch(toolInfo.toolId){
+							case 1:
+								myTool.tool_img.source = 'props_icon01_png';
+
+								break;
+							case 2:
+								myTool.tool_img.source = 'props_icon02_png';
+
+								break;
+							case 3:
+								myTool.tool_img.source = 'props_icon03_png';
+
+								break;
+							case 4:
+								myTool.tool_img.source = 'props_icon04_png';
+
+								break;
+							case 5:
+								myTool.tool_img.source = 'props_icon05_png';
+								break;
+						}
 						myTool.tool_num.text = toolInfo.count;
 						myTool.tool_name.text = toolInfo.toolname;
 						myTool.tool_id = toolInfo.toolId;
