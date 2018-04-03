@@ -1,6 +1,6 @@
 class HttpReq extends egret.HttpRequest{
 	private common:Common = Common.Shared();
-	private api_domain:string = "http://api.test.com/";
+	private api_domain:string = "http://123.207.58.186/";
 	private url:string;
 	private data;
 	private success:any;
@@ -47,7 +47,7 @@ class HttpReq extends egret.HttpRequest{
 		//设置响应头
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		//发送参数
-		request.send();		
+		request.send();
 		request.addEventListener(egret.Event.COMPLETE,this.onGetComplete,this);
 		request.addEventListener(egret.IOErrorEvent.IO_ERROR,this.onGetIOError,this);
 		request.addEventListener(egret.ProgressEvent.PROGRESS,this.onGetProgress,this);

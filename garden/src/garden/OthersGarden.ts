@@ -99,14 +99,13 @@ class OthersGarden extends eui.Component {
 		
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_water';
-
+		
 		httpReq.POST({
 			url:url,
 			data:{toUsername:this.other_user_name},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					console.log(res);
 					this.addChild( this.jiaoshui_ske );
 					this.jiaoshui_ske.gotoAndPlay(1, 2);
 				}

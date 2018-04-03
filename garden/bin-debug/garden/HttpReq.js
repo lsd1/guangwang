@@ -13,7 +13,7 @@ var HttpReq = (function (_super) {
     function HttpReq(username, action, lang, clientType, network, version) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
-        _this.api_domain = "http://api.test.com/";
+        _this.api_domain = "http://123.207.58.186/";
         var lang = lang ? lang : 0;
         var username = username ? username : _this.common.getCookie('username');
         var action = action ? action : '';

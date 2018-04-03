@@ -93,7 +93,6 @@ var OthersGarden = (function (_super) {
             success: function (res) {
                 var res = JSON.parse(res);
                 if (res.code == 0) {
-                    console.log(res);
                     _this.addChild(_this.jiaoshui_ske);
                     _this.jiaoshui_ske.gotoAndPlay(1, 2);
                 }

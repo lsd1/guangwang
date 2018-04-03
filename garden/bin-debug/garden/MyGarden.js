@@ -41,15 +41,6 @@ var MyGarden = (function (_super) {
         _this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onInteractionTap, _this);
         //道具使用提示
         _this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onToolTipsCloseTap, _this);
-        //施用肥料
-        // this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
-        // this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
-        // this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
-        //道具使用
-        // this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
-        // this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
-        // this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
-        // this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
         _this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitToolTipsTap, _this);
         //我的果园
         _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
@@ -58,9 +49,8 @@ var MyGarden = (function (_super) {
         _this.garden_manger_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenMangerCloseTap, _this);
         //修改密码
         _this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangePasswordTap, _this);
-        _this.next_step.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onNextStepTap, _this);
         _this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onSetPassWordCloseTap, _this);
-        _this.change_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onChangePassWordCloseTap, _this);
+        _this.commit_change.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitChangeTap, _this);
         _this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocus, _this);
         //提取积分
         _this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onExtractPointTap, _this);
@@ -283,17 +273,57 @@ var MyGarden = (function (_super) {
         this.panel_garden_news.visible = true;
     };
     MyGarden.prototype.onChangePasswordTap = function (e) {
-        this.panel_change_pass_word.visible = true;
-    };
-    MyGarden.prototype.onChangePassWordCloseTap = function (e) {
-        this.panel_change_pass_word.visible = false;
-    };
-    MyGarden.prototype.onNextStepTap = function (e) {
-        this.panel_change_pass_word.visible = false;
         this.panel_set_pass_word.visible = true;
     };
     MyGarden.prototype.onSetPassWordCloseTap = function (e) {
         this.panel_set_pass_word.visible = false;
+    };
+    //修改密码-提交
+    MyGarden.prototype.onCommitChangeTap = function (e) {
+        var _this = this;
+        if (this.old_pass_word.text == '') {
+            this.tips_text.text = '请输入原来的密码！';
+            this.group_tips.visible = true;
+            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
+            return false;
+        }
+        if (this.old_pass_word.text == '') {
+            this.tips_text.text = '请输入新密码！';
+            this.group_tips.visible = true;
+            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
+            return false;
+        }
+        if (this.old_pass_word.text == '') {
+            this.tips_text.text = '请再次输入新密码！';
+            this.group_tips.visible = true;
+            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
+            return false;
+        }
+        if (this.new_pass_word.text !== this.repeat_new_pass_word.text) {
+            this.tips_text.text = '两次输入密码不一致！';
+            this.group_tips.visible = true;
+            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
+            return false;
+        }
+        else {
+            var httpReq = new HttpReq();
+            var url = 'v1.0/user/edit_password';
+            httpReq.POST({
+                url: url,
+                data: { oldpassword: this.old_pass_word.text, newpassword: this.new_pass_word.text },
+                success: function (res) {
+                    var res = JSON.parse(res);
+                    if (res.code == 0) {
+                    }
+                },
+                error: function () {
+                    console.log('error');
+                },
+                progress: function () {
+                    console.log('waiting......');
+                }
+            });
+        }
     };
     MyGarden.prototype.onExtractPointTap = function (e) {
         this.panel_extract_point.visible = true;

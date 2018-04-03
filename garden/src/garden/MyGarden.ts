@@ -74,15 +74,11 @@ class MyGarden extends eui.Component{
 	//更多记录按钮
 	private more_point_log:eui.Label;
 
-	//修改密码弹框
-	private panel_change_pass_word:eui.Group;
 	//设置新密码弹框
 	private panel_set_pass_word:eui.Group;
 	//旧密码
 	private old_pass_word:eui.Label;
-	//下一步
-	private next_step:eui.Group;
-	//设置新密码
+	//新密码
 	private new_pass_word:eui.Label;
 	//重复新密码
 	private repeat_new_pass_word:eui.Label;
@@ -90,8 +86,6 @@ class MyGarden extends eui.Component{
 	private commit_change:eui.Group;
 	//关闭设置新密码按钮
 	private set_pass_word_close:eui.Button;	
-	//关闭验证旧密码按钮
-	private change_pass_word_close:eui.Button;
 	
 	//提取积分弹框
 	private panel_extract_point:eui.Group;
@@ -167,17 +161,6 @@ class MyGarden extends eui.Component{
 		//道具使用提示
 		this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolTipsCloseTap, this);
 
-		//施用肥料
-		// this.use_muck_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUseMuckCloseTap, this);
-		// this.group_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMuckTap, this);
-		// this.commit_use_muck.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitUseMuckTap, this);
-
-		//道具使用
-		// this.group_insecticide.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupInsecticideTap, this);
-		// this.group_medicine.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupMedicineTap, this);
-		// this.group_ripening.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupRipeningTap, this);
-		// this.group_protection.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGroupProtectionTap, this);
-
 		this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitToolTipsTap, this);
 
 
@@ -188,10 +171,9 @@ class MyGarden extends eui.Component{
 		this.garden_manger_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMangerCloseTap, this);
 
 		//修改密码
-		this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePasswordTap, this);
-		this.next_step.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onNextStepTap, this);
+		this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePasswordTap, this);	
 		this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSetPassWordCloseTap, this);
-		this.change_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePassWordCloseTap, this);
+		this.commit_change.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitChangeTap,this);		
 		this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocus,this);
 
 		//提取积分
@@ -423,22 +405,61 @@ class MyGarden extends eui.Component{
 
 
 	private onChangePasswordTap(e:egret.TouchEvent){
-		this.panel_change_pass_word.visible = true;
-	}
-
-	private onChangePassWordCloseTap(e:egret.TouchEvent){
-		this.panel_change_pass_word.visible = false;
-
-	}
-
-	private onNextStepTap(e:egret.TouchEvent){
-		this.panel_change_pass_word.visible = false;
 		this.panel_set_pass_word.visible = true;
-
 	}
 
 	private onSetPassWordCloseTap(e:egret.TouchEvent){
 		this.panel_set_pass_word.visible = false;
+	}
+
+	//修改密码-提交
+	private onCommitChangeTap(e:egret.TouchEvent){
+		if(this.old_pass_word.text == ''){
+			this.tips_text.text = '请输入原来的密码！';
+			this.group_tips.visible = true;
+			setTimeout(()=>{this.group_tips.visible = false;},4000);			
+			return false;
+		}
+		if(this.old_pass_word.text == ''){
+			this.tips_text.text = '请输入新密码！';
+			this.group_tips.visible = true;
+			setTimeout(()=>{this.group_tips.visible = false;},4000);			
+			return false;
+		}
+
+		if(this.old_pass_word.text == ''){
+			this.tips_text.text = '请再次输入新密码！';
+			this.group_tips.visible = true;
+			setTimeout(()=>{this.group_tips.visible = false;},4000);			
+			return false;	
+		}
+
+		if(this.new_pass_word.text !== this.repeat_new_pass_word.text){
+			this.tips_text.text = '两次输入密码不一致！';
+			this.group_tips.visible = true;
+			setTimeout(()=>{this.group_tips.visible = false;},4000);	
+			return false;					
+		}else{
+			var httpReq = new HttpReq();
+			var url = 'v1.0/user/edit_password';
+			httpReq.POST({
+				url:url,
+				data:{oldpassword:this.old_pass_word.text,newpassword:this.new_pass_word.text},
+				success:(res:any)=>{
+					var res = JSON.parse(res);
+					if(res.code == 0){
+					
+					}
+				},
+				error:()=>{
+					console.log('error');
+				},
+				progress:()=>{
+					console.log('waiting......');
+				}
+			});
+		}
+		
 	}
 
 	private onExtractPointTap(e:egret.TouchEvent){
