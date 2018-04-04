@@ -68,14 +68,14 @@ var OthersGarden = (function (_super) {
         }
         //点击浇水
         _this.water.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onWaterTap, _this);
-        var data = RES.getRes("jiaoshui_ske_mc_json");
-        var txtr = RES.getRes("jiaoshui_ske_tex_png");
+        var data = RES.getRes("jiaoshui_mc_json");
+        var txtr = RES.getRes("jiaoshui_tex_png");
         var mcFactory = new egret.MovieClipDataFactory(data, txtr);
-        _this.jiaoshui_ske = new egret.MovieClip(mcFactory.generateMovieClipData("jiaoshui_ske"));
-        _this.jiaoshui_ske.x = 350;
-        _this.jiaoshui_ske.y = 750;
-        _this.jiaoshui_ske.addEventListener(egret.Event.COMPLETE, function (e) {
-            _this.removeChild(_this.jiaoshui_ske);
+        _this.jiaoshui_mc_1 = new egret.MovieClip(mcFactory.generateMovieClipData("jiaoshui_mc_1"));
+        _this.jiaoshui_mc_1.x = 350;
+        _this.jiaoshui_mc_1.y = 750;
+        _this.jiaoshui_mc_1.addEventListener(egret.Event.COMPLETE, function (e) {
+            _this.removeChild(_this.jiaoshui_mc_1);
         }, _this);
         return _this;
     }
@@ -85,6 +85,7 @@ var OthersGarden = (function (_super) {
     };
     OthersGarden.prototype.onWaterTap = function (e) {
         var _this = this;
+        console.log(1);
         var httpReq = new HttpReq();
         var url = 'v1.0/user/put_water';
         httpReq.POST({
@@ -93,8 +94,9 @@ var OthersGarden = (function (_super) {
             success: function (res) {
                 var res = JSON.parse(res);
                 if (res.code == 0) {
-                    _this.addChild(_this.jiaoshui_ske);
-                    _this.jiaoshui_ske.gotoAndPlay(1, 2);
+                    console.log(res.code);
+                    _this.addChild(_this.jiaoshui_mc_1);
+                    _this.jiaoshui_mc_1.gotoAndPlay(1, 2);
                 }
             },
             error: function () {
@@ -108,4 +110,3 @@ var OthersGarden = (function (_super) {
     return OthersGarden;
 }(eui.Component));
 __reflect(OthersGarden.prototype, "OthersGarden");
-//# sourceMappingURL=OthersGarden.js.map

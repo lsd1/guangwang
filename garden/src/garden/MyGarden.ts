@@ -26,6 +26,15 @@ class MyGarden extends eui.Component{
 	//关闭道具弹框按钮
 	private props_close:eui.Button;
 
+	//激活套餐弹框
+	public panel_active_package:eui.Group;
+	//激活套餐关闭按钮
+	public active_package_close:eui.Button;
+	//套餐激活码
+	public active_code:eui.Label;
+	//提交激活
+	public commit_active_package:eui.EditableText;
+
 	//当前点击的道具
 	public useToolGroup:any;
 	//道具使用提示弹框
@@ -155,13 +164,14 @@ class MyGarden extends eui.Component{
 		//道具列表
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
 		this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsCloseTap, this);
-		
 		this.interaction.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionTap, this);
 
 		//道具使用提示
 		this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolTipsCloseTap, this);
-
 		this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitToolTipsTap, this);
+
+		//激活套餐
+		this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onActivePackageCloseTap, this);
 
 
 		//我的果园
@@ -244,7 +254,7 @@ class MyGarden extends eui.Component{
 					var toolList = res.data.toolList;
 					for(var i = 0; i < toolList.length; i++){
 						let toolInfo = toolList[i];
-						let myTool = new tools();
+						let myTool = new Tools();
 						if(i<3){
 							myTool.x = 101+180*(i);	
 							myTool.y = 494;	
@@ -387,6 +397,20 @@ class MyGarden extends eui.Component{
 		this.panel_garden_news.visible = false;
 	}
 
+	//关闭套餐激活弹框
+	private onActivePackageCloseTap(e:egret.TouchEvent){
+		this.panel_active_package.visible = false;
+	}
+
+	//提交套餐激活弹框
+	private onCommitActivePackageTap(e:egret.TouchEvent){
+		this.panel_active_package.visible = false;
+
+		var data = {"number":999,"price":10,"payOrder":"mcoinTrade"};
+        console.log(data);
+        //window.maiguoer.buyCoinToPay(JSON.stringify(data));
+	}
+
 	//弹出果园动态框
 	private onGardenMoreNewsTap(e:egret.TouchEvent){
 		for(var i = 0; i < 17; i++){
@@ -499,6 +523,7 @@ class MyGarden extends eui.Component{
 		console.log(EventTarget);
 	}
 
+	//修改头像
 	private onChangeAvatarTap(e:egret.TouchEvent){
 		selectImage(this.selImg, this);
 	}

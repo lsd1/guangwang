@@ -42,6 +42,8 @@ var MyGarden = (function (_super) {
         //道具使用提示
         _this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onToolTipsCloseTap, _this);
         _this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitToolTipsTap, _this);
+        //激活套餐
+        _this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onActivePackageCloseTap, _this);
         //我的果园
         _this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onManageTap, _this);
         _this.garden_interactive_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onGardenInteractiveCloseTap, _this);
@@ -123,7 +125,7 @@ var MyGarden = (function (_super) {
                     var toolList = res.data.toolList;
                     for (var i = 0; i < toolList.length; i++) {
                         var toolInfo = toolList[i];
-                        var myTool = new tools();
+                        var myTool = new Tools();
                         if (i < 3) {
                             myTool.x = 101 + 180 * (i);
                             myTool.y = 494;
@@ -255,6 +257,17 @@ var MyGarden = (function (_super) {
     MyGarden.prototype.onGardenNewsCloseTap = function (e) {
         this.panel_garden_news.visible = false;
     };
+    //关闭套餐激活弹框
+    MyGarden.prototype.onActivePackageCloseTap = function (e) {
+        this.panel_active_package.visible = false;
+    };
+    //提交套餐激活弹框
+    MyGarden.prototype.onCommitActivePackageTap = function (e) {
+        this.panel_active_package.visible = false;
+        var data = { "number": 999, "price": 10, "payOrder": "mcoinTrade" };
+        console.log(data);
+        //window.maiguoer.buyCoinToPay(JSON.stringify(data));
+    };
     //弹出果园动态框
     MyGarden.prototype.onGardenMoreNewsTap = function (e) {
         for (var i = 0; i < 17; i++) {
@@ -356,6 +369,7 @@ var MyGarden = (function (_super) {
     MyGarden.prototype.onInputFocus = function (e) {
         console.log(EventTarget);
     };
+    //修改头像
     MyGarden.prototype.onChangeAvatarTap = function (e) {
         selectImage(this.selImg, this);
     };
@@ -451,4 +465,3 @@ var MyGarden = (function (_super) {
     return MyGarden;
 }(eui.Component));
 __reflect(MyGarden.prototype, "MyGarden");
-//# sourceMappingURL=MyGarden.js.map

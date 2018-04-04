@@ -72,4 +72,3 @@ var InteractionList = (function () {
     return InteractionList;
 }());
 __reflect(InteractionList.prototype, "InteractionList");
-//# sourceMappingURL=InteractionList.js.map
