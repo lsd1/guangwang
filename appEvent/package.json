@@ -1,0 +1,5 @@
+{
+	"name": "appEvent",
+	"compilerVersion": "5.1.8",
+	"typings": "typings/appEvent.d.ts"
+}

@@ -13,36 +13,43 @@ var index = (function (_super) {
     function index() {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
+        //是否‘提示框’打开的遮罩
+        _this.is_tips_mask = false;
         _this.skinName = "resource/garden_skins/Index.exml";
-        _this.left = 0;
         _this.right = 0;
+        _this.left = 0;
         _this.top = 0;
         _this.bottom = 0;
+        //打开登录、注册弹框
+        _this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBtnLogClick, _this);
+        _this.btn_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onBtnRegClick, _this);
+        //关闭登录、注册弹框
+        _this.log_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onLogCloseClick, _this);
+        _this.reg_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onRegCloseClick, _this);
+        //登录帐号、密码
+        _this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        //注册帐号、密码、确认密码
+        _this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        _this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, _this.onInputFocusIn, _this);
+        //登录帐号、密码
+        _this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        _this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        //注册帐号、密码、确认密码
+        _this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        _this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, _this.onInputFocusOut, _this);
+        //提交登录、注册
+        _this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitLogClick, _this);
+        _this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onCommitRegClick, _this);
+        //关闭提示弹框
+        _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (_this.is_tips_mask) {
+                _this.full_mask.visible = false;
+            }
+            _this.group_tips.visible = false;
+        }, _this);
         return _this;
-        // //打开登录、注册弹框
-        // this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnLogClick, this);
-        // this.btn_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnRegClick, this);
-        // //关闭登录、注册弹框
-        // this.log_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onLogCloseClick, this);
-        // this.reg_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegCloseClick, this);
-        // //登录帐号、密码
-        // this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-        // this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-        // //注册帐号、密码、确认密码
-        // this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-        // this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-        // this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-        // //登录帐号、密码
-        // this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-        // this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-        // //注册帐号、密码、确认密码
-        // this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-        // this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-        // //提交登录、注册
-        // this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
-        // this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
-        // //关闭提示弹框
-        // this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
     }
     index.Shared = function () {
         if (this.shared == null) {
@@ -52,25 +59,24 @@ var index = (function (_super) {
     };
     //弹出登录框 
     index.prototype.onBtnLogClick = function () {
-        this.group_log_reg.visible = true;
+        this.full_mask.visible = true;
         this.panel_log.visible = true;
-        console.log('open log');
     };
     //弹出注册框 
     index.prototype.onBtnRegClick = function () {
-        this.group_log_reg.visible = true;
+        this.full_mask.visible = true;
         this.panel_reg.visible = true;
         console.log('open reg');
     };
     //关闭登录框 
     index.prototype.onLogCloseClick = function () {
-        this.group_log_reg.visible = false;
+        this.full_mask.visible = false;
         this.panel_log.visible = false;
         console.log('close log');
     };
     //关闭注册框 
     index.prototype.onRegCloseClick = function () {
-        this.group_log_reg.visible = false;
+        this.full_mask.visible = false;
         this.panel_reg.visible = false;
         console.log('close reg');
     };
@@ -126,9 +132,6 @@ var index = (function (_super) {
     //注册
     index.prototype.onCommitRegClick = function (e) {
         var _this = this;
-        console.log(this.reg_user_name.text);
-        console.log(this.reg_pass_word.text);
-        console.log(this.reg_rep_pass_word.text);
         if (this.reg_pass_word.text != this.reg_rep_pass_word.text) {
             this.tips_text.text = '两次输入密码不一致';
             this.group_tips.visible = true;
@@ -155,11 +158,7 @@ var index = (function (_super) {
                 else {
                     _this.tips_text.text = res.msg;
                     _this.group_tips.visible = true;
-                    setTimeout(function () {
-                        _this.group_tips.visible = false;
-                    }, 2000);
                 }
-                console.log(res);
             },
             error: function (error) {
                 console.log(error);
@@ -186,3 +185,4 @@ var index = (function (_super) {
     return index;
 }(eui.Component));
 __reflect(index.prototype, "index");
+//# sourceMappingURL=Index.js.map

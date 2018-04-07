@@ -14,6 +14,10 @@ var OthersGarden = (function (_super) {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         _this.skinName = "resource/garden_skins/OthersGarden.exml";
+        _this.right = 0;
+        _this.left = 0;
+        _this.top = 0;
+        _this.bottom = 0;
         //顶部果园用户头像、昵称信息
         _this.other_user_name = other_user_name;
         //获取果园信息
@@ -25,7 +29,6 @@ var OthersGarden = (function (_super) {
             success: function (res) {
                 var res = JSON.parse(res);
                 if (res.code == 0) {
-                    var topGrop = new eui.Group();
                     var topAvatar = _this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
                     var topAvatarBg = _this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
                     var label = new eui.Label();
@@ -36,12 +39,12 @@ var OthersGarden = (function (_super) {
                     label.size = 30;
                     label.text = other_user_name;
                     label.textColor = 0x000000;
-                    topGrop.x = 0;
-                    topGrop.y = 30;
-                    topGrop.addChild(topAvatarBg);
-                    topGrop.addChild(topAvatar);
-                    topGrop.addChild(label);
-                    _this.addChild(topGrop);
+                    _this.group_top.x = 0;
+                    _this.group_top.y = 30;
+                    _this.group_top.addChild(topAvatarBg);
+                    _this.group_top.addChild(topAvatar);
+                    _this.group_top.addChild(label);
+                    _this.addChild(_this.group_top);
                 }
             },
             error: function () {
@@ -110,3 +113,4 @@ var OthersGarden = (function (_super) {
     return OthersGarden;
 }(eui.Component));
 __reflect(OthersGarden.prototype, "OthersGarden");
+//# sourceMappingURL=OthersGarden.js.map

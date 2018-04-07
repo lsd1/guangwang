@@ -1,0 +1,19 @@
+function pay(payName, data){
+		switch(payName){
+			case 'buyCoinToPay':
+			alert(JSON.stringify(window));
+				window.maiguoer.buyCoinToPay(JSON.stringify(data));
+			break;
+		}
+}
+
+function back(backName, data){
+		switch(backName){
+			case 'goBack':
+				window.maiguoer.goBack();
+			break;
+			case 'goApp':
+				window.maiguoer.goApp();
+			break;
+		}
+}

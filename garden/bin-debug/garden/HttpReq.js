@@ -91,3 +91,4 @@ var HttpReq = (function (_super) {
     return HttpReq;
 }(egret.HttpRequest));
 __reflect(HttpReq.prototype, "HttpReq");
+//# sourceMappingURL=HttpReq.js.map

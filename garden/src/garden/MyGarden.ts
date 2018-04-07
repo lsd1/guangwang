@@ -134,10 +134,21 @@ class MyGarden extends eui.Component{
 	private tips_close:eui.Group;
 	//提示内容
 	private tips_text:eui.Label;
+	//是否‘提示框’打开的遮罩
+	private is_tips_mask:boolean = false;
+	//全局遮罩
+	private full_mask:eui.Rect;
 
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
+
+		this.right = 0;
+		this.left = 0;
+		this.top = 0;
+		this.bottom = 0;
+
+
 		//获取果园信息
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
@@ -159,7 +170,12 @@ class MyGarden extends eui.Component{
 		});
 
 		//关闭提示弹框
-		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
+		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			if(this.is_tips_mask){
+				this.full_mask.visible = false;
+			}
+			this.group_tips.visible = false;
+		}, this);
 		
 		//道具列表
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
@@ -243,6 +259,7 @@ class MyGarden extends eui.Component{
 
 	//点击道具
 	private onPropsTap(e:egret.TouchEvent){
+		this.full_mask.visible = true;
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/tool/show';
 		httpReq.GET({
@@ -256,11 +273,11 @@ class MyGarden extends eui.Component{
 						let toolInfo = toolList[i];
 						let myTool = new Tools();
 						if(i<3){
-							myTool.x = 101+180*(i);	
-							myTool.y = 494;	
+							myTool.x = 21+180*(i);	
+							myTool.y = 93;	
 						}else{
-							myTool.x = 101+180*(i-3);	
-							myTool.y = 494+209;	
+							myTool.x = 21+180*(i-3);	
+							myTool.y = 93+209;	
 						}
 						switch(toolInfo.toolId){
 							case 1:
@@ -288,7 +305,7 @@ class MyGarden extends eui.Component{
 						myTool.tool_id = toolInfo.toolId;
 						this.panel_props.addChild(myTool);
 					}
-
+					
 					this.panel_props.visible = true;
 				}else{
 					this.tips_text = res.msg;
@@ -379,11 +396,13 @@ class MyGarden extends eui.Component{
 
 	//关闭我的果园弹框
 	private onGardenMangerCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;		
 		this.panel_garden_manger.visible = false;
 	}
 
 	//关闭道具弹框
 	private onPropsCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;		
 		this.panel_props.visible = false;
 	}
 
@@ -399,6 +418,7 @@ class MyGarden extends eui.Component{
 
 	//关闭套餐激活弹框
 	private onActivePackageCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;
 		this.panel_active_package.visible = false;
 	}
 
@@ -429,10 +449,12 @@ class MyGarden extends eui.Component{
 
 
 	private onChangePasswordTap(e:egret.TouchEvent){
+		this.full_mask.visible = true;
 		this.panel_set_pass_word.visible = true;
 	}
 
 	private onSetPassWordCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;
 		this.panel_set_pass_word.visible = false;
 	}
 
@@ -440,28 +462,24 @@ class MyGarden extends eui.Component{
 	private onCommitChangeTap(e:egret.TouchEvent){
 		if(this.old_pass_word.text == ''){
 			this.tips_text.text = '请输入原来的密码！';
-			this.group_tips.visible = true;
-			setTimeout(()=>{this.group_tips.visible = false;},4000);			
+			this.group_tips.visible = true;	
 			return false;
 		}
 		if(this.old_pass_word.text == ''){
 			this.tips_text.text = '请输入新密码！';
 			this.group_tips.visible = true;
-			setTimeout(()=>{this.group_tips.visible = false;},4000);			
 			return false;
 		}
 
 		if(this.old_pass_word.text == ''){
 			this.tips_text.text = '请再次输入新密码！';
-			this.group_tips.visible = true;
-			setTimeout(()=>{this.group_tips.visible = false;},4000);			
+			this.group_tips.visible = true;	
 			return false;	
 		}
 
 		if(this.new_pass_word.text !== this.repeat_new_pass_word.text){
 			this.tips_text.text = '两次输入密码不一致！';
 			this.group_tips.visible = true;
-			setTimeout(()=>{this.group_tips.visible = false;},4000);	
 			return false;					
 		}else{
 			var httpReq = new HttpReq();
@@ -487,10 +505,12 @@ class MyGarden extends eui.Component{
 	}
 
 	private onExtractPointTap(e:egret.TouchEvent){
+		this.full_mask.visible = true;	
 		this.panel_extract_point.visible = true;
 	}
 
 	private onExtractPointCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;		
 		this.panel_extract_point.visible = false;
 	}
 
@@ -556,10 +576,13 @@ class MyGarden extends eui.Component{
 
 			//裁剪区域为正方形。
 			a.cut_area.width = a.cut_area.height = a.origin_image.height < a.origin_image.width ? a.origin_image.height : a.origin_image.width
+			console.log(a.stage.stageWidth,'-',a.stageHeight);
 			a.cut_area.x = a.stage.stageWidth / 2 - (a.cut_area.width / 2);
-			a.cut_area.y = a.stage.stageHeight / 4 - (a.cut_area.height / 2);
+			a.cut_area.y = 0;
 			a.setImageTexture(a.new_image);			
 			a.cut_image.visible = true;
+			a.full_mask.fillAlpha = 1;
+			a.full_mask.visible = true;
 		}, a);
 
 		// var mydisp:any = b;
@@ -614,6 +637,8 @@ class MyGarden extends eui.Component{
 		//确定裁剪之后，更新头像。
 		this.setImageTexture(this.my_avatar);
 		this.cut_image.visible = false;
+		this.full_mask.fillAlpha = 0.4;
+		this.full_mask.visible = false;
 	}
 
 	private setImageTexture(image:eui.Image){
@@ -623,6 +648,7 @@ class MyGarden extends eui.Component{
 	}
 
 	private onToolTipsCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;		
 		this.panel_tool_tips.visible = false;
 	}
 

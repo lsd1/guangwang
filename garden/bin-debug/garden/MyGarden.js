@@ -13,7 +13,13 @@ var MyGarden = (function (_super) {
     function MyGarden() {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
+        //是否‘提示框’打开的遮罩
+        _this.is_tips_mask = false;
         _this.skinName = "resource/garden_skins/MyGarden.exml";
+        _this.right = 0;
+        _this.left = 0;
+        _this.top = 0;
+        _this.bottom = 0;
         //获取果园信息
         var httpReq = new HttpReq();
         var url = 'v1.0/user/show_garden';
@@ -34,7 +40,12 @@ var MyGarden = (function (_super) {
             }
         });
         //关闭提示弹框
-        _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { _this.group_tips.visible = false; }, _this);
+        _this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (_this.is_tips_mask) {
+                _this.full_mask.visible = false;
+            }
+            _this.group_tips.visible = false;
+        }, _this);
         //道具列表
         _this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsTap, _this);
         _this.props_close.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onPropsCloseTap, _this);
@@ -114,6 +125,7 @@ var MyGarden = (function (_super) {
     //点击道具
     MyGarden.prototype.onPropsTap = function (e) {
         var _this = this;
+        this.full_mask.visible = true;
         var httpReq = new HttpReq();
         var url = 'v1.0/tool/show';
         httpReq.GET({
@@ -127,12 +139,12 @@ var MyGarden = (function (_super) {
                         var toolInfo = toolList[i];
                         var myTool = new Tools();
                         if (i < 3) {
-                            myTool.x = 101 + 180 * (i);
-                            myTool.y = 494;
+                            myTool.x = 21 + 180 * (i);
+                            myTool.y = 93;
                         }
                         else {
-                            myTool.x = 101 + 180 * (i - 3);
-                            myTool.y = 494 + 209;
+                            myTool.x = 21 + 180 * (i - 3);
+                            myTool.y = 93 + 209;
                         }
                         switch (toolInfo.toolId) {
                             case 1:
@@ -243,10 +255,12 @@ var MyGarden = (function (_super) {
     };
     //关闭我的果园弹框
     MyGarden.prototype.onGardenMangerCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_garden_manger.visible = false;
     };
     //关闭道具弹框
     MyGarden.prototype.onPropsCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_props.visible = false;
     };
     //关闭果园互动
@@ -259,6 +273,7 @@ var MyGarden = (function (_super) {
     };
     //关闭套餐激活弹框
     MyGarden.prototype.onActivePackageCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_active_package.visible = false;
     };
     //提交套餐激活弹框
@@ -286,36 +301,33 @@ var MyGarden = (function (_super) {
         this.panel_garden_news.visible = true;
     };
     MyGarden.prototype.onChangePasswordTap = function (e) {
+        this.full_mask.visible = true;
         this.panel_set_pass_word.visible = true;
     };
     MyGarden.prototype.onSetPassWordCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_set_pass_word.visible = false;
     };
     //修改密码-提交
     MyGarden.prototype.onCommitChangeTap = function (e) {
-        var _this = this;
         if (this.old_pass_word.text == '') {
             this.tips_text.text = '请输入原来的密码！';
             this.group_tips.visible = true;
-            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
             return false;
         }
         if (this.old_pass_word.text == '') {
             this.tips_text.text = '请输入新密码！';
             this.group_tips.visible = true;
-            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
             return false;
         }
         if (this.old_pass_word.text == '') {
             this.tips_text.text = '请再次输入新密码！';
             this.group_tips.visible = true;
-            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
             return false;
         }
         if (this.new_pass_word.text !== this.repeat_new_pass_word.text) {
             this.tips_text.text = '两次输入密码不一致！';
             this.group_tips.visible = true;
-            setTimeout(function () { _this.group_tips.visible = false; }, 4000);
             return false;
         }
         else {
@@ -339,9 +351,11 @@ var MyGarden = (function (_super) {
         }
     };
     MyGarden.prototype.onExtractPointTap = function (e) {
+        this.full_mask.visible = true;
         this.panel_extract_point.visible = true;
     };
     MyGarden.prototype.onExtractPointCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_extract_point.visible = false;
     };
     //提取积分
@@ -397,10 +411,13 @@ var MyGarden = (function (_super) {
             }
             //裁剪区域为正方形。
             a.cut_area.width = a.cut_area.height = a.origin_image.height < a.origin_image.width ? a.origin_image.height : a.origin_image.width;
+            console.log(a.stage.stageWidth, '-', a.stageHeight);
             a.cut_area.x = a.stage.stageWidth / 2 - (a.cut_area.width / 2);
-            a.cut_area.y = a.stage.stageHeight / 4 - (a.cut_area.height / 2);
+            a.cut_area.y = 0;
             a.setImageTexture(a.new_image);
             a.cut_image.visible = true;
+            a.full_mask.fillAlpha = 1;
+            a.full_mask.visible = true;
         }, a);
         // var mydisp:any = b;
         // var rt: egret.RenderTexture = new egret.RenderTexture();   //建立缓冲画布
@@ -447,6 +464,8 @@ var MyGarden = (function (_super) {
         //确定裁剪之后，更新头像。
         this.setImageTexture(this.my_avatar);
         this.cut_image.visible = false;
+        this.full_mask.fillAlpha = 0.4;
+        this.full_mask.visible = false;
     };
     MyGarden.prototype.setImageTexture = function (image) {
         var rt = new egret.RenderTexture;
@@ -454,6 +473,7 @@ var MyGarden = (function (_super) {
         image.texture = rt;
     };
     MyGarden.prototype.onToolTipsCloseTap = function (e) {
+        this.full_mask.visible = false;
         this.panel_tool_tips.visible = false;
     };
     MyGarden.prototype.onCommitToolTipsTap = function (e) {
@@ -465,3 +485,4 @@ var MyGarden = (function (_super) {
     return MyGarden;
 }(eui.Component));
 __reflect(MyGarden.prototype, "MyGarden");
+//# sourceMappingURL=MyGarden.js.map

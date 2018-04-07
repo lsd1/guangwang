@@ -9,32 +9,52 @@ class index extends eui.Component {
 		return this.shared;
 	}
 	private common:Common = Common.Shared();
+
+	//登录、注册按钮
 	private btn_log:eui.Button;
 	private btn_reg:eui.Button;
+
+	//关闭登陆、注册按钮
 	private log_close:eui.Button;
 	private reg_close:eui.Button;
-	private group_log_reg:eui.Group;
+
+	//登陆、注册框
 	private panel_log:eui.Group;
 	private panel_reg:eui.Group;
+
+	//确认登陆、注册
 	private commit_log:eui.Group;
 	private commit_reg:eui.Group;
+
+	//登陆、注册输入框
 	private log_user_name:eui.EditableText;
 	private log_pass_word:eui.EditableText;
 	private reg_user_name:eui.EditableText;
 	private reg_pass_word:eui.EditableText;
 	private reg_rep_pass_word:eui.EditableText;
+	
+	//记录当前输入框的提示语
 	private placeHolder:string;
+
 	//提示弹框
 	private group_tips:eui.Group;
 	//关闭提示弹框
 	private tips_close:eui.Group;
 	//提示内容
 	private tips_text:eui.Label;
+	//是否‘提示框’打开的遮罩
+	private is_tips_mask:boolean = false;
+
+	//全屏遮罩
+	private full_mask:eui.Rect;
 
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/Index.exml";
-
+		this.right = 0;
+		this.left = 0;
+		this.top = 0;
+		this.bottom = 0;
 		//打开登录、注册弹框
 		this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnLogClick, this);
 		this.btn_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnRegClick, this);
@@ -66,25 +86,29 @@ class index extends eui.Component {
 		this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
 
 		//关闭提示弹框
-		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.group_tips.visible = false;}, this);
+		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			if(this.is_tips_mask){
+				this.full_mask.visible = false;
+			}
+			this.group_tips.visible = false;
+		}, this);
 	}
 
 	//弹出登录框 
 	private onBtnLogClick(){
-		this.group_log_reg.visible = true;
+		this.full_mask.visible = true;
 		this.panel_log.visible = true;
-		console.log('open log');
 	}
 	//弹出注册框 
 	private onBtnRegClick(){
-		this.group_log_reg.visible = true;		
+		this.full_mask.visible = true;		
 		this.panel_reg.visible = true;
 		console.log('open reg');
 	}
 
 	//关闭登录框 
 	private onLogCloseClick(){
-		this.group_log_reg.visible = false;		
+		this.full_mask.visible = false;		
 		this.panel_log.visible = false;
 		console.log('close log');
 		
@@ -92,7 +116,7 @@ class index extends eui.Component {
 
 	//关闭注册框 
 	private onRegCloseClick(){
-		this.group_log_reg.visible = false;		
+		this.full_mask.visible = false;		
 		this.panel_reg.visible = false;
 		console.log('close reg');
 	}
@@ -147,10 +171,6 @@ class index extends eui.Component {
 
 	//注册
 	private onCommitRegClick(e:egret.TouchEvent){
-		console.log(this.reg_user_name.text);
-		console.log(this.reg_pass_word.text);
-		console.log(this.reg_rep_pass_word.text);
-
 		if(this.reg_pass_word.text != this.reg_rep_pass_word.text){
 			this.tips_text.text = '两次输入密码不一致';
 			this.group_tips.visible = true;
@@ -174,16 +194,12 @@ class index extends eui.Component {
 					setTimeout(()=>{
 						this.group_tips.visible = false;
 						this.panel_reg.visible = false;
-						this.panel_log.visible = true;
+						this.panel_log.visible = true;				
 					} ,2000)
 				} else {
 					this.tips_text.text = res.msg;
 					this.group_tips.visible = true;
-					setTimeout(()=>{
-						this.group_tips.visible = false;
-					} ,2000)
 				}
-				console.log(res);
 			},
 			error:(error)=>{
 				console.log(error);

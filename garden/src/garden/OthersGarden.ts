@@ -12,11 +12,16 @@ class OthersGarden extends eui.Component {
 	private jiaoshui_mc_1:egret.MovieClip;
 	//果园用户名
 	private other_user_name:string;
-	
+	//顶部果园用户头像、昵称信息
+	private group_top:eui.Group;
 	
 	public constructor(other_user_name:string) {
 		super();
 		this.skinName = "resource/garden_skins/OthersGarden.exml";
+		this.right = 0;
+		this.left = 0;
+		this.top = 0;
+		this.bottom = 0;
 		//顶部果园用户头像、昵称信息
 		this.other_user_name = other_user_name;
 		
@@ -29,7 +34,6 @@ class OthersGarden extends eui.Component {
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					var topGrop:eui.Group = new eui.Group();
 					var topAvatar = this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
 					var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
 					var label:eui.Label = new eui.Label();
@@ -40,12 +44,12 @@ class OthersGarden extends eui.Component {
 					label.size = 30;
 					label.text = other_user_name;
 					label.textColor = 0x000000;
-					topGrop.x = 0;
-					topGrop.y = 30;
-					topGrop.addChild(topAvatarBg);		
-					topGrop.addChild(topAvatar);
-					topGrop.addChild(label);
-					this.addChild(topGrop);
+					this.group_top.x = 0;
+					this.group_top.y = 30;
+					this.group_top.addChild(topAvatarBg);		
+					this.group_top.addChild(topAvatar);
+					this.group_top.addChild(label);
+					this.addChild(this.group_top);
 				}
 			},
 			error:()=>{

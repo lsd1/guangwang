@@ -1,0 +1,26 @@
+{
+	"skins": {},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/garden_skins/index.exml",
+		"resource/garden_skins/InteractionList.exml",
+		"resource/garden_skins/myGarden.exml",
+		"resource/garden_skins/OthersGarden.exml",
+		"resource/garden_skins/scoreList.exml",
+		"resource/garden_skins/tool.exml",
+		"resource/eui_skins/ButtonSkin.exml",
+		"resource/eui_skins/CheckBoxSkin.exml",
+		"resource/eui_skins/HScrollBarSkin.exml",
+		"resource/eui_skins/HSliderSkin.exml",
+		"resource/eui_skins/ItemRendererSkin.exml",
+		"resource/eui_skins/PanelSkin.exml",
+		"resource/eui_skins/ProgressBarSkin.exml",
+		"resource/eui_skins/RadioButtonSkin.exml",
+		"resource/eui_skins/ScrollerSkin.exml",
+		"resource/eui_skins/TextInputSkin.exml",
+		"resource/eui_skins/ToggleSwitchSkin.exml",
+		"resource/eui_skins/VScrollBarSkin.exml",
+		"resource/eui_skins/VSliderSkin.exml"
+	],
+	"path": "resource/default.thm.json"
+}
