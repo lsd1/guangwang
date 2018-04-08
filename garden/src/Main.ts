@@ -102,7 +102,7 @@ class Main extends eui.UILayer {
         if(common.getCookie('token') && common.getCookie('username')){
 			this.addChild(MyGarden.Shared());
 		}else{
-            this.addChild(index.Shared());
+            this.addChild(Index.Shared());
         }
     }
 

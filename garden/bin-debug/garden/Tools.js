@@ -12,7 +12,7 @@ var Tools = (function (_super) {
     __extends(Tools, _super);
     function Tools() {
         var _this = _super.call(this) || this;
-        _this.skinName = 'resource/garden_skins/tool.exml';
+        _this.skinName = 'resource/garden_skins/tools.exml';
         _this.group_tool.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onToolGroupTap, _this);
         return _this;
     }

@@ -170,7 +170,7 @@ var Main = (function (_super) {
             this.addChild(MyGarden.Shared());
         }
         else {
-            this.addChild(index.Shared());
+            this.addChild(Index.Shared());
         }
     };
     return Main;

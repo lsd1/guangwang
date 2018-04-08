@@ -1,1 +1,188 @@
-{"file":"jiaoshui_tex.png","res":{"Sprite_8":{"x":111,"y":266,"w":105,"h":108},"Sprite_6":{"x":218,"y":266,"w":105,"h":102},"Sprite_3":{"x":221,"y":123,"w":100,"h":98},"Sprite_1":{"x":1,"y":414,"w":108,"h":90},"Sprite_10":{"x":111,"y":144,"w":108,"h":120},"Sprite_5":{"x":323,"y":99,"w":100,"h":95},"Sprite_13":{"x":1,"y":1,"w":109,"h":141},"Sprite_7":{"x":111,"y":376,"w":105,"h":104},"Sprite_4":{"x":325,"y":1,"w":91,"h":95},"Sprite_12":{"x":1,"y":144,"w":108,"h":135},"Sprite_2":{"x":222,"y":1,"w":101,"h":96},"Sprite_0":{"x":218,"y":370,"w":109,"h":79},"Sprite_11":{"x":1,"y":281,"w":108,"h":131},"Sprite_9":{"x":112,"y":1,"w":108,"h":120}},"mc":{"jiaoshui_mc_1":{"labels":[{"end":14,"frame":1,"name":"Sprite"}],"frameRate":14,"frames":[{"duration":1,"y":-36,"res":"Sprite_0","x":-52},{"duration":1,"y":-47,"res":"Sprite_1","x":-54},{"duration":1,"y":-57,"res":"Sprite_2","x":-51},{"duration":1,"y":-64,"res":"Sprite_3","x":-45},{"duration":1,"y":-67,"res":"Sprite_4","x":-36},{"duration":1,"y":-67,"res":"Sprite_5","x":-45},{"duration":1,"y":-67,"res":"Sprite_6","x":-50},{"duration":1,"y":-67,"res":"Sprite_7","x":-50},{"duration":1,"y":-67,"res":"Sprite_8","x":-50},{"duration":1,"y":-67,"res":"Sprite_9","x":-53},{"duration":1,"y":-67,"res":"Sprite_10","x":-53},{"duration":1,"y":-67,"res":"Sprite_11","x":-53},{"duration":1,"y":-67,"res":"Sprite_12","x":-53},{"duration":1,"y":-67,"res":"Sprite_13","x":-54}],"events":[]}}}
+{
+  "file": "jiaoshui_tex.png",
+  "res": {
+    "Sprite_8": {
+      "x": 111,
+      "y": 266,
+      "w": 105,
+      "h": 108
+    },
+    "Sprite_6": {
+      "x": 218,
+      "y": 266,
+      "w": 105,
+      "h": 102
+    },
+    "Sprite_3": {
+      "x": 221,
+      "y": 123,
+      "w": 100,
+      "h": 98
+    },
+    "Sprite_1": {
+      "x": 1,
+      "y": 414,
+      "w": 108,
+      "h": 90
+    },
+    "Sprite_10": {
+      "x": 111,
+      "y": 144,
+      "w": 108,
+      "h": 120
+    },
+    "Sprite_5": {
+      "x": 323,
+      "y": 99,
+      "w": 100,
+      "h": 95
+    },
+    "Sprite_13": {
+      "x": 1,
+      "y": 1,
+      "w": 109,
+      "h": 141
+    },
+    "Sprite_7": {
+      "x": 111,
+      "y": 376,
+      "w": 105,
+      "h": 104
+    },
+    "Sprite_4": {
+      "x": 325,
+      "y": 1,
+      "w": 91,
+      "h": 95
+    },
+    "Sprite_12": {
+      "x": 1,
+      "y": 144,
+      "w": 108,
+      "h": 135
+    },
+    "Sprite_2": {
+      "x": 222,
+      "y": 1,
+      "w": 101,
+      "h": 96
+    },
+    "Sprite_0": {
+      "x": 218,
+      "y": 370,
+      "w": 109,
+      "h": 79
+    },
+    "Sprite_11": {
+      "x": 1,
+      "y": 281,
+      "w": 108,
+      "h": 131
+    },
+    "Sprite_9": {
+      "x": 112,
+      "y": 1,
+      "w": 108,
+      "h": 120
+    }
+  },
+  "mc": {
+    "jiaoshui_mc_1": {
+      "labels": [
+        {
+          "end": 14,
+          "frame": 1,
+          "name": "Sprite"
+        }
+      ],
+      "frameRate": 14,
+      "frames": [
+        {
+          "duration": 1,
+          "y": -36,
+          "res": "Sprite_0",
+          "x": -52
+        },
+        {
+          "duration": 1,
+          "y": -47,
+          "res": "Sprite_1",
+          "x": -54
+        },
+        {
+          "duration": 1,
+          "y": -57,
+          "res": "Sprite_2",
+          "x": -51
+        },
+        {
+          "duration": 1,
+          "y": -64,
+          "res": "Sprite_3",
+          "x": -45
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_4",
+          "x": -36
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_5",
+          "x": -45
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_6",
+          "x": -50
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_7",
+          "x": -50
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_8",
+          "x": -50
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_9",
+          "x": -53
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_10",
+          "x": -53
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_11",
+          "x": -53
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_12",
+          "x": -53
+        },
+        {
+          "duration": 1,
+          "y": -67,
+          "res": "Sprite_13",
+          "x": -54
+        }
+      ],
+      "events": []
+    }
+  }
+}

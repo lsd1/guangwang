@@ -20,7 +20,7 @@
 		"resource/garden_skins/MyGarden.exml",
 		"resource/garden_skins/OthersGarden.exml",
 		"resource/garden_skins/ScoreList.exml",
-		"resource/garden_skins/Tool.exml"
+		"resource/garden_skins/Tools.exml"
 	],
 	"path": "resource/default.thm.json"
 }
