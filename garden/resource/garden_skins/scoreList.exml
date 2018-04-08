@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="scoreList" width="690" height="37" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="score_list" width="690" height="37" x="0" y="0">
-		<e:Label id="score_desc" text="" left="0" width="150" height="37" fontFamily="Microsoft YaHei" textColor="0x673c13" y="0" x="0" scaleX="1" scaleY="1"/>
-		<e:Label id="score_change" text="" x="198.48000000000002" anchorOffsetX="0" width="150" anchorOffsetY="0" height="37" fontFamily="Microsoft YaHei" textColor="0x673c13" y="0" scaleX="1" scaleY="1"/>
-		<e:Label id="score_date" text="" textColor="0x673c13" fontFamily="Microsoft YaHei" height="37" anchorOffsetX="0" right="0" width="300" y="0" x="400" scaleX="1" scaleY="1"/>
-	</e:Group>
-</e:Skin>
