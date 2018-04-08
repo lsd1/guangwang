@@ -13,11 +13,12 @@
 
 	</e:Group>
 
-	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0" locked="true">
+	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
 		<e:Rect width="750" height="248" fillColor="0xffffff" horizontalCenter="0" bottom="0"/>
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0"/>
 	</e:Group>
+	<e:Rect id="full_mask" fillAlpha="0.4" left="0" top="0" right="0" bottom="0" locked="true" visible="false"/>
 	<e:Group id="panel_props" width="580" height="544" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
 
 		<e:Rect width="580" height="544" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" x="0" y="0"/>
@@ -170,7 +171,7 @@
 		<e:Image id="my_avatar" x="48" y="307" anchorOffsetX="0" anchorOffsetY="0" source="othersgarden_icon_water_png" width="150" height="150"/>
 	</e:Group>
 
-	<e:Group id="panel_set_pass_word" width="580" height="620" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" locked="true" visible="false">
+	<e:Group id="panel_set_pass_word" width="580" height="620" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
 
 		<e:Rect width="580" height="620" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" x="0"/>
 		<e:Rect width="544" height="504" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="0" bottom="18"/>
@@ -195,7 +196,7 @@
 		</e:Group>
 	</e:Group>
 
-	<e:Group id="panel_extract_point" width="580" height="518" anchorOffsetY="0" verticalCenter="0" horizontalCenter="0" locked="true" visible="false">
+	<e:Group id="panel_extract_point" width="580" height="518" anchorOffsetY="0" verticalCenter="0" horizontalCenter="0" visible="false">
 
 		<e:Rect width="580" height="518" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" x="0"/>
 		<e:Rect width="544" height="402" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="0" y="84"/>
@@ -218,18 +219,18 @@
 	</e:Group>
 
 
-	<e:Group id="group_tips" width="478" height="444" verticalCenter="0" horizontalCenter="0" visible="false" locked="true">
+	<e:Group id="group_tips" width="478" height="444" verticalCenter="0" horizontalCenter="0" locked="true" visible="false">
 
 		<e:Rect width="478" height="444" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" horizontalCenter="0"/>
 		<e:Rect width="432" height="250" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" y="85"/>
 		<e:Label text="温馨提示" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" size="35" y="24" horizontalCenter="0"/>
-		<e:Label id="tips_text" text="" x="204" y="442" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10"/>
+		<e:Label id="tips_text" text="" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10" verticalCenter="-20" horizontalCenter="0"/>
 		<e:Group id="tips_close" width="222" height="82" horizontalCenter="0" y="348">
 			<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" horizontalCenter="0" verticalCenter="0"/>
 			<e:Label text="知道了" fontFamily="Microsoft YaHei" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
 	</e:Group>
-	<e:Rect id="full_mask" fillAlpha="0.4" left="0" top="0" right="0" bottom="0" locked="true" visible="false"/>
+
 	<e:Group id="cut_image" width="750" height="1334" horizontalCenter="0" verticalCenter="0" visible="false">
 		<e:Group id="cut_area_group" top="0" width="750" height="667" horizontalCenter="0">
 		<e:Image id="origin_image" scaleX="1" scaleY="1" horizontalCenter="0" top="0"/>

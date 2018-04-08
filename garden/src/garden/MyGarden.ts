@@ -90,7 +90,7 @@ class MyGarden extends eui.Component{
 	//新密码
 	private new_pass_word:eui.Label;
 	//重复新密码
-	private repeat_new_pass_word:eui.Label;
+	private repeat_pass_word:eui.Label;
 	//提交修改
 	private commit_change:eui.Group;
 	//关闭设置新密码按钮
@@ -477,7 +477,7 @@ class MyGarden extends eui.Component{
 			return false;	
 		}
 
-		if(this.new_pass_word.text !== this.repeat_new_pass_word.text){
+		if(this.new_pass_word.text !== this.repeat_pass_word.text){
 			this.tips_text.text = '两次输入密码不一致！';
 			this.group_tips.visible = true;
 			return false;					
@@ -490,7 +490,11 @@ class MyGarden extends eui.Component{
 				success:(res:any)=>{
 					var res = JSON.parse(res);
 					if(res.code == 0){
-					
+						this.tips_text.text = '修改密码成功';
+						this.group_tips.visible = true;
+					}else{
+						this.tips_text.text = res.msg;
+						this.group_tips.visible = true;
 					}
 				},
 				error:()=>{
@@ -519,14 +523,30 @@ class MyGarden extends eui.Component{
 		
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/draw_score';
-		var score = 1;
+		var score = this.point_number.text;
+		var address = this.wallet_address.text;
+		if(parseInt(score) <= 0 || score == ''){
+			this.tips_text.text = '请输入正确的积分数目';
+			this.group_tips.visible = true;
+			return false;
+		}
+		if(address == ''){
+			this.tips_text.text = '钱包地址不能为空';
+			this.group_tips.visible = true;
+			return false;
+		}
+		console.log(score,'-',address);
 		httpReq.POST({
 			url:url,
-			data:{score:score},
+			data:{score:score,address:address},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					
+					this.tips_text.text = '积分提取成功';
+					this.group_tips.visible = true;
+				}else{
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
 				}
 			},
 			error:()=>{

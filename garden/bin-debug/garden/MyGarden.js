@@ -310,6 +310,7 @@ var MyGarden = (function (_super) {
     };
     //修改密码-提交
     MyGarden.prototype.onCommitChangeTap = function (e) {
+        var _this = this;
         if (this.old_pass_word.text == '') {
             this.tips_text.text = '请输入原来的密码！';
             this.group_tips.visible = true;
@@ -325,7 +326,7 @@ var MyGarden = (function (_super) {
             this.group_tips.visible = true;
             return false;
         }
-        if (this.new_pass_word.text !== this.repeat_new_pass_word.text) {
+        if (this.new_pass_word.text !== this.repeat_pass_word.text) {
             this.tips_text.text = '两次输入密码不一致！';
             this.group_tips.visible = true;
             return false;
@@ -339,6 +340,12 @@ var MyGarden = (function (_super) {
                 success: function (res) {
                     var res = JSON.parse(res);
                     if (res.code == 0) {
+                        _this.tips_text.text = '修改密码成功';
+                        _this.group_tips.visible = true;
+                    }
+                    else {
+                        _this.tips_text.text = res.msg;
+                        _this.group_tips.visible = true;
                     }
                 },
                 error: function () {
@@ -360,15 +367,34 @@ var MyGarden = (function (_super) {
     };
     //提取积分
     MyGarden.prototype.onCommitExtractPointTap = function (e) {
+        var _this = this;
         var httpReq = new HttpReq();
         var url = 'v1.0/user/draw_score';
-        var score = 1;
+        var score = this.point_number.text;
+        var address = this.wallet_address.text;
+        if (parseInt(score) <= 0 || score == '') {
+            this.tips_text.text = '请输入正确的积分数目';
+            this.group_tips.visible = true;
+            return false;
+        }
+        if (address == '') {
+            this.tips_text.text = '钱包地址不能为空';
+            this.group_tips.visible = true;
+            return false;
+        }
+        console.log(score, '-', address);
         httpReq.POST({
             url: url,
-            data: { score: score },
+            data: { score: score, address: address },
             success: function (res) {
                 var res = JSON.parse(res);
                 if (res.code == 0) {
+                    _this.tips_text.text = '积分提取成功';
+                    _this.group_tips.visible = true;
+                }
+                else {
+                    _this.tips_text.text = res.msg;
+                    _this.group_tips.visible = true;
                 }
             },
             error: function () {
