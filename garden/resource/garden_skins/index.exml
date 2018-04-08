@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="loginButton" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="garden_png" left="0" top="0" right="0" bottom="0"/>
+	<e:Rect id="full_mask" fillAlpha="0.5" scaleX="1" scaleY="1" left="0" top="0" bottom="0" right="0" width="0" height="0" locked="true" visible="false"/>
+	<e:Group id="group_log_reg_button" anchorOffsetX="0" width="658" height="200" horizontalCenter="0" bottom="0" locked="true">
+		<e:Button id="btn_reg" label="" scaleX="1" scaleY="1" left="18" top="54" width="266">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_logon_nor_png" source.down="btn_logon_pre_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="btn_log" label="" scaleX="1" scaleY="1" right="28" width="266" top="54">
+
+		
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_login_nor_png" source.down="btn_login_pre_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="panel_log" anchorOffsetX="0" anchorOffsetY="0" width="572" height="632" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
+		<e:Rect width="572" height="632" y="0" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="1" fillColor="0xffd778" ellipseWidth="100" ellipseHeight="100" x="0" scaleX="1" scaleY="1"/>
+		<e:Button id="log_close" label="" x="500.17" y="23.12" anchorOffsetY="0" height="45" anchorOffsetX="0" width="45" scaleX="1" scaleY="1">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+			</e:Skin>
+		</e:skinName>
+		</e:Button>
+		<e:Image source="text_login_png" y="23.12" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Rect width="540" height="520" y="82.12" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="30" ellipseHeight="30" fillColor="0xffefbd" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Rect width="464" height="98" y="120.12" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" ellipseHeight="20" fillColor="0xffffff" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:EditableText id="log_user_name" width="382" height="64" text="请输入账号昵称" y="142.12" anchorOffsetX="0" anchorOffsetY="0" textColor="0xcccccc" fontFamily="SimHei" verticalAlign="middle" textAlign="left" horizontalCenter="0"/>
+		<e:Rect width="464" height="98" y="244.12" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" ellipseHeight="20" fillColor="0xFFFFFF" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:EditableText id="log_pass_word" width="382" height="64" text="请输入登陆密码" y="264.12" anchorOffsetX="0" anchorOffsetY="0" textColor="0xcccccc" verticalAlign="middle" textAlign="left" fontFamily="SimHei" displayAsPassword="true" horizontalCenter="0"/>
+		<e:Label text="点击登录即表示您已同意" x="122.25" y="500.62" anchorOffsetX="0" width="222.84" anchorOffsetY="0" height="23.81" textColor="0xe1c37c" size="20" fontFamily="SimHei" scaleX="1" scaleY="1"/>
+		<e:Label text="《用户协议》" x="345.09" y="500.62" size="20" textColor="0xffa600" fontFamily="SimHei" scaleX="1" scaleY="1"/>
+		<e:Group id="commit_log" width="330" height="100" y="379.12" horizontalCenter="0">
+		<e:Rect width="330" height="100" y="0" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" x="0"/>
+		<e:Label text="登录" y="33.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130.00000000000003"/>
+		</e:Group>
+	</e:Group>
+	<e:Group id="panel_reg" width="572" height="720" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="37" visible="false" locked="true">
+		<e:Rect width="572" height="720" y="0" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="1" fillColor="0xffd778" ellipseWidth="50" ellipseHeight="50" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Image y="34.5" scaleX="1" scaleY="1" source="text_logon_png" horizontalCenter="0"/>
+		<e:Button id="reg_close" label="" x="504.61" y="27.94" anchorOffsetY="0" height="45" anchorOffsetX="0" width="45" scaleX="1" scaleY="1">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+			</e:Skin>
+		</e:skinName>
+		</e:Button>
+		<e:Rect width="540" height="598" y="100" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="30" ellipseHeight="30" fillColor="0xffefbd" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Rect width="464" height="98" y="138" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" ellipseHeight="20" fillColor="0xffffff" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:EditableText id="reg_user_name" text="请设置账号昵称" y="156" anchorOffsetX="0" width="400" anchorOffsetY="0" height="62" textColor="0xCCCCCC" fontFamily="SimHei" size="30" verticalAlign="middle" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Rect width="464" height="98" y="252" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" ellipseHeight="20" fillColor="0xFFFFFF" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:EditableText id="reg_pass_word" text="请设置登录密码" y="270" anchorOffsetX="0" width="400" anchorOffsetY="0" height="62" textColor="0xcccccc" fontFamily="SimHei" size="30" verticalAlign="middle" scaleX="1" scaleY="1" displayAsPassword="true" horizontalCenter="0"/>
+		<e:Rect width="464" height="98" y="372" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" ellipseHeight="20" fillColor="0xFFFFFF" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:EditableText id="reg_rep_pass_word" text="请确认登录密码" y="388" anchorOffsetX="0" width="400" anchorOffsetY="0" height="62" textColor="0xCCCCCC" fontFamily="SimHei" size="30" verticalAlign="middle" scaleX="1" scaleY="1" displayAsPassword="true" horizontalCenter="0"/>
+		<e:Label text="点击注册即表示您已同意" x="116.25" y="620.5" anchorOffsetX="0" width="222.84" anchorOffsetY="0" height="23.81" textColor="0xe1c37c" size="20" fontFamily="SimHei" scaleX="1" scaleY="1"/>
+		<e:Label text="《用户协议》" x="340.18" y="620.5" size="20" textColor="0xffa600" fontFamily="SimHei" scaleX="1" scaleY="1"/>
+		<e:Group id="commit_reg" width="330" height="100" y="500" horizontalCenter="0">
+		<e:Rect width="330" height="100" y="0" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" x="0"/>
+		<e:Label text="注册" y="32.38000000000011" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130.00000000000003"/>
+		</e:Group>
+	</e:Group>
+	<e:Group id="group_tips" width="478" height="444" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
+		<e:Rect width="478" height="444" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" horizontalCenter="0" verticalCenter="0" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Rect width="432" height="250" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" x="23.00000000000003" y="97" scaleX="1" scaleY="1"/>
+		<e:Label text="温馨提示" y="36.26999999999998" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" horizontalCenter="0" size="35" x="169" scaleX="1" scaleY="1"/>
+		<e:Label id="tips_text" text="" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10" verticalCenter="0" horizontalCenter="0" x="59.00000000000003" y="133" scaleX="1" scaleY="1"/>
+		<e:Group id="tips_close" width="222" height="82" y="354.27" horizontalCenter="0" x="128" scaleX="1" scaleY="1">
+		<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" verticalCenter="0" horizontalCenter="0"/>
+		<e:Label text="知道了" fontFamily="Microsoft YaHei" verticalCenter="0" horizontalCenter="0"/>
+		</e:Group>
+	</e:Group>
+
+
+
+</e:Skin>
