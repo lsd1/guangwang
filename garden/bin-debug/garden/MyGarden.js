@@ -20,6 +20,13 @@ var MyGarden = (function (_super) {
         _this.left = 0;
         _this.top = 0;
         _this.bottom = 0;
+        _this.callTest.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.ExternalInterface.call('sendToNative', 'message from js');
+            alert('I have sendToJava!!');
+        }, _this);
+        egret.ExternalInterface.addCallback('sendToJs', function (message) {
+            alert(message);
+        });
         //获取果园信息
         var httpReq = new HttpReq();
         var url = 'v1.0/user/show_garden';
@@ -511,4 +518,3 @@ var MyGarden = (function (_super) {
     return MyGarden;
 }(eui.Component));
 __reflect(MyGarden.prototype, "MyGarden");
-//# sourceMappingURL=MyGarden.js.map

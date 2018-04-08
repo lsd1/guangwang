@@ -54,4 +54,3 @@ var NewsList = (function () {
     return NewsList;
 }());
 __reflect(NewsList.prototype, "NewsList");
-//# sourceMappingURL=NewsList.js.map

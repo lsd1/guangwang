@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="index" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="loginButton" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="garden_png" left="0" top="0" right="0" bottom="0"/>
 	<e:Rect id="full_mask" fillAlpha="0.5" scaleX="1" scaleY="1" left="0" top="0" bottom="0" right="0" width="0" height="0" locked="true" visible="false"/>
 	<e:Group id="group_log_reg_button" anchorOffsetX="0" width="658" height="200" horizontalCenter="0" bottom="0" locked="true">

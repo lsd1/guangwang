@@ -97,12 +97,15 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
+        egret.ExternalInterface.addCallback('sendToJs', (message:string)=>{
+			alert(message);
+		});
         var common = Common.Shared();
         //this.addChild(index.Shared());
         if(common.getCookie('token') && common.getCookie('username')){
 			this.addChild(MyGarden.Shared());
 		}else{
-            this.addChild(Index.Shared());
+            this.addChild(index.Shared());
         }
     }
 

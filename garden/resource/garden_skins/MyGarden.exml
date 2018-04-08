@@ -8,6 +8,7 @@
 			<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
+			<e:Label id="callTest" text="callJava" x="337" y="41"/>
 		</e:Group>
 
 

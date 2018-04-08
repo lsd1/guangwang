@@ -43,10 +43,6 @@
 		{
 			"name": "md5",
 			"path": "../md5"
-		},
-		{
-			"name": "appEvent",
-			"path": "../appEvent"
 		}
 	]
 }

@@ -164,16 +164,18 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
+        egret.ExternalInterface.addCallback('sendToJs', function (message) {
+            alert(message);
+        });
         var common = Common.Shared();
         //this.addChild(index.Shared());
         if (common.getCookie('token') && common.getCookie('username')) {
             this.addChild(MyGarden.Shared());
         }
         else {
-            this.addChild(Index.Shared());
+            this.addChild(index.Shared());
         }
     };
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
-//# sourceMappingURL=Main.js.map

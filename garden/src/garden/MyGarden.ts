@@ -138,6 +138,8 @@ class MyGarden extends eui.Component{
 	private is_tips_mask:boolean = false;
 	//全局遮罩
 	private full_mask:eui.Rect;
+	//调Java
+	private callTest:eui.Label;
 
 	public constructor() {
 		super();
@@ -148,6 +150,14 @@ class MyGarden extends eui.Component{
 		this.top = 0;
 		this.bottom = 0;
 
+		this.callTest.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
+			egret.ExternalInterface.call('sendToNative', 'message from js');
+			alert('I have sendToJava!!');
+		},this);
+
+		egret.ExternalInterface.addCallback('sendToJs', (message:string)=>{
+			alert(message);
+		});
 
 		//获取果园信息
 		var httpReq = new HttpReq();

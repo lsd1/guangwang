@@ -10,7 +10,7 @@ class Tools extends eui.Component {
 	public tool_id:number;
 	public constructor() {
 		super();
-		this.skinName = 'resource/garden_skins/tools.exml';
+		this.skinName = 'resource/garden_skins/tool.exml';
 		this.group_tool.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolGroupTap, this);
 	}
 

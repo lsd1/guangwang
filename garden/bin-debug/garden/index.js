@@ -8,9 +8,9 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var Index = (function (_super) {
-    __extends(Index, _super);
-    function Index() {
+var index = (function (_super) {
+    __extends(index, _super);
+    function index() {
         var _this = _super.call(this) || this;
         _this.common = Common.Shared();
         //是否‘提示框’打开的遮罩
@@ -51,37 +51,37 @@ var Index = (function (_super) {
         }, _this);
         return _this;
     }
-    Index.Shared = function () {
+    index.Shared = function () {
         if (this.shared == null) {
-            this.shared = new Index();
+            this.shared = new index();
         }
         return this.shared;
     };
     //弹出登录框 
-    Index.prototype.onBtnLogClick = function () {
+    index.prototype.onBtnLogClick = function () {
         this.full_mask.visible = true;
         this.panel_log.visible = true;
     };
     //弹出注册框 
-    Index.prototype.onBtnRegClick = function () {
+    index.prototype.onBtnRegClick = function () {
         this.full_mask.visible = true;
         this.panel_reg.visible = true;
         console.log('open reg');
     };
     //关闭登录框 
-    Index.prototype.onLogCloseClick = function () {
+    index.prototype.onLogCloseClick = function () {
         this.full_mask.visible = false;
         this.panel_log.visible = false;
         console.log('close log');
     };
     //关闭注册框 
-    Index.prototype.onRegCloseClick = function () {
+    index.prototype.onRegCloseClick = function () {
         this.full_mask.visible = false;
         this.panel_reg.visible = false;
         console.log('close reg');
     };
     //登录
-    Index.prototype.onCommitLogClick = function () {
+    index.prototype.onCommitLogClick = function () {
         var _this = this;
         var httpReq = new HttpReq();
         var url = 'v1.0/login';
@@ -130,7 +130,7 @@ var Index = (function (_super) {
         // });
     };
     //注册
-    Index.prototype.onCommitRegClick = function (e) {
+    index.prototype.onCommitRegClick = function (e) {
         var _this = this;
         if (this.reg_pass_word.text != this.reg_rep_pass_word.text) {
             this.tips_text.text = '两次输入密码不一致';
@@ -168,13 +168,13 @@ var Index = (function (_super) {
             }
         });
     };
-    Index.prototype.onInputFocusOut = function (e) {
+    index.prototype.onInputFocusOut = function (e) {
         e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
         if (e.currentTarget.text == '') {
             e.currentTarget.text = this.placeHolder;
         }
     };
-    Index.prototype.onInputFocusIn = function (e) {
+    index.prototype.onInputFocusIn = function (e) {
         var patt = new RegExp('(请输入|请设置|请充值|请确认)');
         if (patt.test(e.currentTarget.text)) {
             this.placeHolder = e.currentTarget.text;
@@ -182,7 +182,6 @@ var Index = (function (_super) {
         }
         e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
     };
-    return Index;
+    return index;
 }(eui.Component));
-__reflect(Index.prototype, "Index");
-//# sourceMappingURL=Index.js.map
+__reflect(index.prototype, "index");
