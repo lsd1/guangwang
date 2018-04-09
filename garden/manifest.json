@@ -21,7 +21,7 @@
 		"bin-debug/garden/AvatarList.js",
 		"bin-debug/garden/Common.js",
 		"bin-debug/LoadingUI.js",
-		"bin-debug/garden/index.js",
+		"bin-debug/garden/Index.js",
 		"bin-debug/garden/InteractionList.js",
 		"bin-debug/garden/MyGarden.js",
 		"bin-debug/garden/NewsList.js",

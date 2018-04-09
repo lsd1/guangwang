@@ -168,14 +168,15 @@ var Main = (function (_super) {
             alert(message);
         });
         var common = Common.Shared();
-        //this.addChild(index.Shared());
+        //this.addChild(Index.Shared());
         if (common.getCookie('token') && common.getCookie('username')) {
             this.addChild(MyGarden.Shared());
         }
         else {
-            this.addChild(index.Shared());
+            this.addChild(Index.Shared());
         }
     };
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
+//# sourceMappingURL=Main.js.map

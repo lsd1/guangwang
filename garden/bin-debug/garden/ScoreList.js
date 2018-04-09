@@ -20,3 +20,4 @@ var ScoreList = (function (_super) {
     return ScoreList;
 }(eui.Component));
 __reflect(ScoreList.prototype, "ScoreList");
+//# sourceMappingURL=ScoreList.js.map

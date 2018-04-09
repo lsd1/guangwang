@@ -101,11 +101,11 @@ class Main extends eui.UILayer {
 			alert(message);
 		});
         var common = Common.Shared();
-        //this.addChild(index.Shared());
+        //this.addChild(Index.Shared());
         if(common.getCookie('token') && common.getCookie('username')){
 			this.addChild(MyGarden.Shared());
 		}else{
-            this.addChild(index.Shared());
+            this.addChild(Index.Shared());
         }
     }
 

@@ -58,5 +58,5 @@ declare class myGarden extends eui.Skin{
 }
 declare class scoreList extends eui.Skin{
 }
-declare class tool extends eui.Skin{
+declare class tools extends eui.Skin{
 }
