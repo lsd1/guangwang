@@ -1,10 +1,10 @@
-class index extends eui.Component {
+class Index extends eui.Component {
 
 	//单例模式
-	private static shared:index;
+	private static shared:Index;
 	public static Shared(){
 		if(this.shared == null){
-			this.shared = new index();
+			this.shared = new Index();
 		}
 		return this.shared;
 	}
