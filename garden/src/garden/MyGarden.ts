@@ -31,7 +31,7 @@ class MyGarden extends eui.Component{
 	//激活套餐关闭按钮
 	public active_package_close:eui.Button;
 	//套餐激活码
-	public active_code:eui.Label;
+	public package_no:eui.Label;
 	//提交激活
 	public commit_active_package:eui.EditableText;
 
@@ -137,9 +137,7 @@ class MyGarden extends eui.Component{
 	//是否‘提示框’打开的遮罩
 	private is_tips_mask:boolean = false;
 	//全局遮罩
-	private full_mask:eui.Rect;
-	//调Java
-	private callTest:eui.Label;
+	public full_mask:eui.Rect;
 
 	public constructor() {
 		super();
@@ -150,15 +148,6 @@ class MyGarden extends eui.Component{
 		this.top = 0;
 		this.bottom = 0;
 
-		this.callTest.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
-			egret.ExternalInterface.call('sendToNative', 'message from js');
-			alert('I have sendToJava!!');
-		},this);
-
-		egret.ExternalInterface.addCallback('sendToJs', (message:string)=>{
-			alert(message);
-		});
-
 		//获取果园信息
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
@@ -168,7 +157,7 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					console.log(res);
+					//console.log(res);
 				}
 			},
 			error:()=>{
@@ -178,6 +167,8 @@ class MyGarden extends eui.Component{
 				console.log('waiting......');
 			}
 		});
+
+
 
 		//关闭提示弹框
 		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
@@ -196,8 +187,9 @@ class MyGarden extends eui.Component{
 		this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolTipsCloseTap, this);
 		this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitToolTipsTap, this);
 
-		//激活套餐
+		//关闭激活套餐弹框
 		this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onActivePackageCloseTap, this);
+		this.package_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 
 		//我的果园
@@ -230,6 +222,10 @@ class MyGarden extends eui.Component{
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);		
 		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
 
+		//激活礼包获取道具
+		this.commit_active_package.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActivePackageTap,this);
+
+
 		//顶部果园用户头像、昵称信息
 		this.my_avatar.source = this.common.getCookie('avatar');
 		this.user_name.text = this.common.getCookie('username');
@@ -254,21 +250,42 @@ class MyGarden extends eui.Component{
         line.graphics.endFill();
 		this.group_avatar.addChild(line);
 
-		//尾部果园互动消息列表
-		for(var i = 0; i < 6; i++){
-			let avatar = new AvatarList();
-			avatar.x = 25 + i * 120;
-			if(i==5){
-				this.garden_more_news = avatar.createAvatar(i + 1, "mygarden_png", "30");
-				this.group_avatar.addChild(this.garden_more_news);
-				
-			}else{
-				let avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
-				this.group_avatar.addChild(avatar_cell);
-			}
-		}
 
-		this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
+		//获取果园日志
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/user_logs';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					let userLogList = res.data.userLogList;
+					for(var i = 0; i < userLogList.length; i++){
+						let avatar = new AvatarList();
+						avatar.x = 25 + i * 120;
+						let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
+						if(i==1){
+							this.garden_more_news = avatar.createAvatar(i + 1, avatar_source, "30");
+							this.group_avatar.addChild(this.garden_more_news);
+							this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
+						}else{
+							let avatar_cell = avatar.createAvatar(i + 1, avatar_source, "30");
+							this.group_avatar.addChild(avatar_cell);
+						}
+					}
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
+
+		//尾部果园互动消息列表
+
 	}
 
 	//点击道具
@@ -345,10 +362,8 @@ class MyGarden extends eui.Component{
 			data:{},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
-				console.log(res);
 				if(res.code == 0){
-					var pickList = res.data.pickList;
-					console.log(pickList);					
+					var pickList = res.data.pickList;			
 					for(var i = 0; i < pickList.length; i++){
 						let interaction = new InteractionList(pickList[i].id, pickList[i].username);
 						let typeArr = [];
@@ -439,26 +454,77 @@ class MyGarden extends eui.Component{
 	//提交套餐激活弹框
 	private onCommitActivePackageTap(e:egret.TouchEvent){
 		this.panel_active_package.visible = false;
+		this.full_mask.visible = false;
+		let packageNo = this.package_no.text;
+		if(packageNo == ''){
+			this.tips_text.text = '请输入激活码';
+			this.group_tips.visible = true;			
+			return false;
+		}
 
-		var data = {"number":999,"price":10,"payOrder":"mcoinTrade"};
-        console.log(data);
-        //window.maiguoer.buyCoinToPay(JSON.stringify(data));
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/put_package';
+		httpReq.POST({
+			url:url,
+			data:{packageNo:packageNo},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.full_mask.visible = true;	
+					this.is_tips_mask = true;
+					this.tips_text.text = '恭喜你获得了道具大礼包！';						
+					this.group_tips.visible = true;
+				}else{
+					this.full_mask.visible = true;	
+					this.is_tips_mask = true;	
+					this.tips_text.text = res.msg;					
+					this.group_tips.visible = true;
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
+		var data = {"packageNo":999,"price":10,"payOrder":"mcoinTrade"};
+
 	}
 
 	//弹出果园动态框
 	private onGardenMoreNewsTap(e:egret.TouchEvent){
-		for(var i = 0; i < 17; i++){
-			let news = new NewsList();
-			if(i == 0){
-				var list = news.createList('mygarden_png', '曲终人散', 3600, 0, i * 122);
-			}else if(i < 2 && i > 0){
-				var list = news.createList('mygarden_png', '曲终人散', 3500, 0, i * 122);
-			}else{
-				var list = news.createList('mygarden_png', '曲终人散', 3400, 0, i * 122);
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/user_logs';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					let userLogList = res.data.userLogList;
+					for(var i = 0; i < userLogList.length; i++){
+							let news = new NewsList();
+							let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : 'mygarden_png';
+							if(i == 0){
+								var list = news.createList(avatar_source, userLogList[i].username, userLogList[i].datetime, userLogList[i].content, 0, i * 122);
+							}else if(i < 2 && i > 0){
+								var list = news.createList(avatar_source, userLogList[i].username, userLogList[i].datetime, userLogList[i].content, 0, i * 122);
+							}else{
+								var list = news.createList(avatar_source, userLogList[i].username, userLogList[i].datetime, userLogList[i].content, 0, i * 122);
+							}
+							this.group_news_list.addChild(list);
+					}
+					this.panel_garden_news.visible = true;		
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
 			}
-			this.group_news_list.addChild(list);
-		}
-		this.panel_garden_news.visible = true;		
+		});
 	}
 
 
@@ -550,7 +616,6 @@ class MyGarden extends eui.Component{
 			this.group_tips.visible = true;
 			return false;
 		}
-		console.log(score,'-',address);
 		httpReq.POST({
 			url:url,
 			data:{score:score,address:address},
@@ -624,7 +689,6 @@ class MyGarden extends eui.Component{
 
 			//裁剪区域为正方形。
 			a.cut_area.width = a.cut_area.height = a.origin_image.height < a.origin_image.width ? a.origin_image.height : a.origin_image.width
-			console.log(a.stage.stageWidth,'-',a.stageHeight);
 			a.cut_area.x = a.stage.stageWidth / 2 - (a.cut_area.width / 2);
 			a.cut_area.y = 0;
 			a.setImageTexture(a.new_image);			
@@ -701,8 +765,8 @@ class MyGarden extends eui.Component{
 	}
 
 	private onCommitToolTipsTap(e:egret.TouchEvent){
-		console.log(this.useToolGroup.tool_num.text);
-		console.log(this.useToolGroup.tool_id);
+		//console.log(this.useToolGroup.tool_num.text);
+		//console.log(this.useToolGroup.tool_id);
 		this.useToolGroup.tool_num.text--;
 		this.panel_tool_tips.visible = false;
 	}

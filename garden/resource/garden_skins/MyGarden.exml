@@ -8,7 +8,7 @@
 			<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
-			<e:Label id="callTest" text="callJava" x="337" y="41"/>
+
 		</e:Group>
 
 
@@ -53,7 +53,7 @@
 		</e:Group>
 	</e:Group>
 
-	<e:Group id="panel_active_package" width="580" height="496" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" locked="true" visible="false">
+	<e:Group id="panel_active_package" width="580" height="496" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
 
 		<e:Rect width="580" height="496" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" left="0" top="0"/>
 		<e:Label text="激活套餐" textColor="0x7c3c03" fontFamily="Microsoft YaHei" size="45" bold="true" y="30" horizontalCenter="0"/>
@@ -68,7 +68,7 @@
 
 		<e:Label text="　　道具数量为零，请输入激活码激活套餐获取道具。" anchorOffsetX="0" width="510" anchorOffsetY="0" height="124" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" y="120" horizontalCenter="0"/>
 		<e:Rect width="424" height="86" y="236" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="active_code" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="请输入激活码" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		<e:EditableText id="package_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="请输入激活码" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
 
 		
 		<e:Group id="commit_active_package" width="330" height="100" y="358" horizontalCenter="0">

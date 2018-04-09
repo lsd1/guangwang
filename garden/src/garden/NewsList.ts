@@ -8,7 +8,7 @@ class NewsList {
 	private count:number = 0;
 
 	//生成动态列表
-	public createList(userAvatar?:string, username?:string,time?:number,x?:number,y?:number){
+	public createList(userAvatar?:string, username?:string,time?:number, content?:string, x?:number,y?:number){
 		var group:eui.Group = new eui.Group();
 		group.x = x>0?x:0;
 		group.y = y>0?y:0;
@@ -21,6 +21,7 @@ class NewsList {
 		var labelName:eui.Label = new eui.Label();
 		labelName.width = 400;
 		labelName.height = 140;
+		labelName.x = 5;
 		labelName.textAlign = "center";
 		labelName.verticalAlign = "middle";
 		labelName.size = 30;
@@ -36,14 +37,14 @@ class NewsList {
 		labelNews.textAlign = "center";
 		labelNews.verticalAlign = "middle";
 		labelNews.size = 30;
-		labelNews.text = '偷了20个果子';
+		labelNews.text = content;
 		labelNews.textColor = 0x673C13;
 
 		//时间
 		var labelTime:eui.Label = new eui.Label();
-		labelTime.width = 100;
+		labelTime.width = 400;
 		labelTime.height = 140;
-		labelTime.x = 560;
+		labelTime.x = 350;
 		labelTime.textAlign = "right";
 		labelTime.verticalAlign = "middle";
 		labelTime.size = 30;
