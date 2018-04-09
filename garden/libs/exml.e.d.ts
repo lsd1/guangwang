@@ -1,13 +1,3 @@
-declare class loginButton extends eui.Skin{
-}
-declare class interactionList extends eui.Skin{
-}
-declare class myGarden extends eui.Skin{
-}
-declare class scoreList extends eui.Skin{
-}
-declare class tools extends eui.Skin{
-}
 declare module skins{
 	class ButtonSkin extends eui.Skin{
 	}
@@ -59,4 +49,14 @@ declare module skins{
 declare module skins{
 	class VSliderSkin extends eui.Skin{
 	}
+}
+declare class loginButton extends eui.Skin{
+}
+declare class interactionList extends eui.Skin{
+}
+declare class myGarden extends eui.Skin{
+}
+declare class scoreList extends eui.Skin{
+}
+declare class tools extends eui.Skin{
 }
