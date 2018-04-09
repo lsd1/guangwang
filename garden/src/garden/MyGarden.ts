@@ -210,12 +210,16 @@ class MyGarden extends eui.Component{
 		this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePasswordTap, this);	
 		this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSetPassWordCloseTap, this);
 		this.commit_change.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitChangeTap,this);		
-		this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocus,this);
+		this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		this.new_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		this.repeat_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 		//提取积分
 		this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointTap, this);
 		this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointCloseTap, this);
 		this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
+		this.wallet_address.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		this.point_number.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 		//修改头像
 		this.change_avatar.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangeAvatarTap, this);
@@ -496,12 +500,13 @@ class MyGarden extends eui.Component{
 			var url = 'v1.0/user/edit_password';
 			httpReq.POST({
 				url:url,
-				data:{oldpassword:this.old_pass_word.text,newpassword:this.new_pass_word.text},
+				data:{oldpassword:hex_md5(this.old_pass_word.text),newpassword:hex_md5(this.new_pass_word.text)},
 				success:(res:any)=>{
 					var res = JSON.parse(res);
 					if(res.code == 0){
 						this.tips_text.text = '修改密码成功';
 						this.group_tips.visible = true;
+						this.panel_set_pass_word.visible = false;
 					}else{
 						this.tips_text.text = res.msg;
 						this.group_tips.visible = true;
@@ -569,8 +574,21 @@ class MyGarden extends eui.Component{
 		this.panel_extract_point.visible = false;
 	}
 
-	private onInputFocus(e:egret.FocusEvent){
-		console.log(EventTarget);
+	private onInputFocusIn(e:egret.FocusEvent){
+		var patt = new RegExp('(请输入|请设置|请充值|请确认|请再次)');
+		if(patt.test(e.currentTarget.text)){
+			e.currentTarget.placeHolder = e.currentTarget.text;
+			e.currentTarget.text = '';	
+		}
+
+		e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+	}
+
+	private onInputFocusOut(e:egret.FocusEvent){
+		e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+		if(e.currentTarget.text == ''){
+			e.currentTarget.text = e.currentTarget.placeHolder;
+		}
 	}
 
 	//修改头像

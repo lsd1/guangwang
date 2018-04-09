@@ -32,9 +32,6 @@ class Index extends eui.Component {
 	private reg_user_name:eui.EditableText;
 	private reg_pass_word:eui.EditableText;
 	private reg_rep_pass_word:eui.EditableText;
-	
-	//记录当前输入框的提示语
-	private placeHolder:string;
 
 	//提示弹框
 	private group_tips:eui.Group;
@@ -216,14 +213,14 @@ class Index extends eui.Component {
 	private onInputFocusOut(e:egret.FocusEvent){
 		e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
 		if(e.currentTarget.text == ''){
-			e.currentTarget.text = this.placeHolder;
+			e.currentTarget.text = e.currentTarget.placeHolder;
 		}
 	}
 
 	private onInputFocusIn(e:egret.FocusEvent){
 		var patt = new RegExp('(请输入|请设置|请充值|请确认)');
 		if(patt.test(e.currentTarget.text)){
-			this.placeHolder = e.currentTarget.text;
+			e.currentTarget.placeHolder =  e.currentTarget.text;	
 			e.currentTarget.text = '';	
 		}
 
