@@ -135,6 +135,7 @@ class Index extends eui.Component {
 					//this.common.setCookie('avatar', res.data.userInfo.avatar, 30);
 					this.common.setCookie('avatar', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1373411777,3992091759&fm=27&gp=0.jpg', 30);
 					this.common.setCookie('token', res.token, 30);
+					this.common.setCookie('isActivate', res.data.userInfo.isActivate, 30);
 					this.parent.addChild(MyGarden.Shared())
 					this.parent.removeChild(this);
 				}else{

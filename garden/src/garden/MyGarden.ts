@@ -156,17 +156,26 @@ class MyGarden extends eui.Component{
 	//杀虫动画
 	private shachong_mc_1:any;
 	//浇水
-	private jiaoshui_mc_1:any
+	private jiaoshui_mc_1:any;
+	//激活果园
+	private panel_active_garden:eui.Group;
+	//果园激活码
+	private activate_no:eui.EditableText;
+	//提交激活码
+	private commit_active_garden:eui.Group;
 
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
-
 		this.right = 0;
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
-
+		var isActivate:any = this.common.getCookie('isActivate');
+		if(isActivate <= 0){
+			this.full_mask.visible = true;
+			this.panel_active_garden.visible = true;
+		} 
 		//获取果园信息
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
@@ -176,7 +185,7 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					//console.log(res);
+					console.log(res);
 				}
 			},
 			error:()=>{
@@ -188,6 +197,16 @@ class MyGarden extends eui.Component{
 		});
 
 
+		//关闭激活套餐弹框
+		this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onActivePackageCloseTap, this);
+		this.package_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		//激活礼包获取道具
+		this.commit_active_package.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActivePackageTap,this);
+		
+		//激活果园
+		this.commit_active_garden.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActiveGardenTap,this);
+		//果园激活码输入框
+		this.activate_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 		//关闭提示弹框
 		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
@@ -205,11 +224,6 @@ class MyGarden extends eui.Component{
 		//道具使用提示
 		this.tool_tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolTipsCloseTap, this);
 		this.commit_tool_tips.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitToolTipsTap, this);
-
-		//关闭激活套餐弹框
-		this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onActivePackageCloseTap, this);
-		this.package_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
-
 
 		//我的果园
 		this.manage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onManageTap, this);
@@ -240,10 +254,6 @@ class MyGarden extends eui.Component{
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);		
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);		
 		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
-
-		//激活礼包获取道具
-		this.commit_active_package.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActivePackageTap,this);
-
 
 		//顶部果园用户头像、昵称信息
 		this.my_avatar.source = this.common.getCookie('avatar');
@@ -305,6 +315,40 @@ class MyGarden extends eui.Component{
 
 		//尾部果园互动消息列表
 
+	}
+
+	private onCommitActiveGardenTap(e:egret.TouchEvent){
+		var activateNo = this.activate_no.text;
+		if(activateNo == ''){
+			this.tips_text.text = '激活码不能为空';
+			this.group_tips.visible = true;
+			return false;
+		}
+		var httpReq = HttpReq.Shared();
+		var url = 'v1.0/user/put_activate';
+		httpReq.POST({
+			url:url,
+			data:{activateNo:activateNo},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.panel_active_garden.visible = false;
+					this.full_mask.visible = false;
+					this.tips_text.text = '恭喜你激活成功！';
+					this.group_tips.visible = true;
+					this.common.setCookie('isActivate', true, 30);
+				}else{
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 	}
 
 	//点击道具

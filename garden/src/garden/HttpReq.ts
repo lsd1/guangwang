@@ -1,4 +1,13 @@
 class HttpReq extends egret.HttpRequest{
+
+	private static share:HttpReq;
+	public static Shared(){
+		if(!this.share){
+			this.share = new HttpReq();
+		}
+		return this.share;
+	}
+
 	private common:Common = Common.Shared();
 	private api_domain:string = "http://123.207.58.186/";
 	private url:string;
@@ -14,6 +23,8 @@ class HttpReq extends egret.HttpRequest{
 	private network:number;
 	private version:string;
 	private params:Params;
+	//是否在发送中
+	private isSendding = false;
 
 	public constructor(username?:string, action?:string, lang?:number, clientType?:number, network?:number, version?:string) {
 		super();
@@ -26,6 +37,8 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public GET(actionParams:any){
+		if(this.isSendding) return false;	
+		this.isSendding = true;
 		this.action = actionParams.url;
 		this.username =  actionParams.username;
 		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
@@ -54,6 +67,10 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public POST(actionParams:any){
+		console.log(0);
+		if(this.isSendding) return false;
+		this.isSendding = true;
+		console.log(1);
 		this.url = this.api_domain + actionParams.url;	
 		this.username = actionParams.data.username;
 		this.action = actionParams.url;		
@@ -78,6 +95,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public onGetComplete(event:egret.Event):void{
+		this.isSendding = false;
 		var request = <egret.HttpRequest>event.currentTarget;
 		if(this.success){
 			this.success(request.response);
@@ -85,12 +103,14 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public onGetIOError(event:egret.IOErrorEvent):void{
+		this.isSendding = false;
 		if(this.error){
 			this.error();
 		}
 	}
 
 	public onGetProgress(event:egret.ProgressEvent):void {
+		this.isSendding = false;
 		if(this.progress){
 			this.progress();
 		}

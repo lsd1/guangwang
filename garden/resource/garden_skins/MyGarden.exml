@@ -79,6 +79,25 @@
 
 	</e:Group>
 
+	<e:Group id="panel_active_garden" width="580" height="496" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
+
+		<e:Rect width="580" height="496" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" left="0" top="0"/>
+		<e:Label text="激活果园" textColor="0x7c3c03" fontFamily="Microsoft YaHei" size="45" bold="true" y="30" horizontalCenter="0"/>
+		<e:Rect width="544" height="376" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" y="106" horizontalCenter="0"/>
+
+
+		<e:Label text="　　当前果园处于未激活状态，请输入激活码激活。" anchorOffsetX="0" width="510" anchorOffsetY="0" height="124" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" y="120" horizontalCenter="0"/>
+		<e:Rect width="424" height="86" y="236" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
+		<e:EditableText id="activate_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="请输入激活码" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+
+		
+		<e:Group id="commit_active_garden" width="330" height="100" y="358" horizontalCenter="0">
+			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
+		</e:Group>
+
+	</e:Group>
+
 	<e:Group id="panel_tool_tips" width="580" height="450" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
 
 		<e:Rect width="580" height="450" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" left="0"/>
