@@ -16,7 +16,7 @@ class Tools extends eui.Component {
 
 	//点击使用道具
 	private onToolGroupTap(e:egret.TouchEvent){
-		if(parseInt(this.tool_num.text) < 1){
+		if(parseInt(this.tool_num.text) > 1){
 			MyGarden.Shared().full_mask.visible = true;
 			MyGarden.Shared().package_no.text = '请输入激活码';
 			MyGarden.Shared().panel_active_package.visible = true;

@@ -19,7 +19,8 @@
 		<e:Label text="最新动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0"/>
 	</e:Group>
-	<e:Rect id="full_mask" fillAlpha="0.4" left="0" top="0" right="0" bottom="0" locked="true" visible="false"/>
+	<e:Rect id="full_mask" fillAlpha="0.4" left="0" top="0" right="0" bottom="0" visible="false"/>
+
 	<e:Group id="panel_props" width="580" height="544" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
 
 		<e:Rect width="580" height="544" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" x="0" y="0"/>
@@ -78,7 +79,7 @@
 
 	</e:Group>
 
-	<e:Group id="panel_tool_tips" width="580" height="450" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
+	<e:Group id="panel_tool_tips" width="580" height="450" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
 
 		<e:Rect width="580" height="450" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" left="0"/>
 		<e:Rect width="544" height="334" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="0" y="94"/>
@@ -95,7 +96,7 @@
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
 			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
 		</e:Group>
-		<e:Label id="tips_title" text="" horizontalCenter="0.5" textColor="0x7c3c03" bold="true" fontFamily="Microsoft YaHei" size="42" top="50"/>
+		<e:Label id="tips_title" text="" horizontalCenter="7.5" textColor="0x7c3c03" bold="true" fontFamily="Microsoft YaHei" size="42" top="36"/>
 	</e:Group>
 
 	<e:Group id="panel_garden_interactive" width="750" height="1140" anchorOffsetY="0" horizontalCenter="0" bottom="0" visible="false" locked="true">

@@ -139,6 +139,25 @@ class MyGarden extends eui.Component{
 	//全局遮罩
 	public full_mask:eui.Rect;
 
+	//施肥动画
+	private feiliao_mc_1:any;
+	//果子熟了画
+	private guozishule_mc_1:any;
+	//催熟动画
+	private cuishu_mc_1:any;
+	//干枯动画
+	private ganku_mc_1:any;
+	//药剂动画
+	private yaoji_mc_1:any;
+	//防偷动画
+	private fangtou_mc_1:any;
+	//长虫动画
+	private chongzi_mc_1:any;
+	//杀虫动画
+	private shachong_mc_1:any;
+	//浇水
+	private jiaoshui_mc_1:any
+
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
@@ -320,15 +339,15 @@ class MyGarden extends eui.Component{
 
 								break;
 							case 3:
-								myTool.tool_img.source = 'props_icon03_png';
-
-								break;
-							case 4:
 								myTool.tool_img.source = 'props_icon04_png';
 
 								break;
-							case 5:
+							case 4:
 								myTool.tool_img.source = 'props_icon05_png';
+
+								break;
+							case 5:
+								myTool.tool_img.source = 'props_icon03_png';
 								break;
 						}
 						myTool.tool_num.text = toolInfo.count;
@@ -766,8 +785,77 @@ class MyGarden extends eui.Component{
 
 	private onCommitToolTipsTap(e:egret.TouchEvent){
 		//console.log(this.useToolGroup.tool_num.text);
-		//console.log(this.useToolGroup.tool_id);
+		var toolId = this.useToolGroup.tool_id;
 		this.useToolGroup.tool_num.text--;
 		this.panel_tool_tips.visible = false;
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/use_tool';
+		console.log(toolId);
+		httpReq.POST({
+			url:url,
+			data:{toolId:toolId,useNum:1},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					//播放施肥动画
+					//成熟倒计时
+					this.full_mask.visible = false;
+					this.panel_tool_tips.visible = false;
+					this.panel_props.visible = false;
+					var mv_name = '';
+					switch(toolId){
+						case 1:
+							mv_name = 'feiliao';
+						break;
+						case 2:
+							mv_name = 'shachong';						
+						break;
+						case 3:
+							mv_name = 'cuishu';						
+						break;
+						case 4:
+							mv_name = 'fangtou';						
+						break;
+						case 5:
+							mv_name = 'yaoji';					
+						break;
+						case 6:
+							mv_name = 'jiaoshui';						
+						break;
+						case 7:
+							mv_name = 'ganku';
+						break;
+						case 8:
+							mv_name = 'chongzi';						
+						break;
+					}
+
+					var data = RES.getRes(mv_name + "_mc_json");
+					var txtr = RES.getRes(mv_name + "_tex_png");
+					var mcFactory:egret.MovieClipDataFactory = new egret.MovieClipDataFactory( data, txtr );
+					var mc = new egret.MovieClip( mcFactory.generateMovieClipData( mv_name + "_mc_1" ) );
+					mc.x = 320;
+					mc.y = 950;
+
+					mc.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+						this.removeChild( mc );
+					}, this);
+
+					this.addChild( mc );
+					mc.gotoAndPlay(1, 2);
+
+				}else{
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
+
 	}
 }
