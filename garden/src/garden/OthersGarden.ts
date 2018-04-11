@@ -81,17 +81,8 @@ class OthersGarden extends eui.Component {
 
 		//点击浇水
 		this.water.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onWaterTap,this);
+		this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 350, 750, this);
 
-		var data = RES.getRes("jiaoshui_mc_json");
-		var txtr = RES.getRes("jiaoshui_tex_png");
-		var mcFactory:egret.MovieClipDataFactory = new egret.MovieClipDataFactory( data, txtr );
-		this.jiaoshui_mc_1 = new egret.MovieClip( mcFactory.generateMovieClipData( "jiaoshui_mc_1" ) );
-		this.jiaoshui_mc_1.x = 350;
-		this.jiaoshui_mc_1.y = 750;
-
-		this.jiaoshui_mc_1.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-			this.removeChild( this.jiaoshui_mc_1 );
-		}, this);
 	}
 
 	private onBackTap(e:egret.TouchEvent){
@@ -100,7 +91,6 @@ class OthersGarden extends eui.Component {
 	}
 
 	private onWaterTap(e:egret.TouchEvent){
-		console.log(1);
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_water';
 		
@@ -110,9 +100,9 @@ class OthersGarden extends eui.Component {
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					console.log(res.code);
 					this.addChild( this.jiaoshui_mc_1 );
 					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
+				}else{
 				}
 			},
 			error:()=>{

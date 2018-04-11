@@ -164,6 +164,17 @@ class MyGarden extends eui.Component{
 	//提交激活码
 	private commit_active_garden:eui.Group;
 
+	//干旱状态
+	private isDry:number;
+	//可浇水状态
+	private isWater:number;
+	//成熟状态
+	private isMature:number;
+	//虫害状态
+	private isWormy:number;
+	//昼夜状态
+	private isNight:number;
+
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
@@ -171,11 +182,14 @@ class MyGarden extends eui.Component{
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
+
+		//判断果园是否激活
 		var isActivate:any = this.common.getCookie('isActivate');
 		if(isActivate <= 0){
 			this.full_mask.visible = true;
 			this.panel_active_garden.visible = true;
 		} 
+
 		//获取果园信息
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
@@ -186,6 +200,37 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					console.log(res);
+					this.isDry = res.data.isDry;
+					this.isWater = res.data.isWater;
+					this.isWormy = res.data.isWormy;
+					this.isNight = res.data.isNight;
+					this.isMature = res.data.isMature;
+					//是否显示干旱动画
+					if(this.isDry <= 0){
+						this.ganku_mc_1 = this.common.mc('ganku', 425, 425);
+						this.addChild( this.ganku_mc_1 );
+						this.ganku_mc_1.gotoAndPlay(0, -1);
+						this.ganku_mc_1.touchEnabled = true;
+						this.ganku_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onDryTap, this);
+					}
+					//是否显示成熟动画
+					if(res.data.isMature){
+						
+					}
+					//是否显示夜晚场景
+					if(res.data.isDry){
+
+					}
+					//是否可以浇水
+					if(res.data.isDry){
+
+					}
+					//是否长虫
+					if(res.data.isDry){
+
+					}
+					
+					
 				}
 			},
 			error:()=>{
@@ -873,21 +918,9 @@ class MyGarden extends eui.Component{
 							mv_name = 'chongzi';						
 						break;
 					}
-
-					var data = RES.getRes(mv_name + "_mc_json");
-					var txtr = RES.getRes(mv_name + "_tex_png");
-					var mcFactory:egret.MovieClipDataFactory = new egret.MovieClipDataFactory( data, txtr );
-					var mc = new egret.MovieClip( mcFactory.generateMovieClipData( mv_name + "_mc_1" ) );
-					mc.x = 320;
-					mc.y = 950;
-
-					mc.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-						this.removeChild( mc );
-					}, this);
-
+					var mc = this.common.mc(mv_name, 320, 950, this);
 					this.addChild( mc );
 					mc.gotoAndPlay(1, 2);
-
 				}else{
 					this.tips_text.text = res.msg;
 					this.group_tips.visible = true;
@@ -901,5 +934,33 @@ class MyGarden extends eui.Component{
 			}
 		});
 
+	}
+
+	//点击水滴浇水
+	private onDryTap(e:egret.TouchEvent){
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/put_water';
+		httpReq.POST({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 350, 900, this);
+					this.addChild( this.jiaoshui_mc_1 );
+					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
+					this.removeChild(this.ganku_mc_1);
+				}else{
+					this.group_tips.visible = true;
+					this.tips_text.text = res.msg;
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 	}
 }
