@@ -100,16 +100,16 @@ class Common {
 
 	//加载动画资源
 	public mc(mv_name:string, x, y, main?:any){
-			var data = RES.getRes(mv_name + "_mc_json");
-			var txtr = RES.getRes(mv_name + "_tex_png");
-			var mcFactory:egret.MovieClipDataFactory = new egret.MovieClipDataFactory( data, txtr );
-			var mc = new egret.MovieClip( mcFactory.generateMovieClipData( mv_name + "_mc_1" ) );
-			mc.x = x; mc.y = y;
-			if(main){
-				mc.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
-					main.removeChild( mc );
-				}, main);
-			}
-			return mc;
+		var data = RES.getRes(mv_name + "_mc_json");
+		var txtr = RES.getRes(mv_name + "_tex_png");
+		var mcFactory:egret.MovieClipDataFactory = new egret.MovieClipDataFactory( data, txtr );
+		var mc = new egret.MovieClip( mcFactory.generateMovieClipData( mv_name + "_mc_1" ) );
+		mc.x = x; mc.y = y;
+		if(main){
+			mc.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
+				main.removeChild( mc );
+			}, main);
+		}
+		return mc;
 	}
 }

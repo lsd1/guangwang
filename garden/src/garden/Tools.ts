@@ -22,7 +22,7 @@ class Tools extends eui.Component {
 			MyGarden.Shared().panel_active_package.visible = true;
 		}else{
 			MyGarden.Shared().useToolGroup = this;
-			var httpReq = new HttpReq();
+			var httpReq = HttpReq.Shared();
 			var url = 'v1.0/tool/show_tips';
 			httpReq.GET({
 				url:url,
@@ -48,7 +48,7 @@ class Tools extends eui.Component {
 
 		// tool/show_tips
 		//toolId
-		// var httpReq = new HttpReq();
+		// var httpReq = HttpReq.Shared();
 		// var url = 'v1.0/tool/show_tips';
 		// httpReq.GET({
 		// 	url:url,

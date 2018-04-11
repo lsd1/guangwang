@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="mygarden_png" left="0" y="0" right="0" horizontalCenter="0"/>
-	<e:Group id="group_top" width="750" height="1086" anchorOffsetY="0" horizontalCenter="0" top="0">
-		<e:Group width="750" height="100" horizontalCenter="-2" x="-2" scaleX="1" scaleY="1" bottom="2">
-			<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
-			<e:Image id="back" x="32" y="7" source="othersgarden_icon_back_png"/>
-			<e:Image id="water" source="othersgarden_icon_water_png" left="646" top="7" right="29" bottom="7"/>
-		</e:Group>
-	</e:Group>
-
 	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
 		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
 		<e:Label text="他的果园动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
 	</e:Group>
+	<e:Image source="mygarden_png" left="0" y="0" right="0" horizontalCenter="0"/>
+	<e:Group id="group_top" width="750" height="1086" anchorOffsetY="0" horizontalCenter="0" top="0">
+		<e:Group width="750" height="100" horizontalCenter="-2" x="-2" scaleX="1" scaleY="1" bottom="2">
+		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
+		<e:Image id="back" x="32" y="7" source="othersgarden_icon_back_png"/>
+		<e:Image id="water" source="othersgarden_icon_water_png" left="646" top="7" right="29" bottom="7"/>
+		</e:Group>
+	</e:Group>
+
+
+	<e:Rect id="full_mask" fillAlpha="0.5" scaleX="1" scaleY="1" left="0" top="0" bottom="0" right="0" width="0" height="0" visible="false"/>
+	<e:Group id="group_tips" width="478" height="444" horizontalCenter="0" verticalCenter="0" visible="false">
+		<e:Rect width="478" height="444" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" horizontalCenter="0" verticalCenter="0" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Rect width="432" height="250" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" x="23.00000000000003" y="97" scaleX="1" scaleY="1"/>
+		<e:Label text="温馨提示" y="36.26999999999998" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" horizontalCenter="0" size="35" x="169" scaleX="1" scaleY="1"/>
+		<e:Label id="tips_text" text="" anchorOffsetX="0" width="360" anchorOffsetY="0" height="178" fontFamily="Microsoft YaHei" textColor="0x000000" textAlign="left" size="34" lineSpacing="10" verticalCenter="0" horizontalCenter="0" x="59.00000000000003" y="133" scaleX="1" scaleY="1"/>
+		<e:Group id="tips_close" width="222" height="82" y="354.27" horizontalCenter="0" x="128" scaleX="1" scaleY="1">
+		<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" verticalCenter="0" horizontalCenter="0"/>
+		<e:Label text="知道了" fontFamily="Microsoft YaHei" verticalCenter="0" horizontalCenter="0"/>
+		</e:Group>
+	</e:Group>
+
+
+
+
 	
 
 </e:Skin>

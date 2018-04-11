@@ -67,10 +67,8 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public POST(actionParams:any){
-		console.log(0);
 		if(this.isSendding) return false;
 		this.isSendding = true;
-		console.log(1);
 		this.url = this.api_domain + actionParams.url;	
 		this.username = actionParams.data.username;
 		this.action = actionParams.url;		
