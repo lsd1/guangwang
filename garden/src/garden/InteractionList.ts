@@ -36,7 +36,7 @@ class InteractionList {
 					typeImage = this.common.createImage(40,40,'interaction_water_png',(610+30*i),50)
 					break;
 				case 2:  
-					typeImage = this.common.createImage(40,40,'interaction_take_png',(610+30*i),50)
+					typeImage = this.common.createImage(40,40,'interaction_pick_png',(610+30*i),50)
 					break;
 				case 3:  
 					typeImage = new eui.Label();

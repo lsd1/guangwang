@@ -120,7 +120,7 @@ class Index extends eui.Component {
 
 	//登录
 	private onCommitLogClick(){
-		var httpReq = HttpReq.Shared();
+		var httpReq = new HttpReq();
 		var url:string = 'v1.0/login';
 		var username = this.log_user_name.text;
 		var password = hex_md5(this.log_pass_word.text);
@@ -175,7 +175,7 @@ class Index extends eui.Component {
 			return false;
 		}
 
-		var httpReq = HttpReq.Shared();
+		var httpReq = new HttpReq();
 		var url:string = 'v1.0/register';
 
 		var username = this.reg_user_name.text;

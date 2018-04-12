@@ -59,7 +59,7 @@ class OthersGarden extends eui.Component {
 		this.other_user_name = other_user_name;
 		
 		//获取果园信息
-		var httpReq = HttpReq.Shared();
+		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
 		httpReq.GET({
 			url:url,
@@ -88,7 +88,7 @@ class OthersGarden extends eui.Component {
 					this.isMature = res.data.isMature;
 					this.fangtou = res.data.fangtou ? res.data.fangtou : 0;
 					//是否显示干旱动画
-					if(this.isDry <= 0){
+					if(this.isDry > 0){
 						console.log('dry');
 						this.ganku_mc_1 = this.common.mc('ganku', 425, 425);
 						this.group_top.addChild( this.ganku_mc_1);
@@ -99,7 +99,6 @@ class OthersGarden extends eui.Component {
 					//是否显示成熟动画
 					if(this.isMature > 0){
 						console.log('dry2');
-						
 						this.guozishule_mc_1 = this.common.mc('guozishule', 300, 600);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
@@ -111,8 +110,8 @@ class OthersGarden extends eui.Component {
 
 					}
 					//是否长虫
-					if(this.isWormy <= 0){
-							console.log('dry3');
+					if(this.isWormy > 0){
+						console.log('dry3');
 						this.insect_mc_1 = this.common.mc('insect', 200, 425);
 						this.group_top.addChild( this.insect_mc_1 );
 						this.insect_mc_1.gotoAndPlay(0, -1);
@@ -120,14 +119,12 @@ class OthersGarden extends eui.Component {
 						this.insect_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInsectTap, this);
 					}
 					//是否开启防偷
-						if(this.fangtou <= 0){
-							console.log('dry4');
-						
+					if(this.fangtou > 0){
+						console.log('dry4');
 						this.fangtou_mc_1 = this.common.mc('fangtou', 300, 350);
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
-
 				}
 			},
 			error:()=>{
@@ -157,12 +154,46 @@ class OthersGarden extends eui.Component {
 		this.group_avatar.addChild(line);
 
 		//尾部果园互动消息列表
-		for(var i = 0; i < 6; i++){
-			let avatar = new AvatarList();
-			avatar.x = 25 + i * 120;
-			let avatar_cell = avatar.createAvatar(i + 1, "mygarden_png", "30");
-			this.group_avatar.addChild(avatar_cell);
-		}
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/user_logs';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					let userLogList = res.data.userLogList;
+					var len = userLogList.length > 6 ? 6 : userLogList.length;
+					for(var i = 0; i < len; i++){
+						let avatar = new AvatarList();
+						avatar.x = 25 + i * 120;
+						//let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
+						let avatar_source = "mygarden_png"; 
+						switch(userLogList[i].curType){
+							case 'steal':
+								let avatar_cell1 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
+								this.group_avatar.addChild(avatar_cell1);
+							break;
+							case 'pick':
+								let avatar_cell2 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
+								this.group_avatar.addChild(avatar_cell2);
+							break;
+							default:
+								let avatar_cell3 = avatar.createAvatar(1, avatar_source, 'interaction_' + userLogList[i].curType+ '_png');
+								this.group_avatar.addChild(avatar_cell3);
+							break;
+						}
+					}
+				}
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
+
 
 		//点击浇水
 		this.water.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onWaterTap,this);
@@ -183,7 +214,7 @@ class OthersGarden extends eui.Component {
 	}
 
 	private onWaterTap(e:egret.TouchEvent){
-		var httpReq = HttpReq.Shared();
+		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_water';
 		
 		httpReq.POST({
@@ -212,7 +243,7 @@ class OthersGarden extends eui.Component {
 
 	//点击偷取果子
 	 private onFruitTap(e:egret.TouchEvent){
-		var httpReq = HttpReq.Shared();
+		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_steal';
 		httpReq.POST({
 			url:url,

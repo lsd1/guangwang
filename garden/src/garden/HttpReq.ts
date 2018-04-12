@@ -1,13 +1,4 @@
 class HttpReq extends egret.HttpRequest{
-
-	private static share:HttpReq;
-	public static Shared(){
-		if(!this.share){
-			this.share = new HttpReq();
-		}
-		return this.share;
-	}
-
 	private common:Common = Common.Shared();
 	private api_domain:string = "http://123.207.58.186/";
 	private url:string;
@@ -37,7 +28,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public GET(actionParams:any){
-		if(this.isSendding) return false;	
+		//if(this.isSendding) return false;	
 		this.isSendding = true;
 		this.action = actionParams.url;
 		this.username =  actionParams.username;
@@ -67,7 +58,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public POST(actionParams:any){
-		if(this.isSendding) return false;
+		//if(this.isSendding) return false;
 		this.isSendding = true;
 		this.url = this.api_domain + actionParams.url;	
 		this.username = actionParams.data.username;

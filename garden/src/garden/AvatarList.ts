@@ -56,7 +56,7 @@ class AvatarList extends eui.Component{
 		switch(type){
 			case 1://浇水
 				this.avatarImage.source = avatarResource;	
-				this.statusImage.source = 'interaction_water_png';
+				this.statusImage.source = statusResource;
 
 				this.group.addChild(this.avatarImage);
 				this.group.addChild(this.statusImage);
@@ -91,7 +91,6 @@ class AvatarList extends eui.Component{
 				this.group.addChild(moreCircle);
 				this.group.addChild(moreImage);
 				this.group.addChild(moreLabel);		
-			
 		}
 		return this.group;
 	}
