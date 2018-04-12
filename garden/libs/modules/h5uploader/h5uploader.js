@@ -26,6 +26,7 @@ function selectImage(selectedFunc, thisValue) {
 function tmpSelectFile(evt) {
     //console.log("image selected...");
     var file = evt.target.files[0];
+	console.log(file);
     var type = file.type;
     if (!type) {
         type = mime[file.name.match(/\.([^\.]+)$/i)[1]];

@@ -28,29 +28,33 @@ class Common {
 	}
 
 	//创建圆形遮罩图片
-	public createCircleMask(width:number, height:number, source:any, x?:number, y?:number){
+	public createCircleMask(width:number, height:number, image:any, x?:number, y?:number){
 		var group:eui.Group = new eui.Group();
 		x =  x > 0 ? x : 0;
 		y =  y > 0 ? y : 0;
-		var image = this.createImage(width, height, source, x, y);
+		var img = this.createImage(width, height, image, x, y);
 		var circle:egret.Shape = new egret.Shape();
 		circle.graphics.beginFill(0x000000, 1);		
 		circle.graphics.drawCircle(width/2+x, width/2+y, width/2);
-		image.mask = circle;
+		img.mask = circle;
 		group.addChild(circle);
-		group.addChild(image);
+		group.addChild(img);
 		return group;
 	}
 
 	//创建一张图片
-	public createImage(width:number, height:number, source:any, x?:number, y?:number){
-		var image:eui.Image = new eui.Image();
-		image.width = width;
-		image.height = height;
-		image.x = x > 0 ? x : 0;
-		image.y = y > 0 ? y : 0;
-		image.source = source;
-		return image;
+	public createImage(width:number, height:number, image:any, x?:number, y?:number){
+		if(typeof(image) == 'string'){
+			var img = new eui.Image();
+			img.source = image;
+		}else{
+			img = image;
+		}
+		img.width = width;
+		img.height = height;
+		img.x = x > 0 ? x : 0;
+		img.y = y > 0 ? y : 0;
+		return img;
 	}
 
 	//设置cookie
@@ -112,4 +116,14 @@ class Common {
 		}
 		return mc;
 	}
+
+	public dataURLtoFile(dataurl:string, filename:string) {
+		var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+		bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+		while(n--){
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+		return new File([u8arr], filename, {type:mime});
+	}
+
 }

@@ -178,6 +178,8 @@ class MyGarden extends eui.Component{
 	private isNight:number;
 	//背景图
 	private bg_img:eui.Image;
+	//用户头像
+	private avatar = new eui.Image();
 
 	public constructor() {
 		super();
@@ -314,8 +316,9 @@ class MyGarden extends eui.Component{
 		//顶部果园用户头像、昵称信息
 		this.my_avatar.source = this.common.getCookie('avatar');
 		this.user_name.text = this.common.getCookie('username');
-		var topAvatar = this.common.createCircleMask(100, 100, this.common.getCookie('avatar'), 20, 20);
-		var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
+		this.avatar.source = this.common.getCookie('avatar');
+		var topAvatar = this.common.createCircleMask(100, 100, this.avatar, 20, 20);
+		var topAvatarBg = this.common.createImage(350, 140, 'garden_data_bg_png', 0, 0);
 		var label:eui.Label = new eui.Label();
 		label.width = 380;
 		label.height = 140;
@@ -891,17 +894,48 @@ class MyGarden extends eui.Component{
 	//确认裁剪
 	private onCutCommitTap(e:egret.TouchEvent){
 		//确定裁剪之后，更新头像。
-		this.setImageTexture(this.my_avatar);
-		this.cut_image.visible = false;
-		this.full_mask.fillAlpha = 0.4;
-		this.full_mask.visible = false;
+		var avatar = this.getImageBase64(this.origin_image);
+		var url = 'v1.0/user/upload_avatar';
+		var httpReq = new HttpReq();
+		httpReq.POST({
+			url:url,
+			data:{'avatar': avatar},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.tips_text.text = '修改头像成功！';
+					this.group_tips.visible = true;
+					this.setImageTexture(this.my_avatar);
+					this.setImageTexture(this.avatar);
+				}else{
+					this.tips_text.text = res.msg;
+					this.group_tips.visible = true;
+				}
+				this.cut_image.visible = false;
+				this.full_mask.fillAlpha = 0.4;
+				this.full_mask.visible = false;
+			},
+			error:()=>{
+				console.log('error');
+			},
+			progress:()=>{
+				console.log('waiting......');
+			}
+		});
 	}
 
 	//填充图片
 	private setImageTexture(image:eui.Image){
 		var rt:egret.RenderTexture = new egret.RenderTexture;
 		rt.drawToTexture( this.origin_image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y , this.cut_area.width,this.cut_area.height), 1 );
-		image.texture = rt;
+		image.texture = rt;		
+	}
+
+	//获取裁剪后图片的base64字符串
+	private getImageBase64(image:eui.Image){
+		var rt:egret.RenderTexture = new egret.RenderTexture;
+		rt.drawToTexture( image, new egret.Rectangle(this.cut_area.x - this.origin_image.x, this.cut_area.y - this.origin_image.y , this.cut_area.width,this.cut_area.height), 1 );	
+		return rt.toDataURL("image/png");
 	}
 
 	//关闭道具使用提示
