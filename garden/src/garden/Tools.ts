@@ -31,8 +31,7 @@ class Tools extends eui.Component {
 					var res = JSON.parse(res);
 					if(res.code == 0){
 						var toolInfo = res.data.toolInfo;
-						console.log(toolInfo);
-						MyGarden.Shared().tool_tips.text = toolInfo.tooltips;
+						MyGarden.Shared().tips_title.text = toolInfo.tooltips;
 						MyGarden.Shared().tips_title.text = '使用' + toolInfo.toolname;
 						MyGarden.Shared().panel_tool_tips.visible = true;					
 					}

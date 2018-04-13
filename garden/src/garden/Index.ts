@@ -32,16 +32,8 @@ class Index extends eui.Component {
 	private reg_user_name:eui.EditableText;
 	private reg_pass_word:eui.EditableText;
 	private reg_rep_pass_word:eui.EditableText;
-
 	//提示弹框
-	private group_tips:eui.Group;
-	//关闭提示弹框
-	private tips_close:eui.Group;
-	//提示内容
-	private tips_text:eui.Label;
-	//是否‘提示框’打开的遮罩
-	private is_tips_mask:boolean = false;
-
+	private tips:any;
 	//全屏遮罩
 	private full_mask:eui.Rect;
 
@@ -52,6 +44,10 @@ class Index extends eui.Component {
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
+
+		this.tips = Tips.Shared();
+		this.addChildAt(this.tips, -1);
+
 		//打开登录、注册弹框
 		this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnLogClick, this);
 		this.btn_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnRegClick, this);
@@ -81,14 +77,6 @@ class Index extends eui.Component {
 		//提交登录、注册
 		this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
 		this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
-
-		//关闭提示弹框
-		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
-			if(this.is_tips_mask){
-				this.full_mask.visible = false;
-			}
-			this.group_tips.visible = false;
-		}, this);
 	}
 
 	//弹出登录框 
@@ -139,8 +127,7 @@ class Index extends eui.Component {
 					this.parent.addChild(MyGarden.Shared())
 					this.parent.removeChild(this);
 				}else{
-					this.tips_text.text = res.msg;
-					this.group_tips.visible = true;
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:(error)=>{
@@ -170,8 +157,7 @@ class Index extends eui.Component {
 	//注册
 	private onCommitRegClick(e:egret.TouchEvent){
 		if(this.reg_pass_word.text != this.reg_rep_pass_word.text){
-			this.tips_text.text = '两次输入密码不一致';
-			this.group_tips.visible = true;
+			this.tips.showTips('两次输入密码不一致');
 			return false;
 		}
 
@@ -187,16 +173,14 @@ class Index extends eui.Component {
 			success:(res)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					this.tips_text.text = '恭喜你注册成功！';
-					this.group_tips.visible = true;
+					this.tips.showTips('恭喜你注册成功！');
 					setTimeout(()=>{
-						this.group_tips.visible = false;
+						this.tips.closeTips();
 						this.panel_reg.visible = false;
 						this.panel_log.visible = true;				
 					} ,2000)
 				} else {
-					this.tips_text.text = res.msg;
-					this.group_tips.visible = true;
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:(error)=>{

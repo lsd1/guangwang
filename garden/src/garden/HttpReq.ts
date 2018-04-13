@@ -1,6 +1,6 @@
 class HttpReq extends egret.HttpRequest{
 	private common:Common = Common.Shared();
-	private api_domain:string = "http://123.207.58.186/";
+	private api_domain:string = "http://app.test.com/";
 	private url:string;
 	private data:any;
 	private success:any;
@@ -26,6 +26,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public GET(actionParams:any){
+		//MyGarden.Shared().wait.show();
 		this.action = actionParams.url;
 		this.username =  actionParams.username;
 		this.params = new Params(this.username, this.action, this.lang, this.clientType, this.network, this.version);
@@ -54,6 +55,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public POST(actionParams:any){
+		//MyGarden.Shared().wait.show();
 		this.url = this.api_domain + actionParams.url;	
 		this.username = actionParams.data.username;
 		this.action = actionParams.url;		
@@ -78,6 +80,7 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public onGetComplete(event:egret.Event):void{
+		//MyGarden.Shared().wait.hide();
 		var request = <egret.HttpRequest>event.currentTarget;
 		if(this.success){
 			this.success(request.response);
@@ -85,12 +88,14 @@ class HttpReq extends egret.HttpRequest{
 	}
 
 	public onGetIOError(event:egret.IOErrorEvent):void{
+		//MyGarden.Shared().wait.hide();
 		if(this.error){
 			this.error();
 		}
 	}
 
 	public onGetProgress(event:egret.ProgressEvent):void {
+		//MyGarden.Shared().wait.hide();
 		if(this.progress){
 			this.progress();
 		}

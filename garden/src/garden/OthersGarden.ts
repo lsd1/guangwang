@@ -35,18 +35,8 @@ class OthersGarden extends eui.Component {
 	private fangtou:number;
 	//昼夜状态
 	private isNight:number;
-
-	//提示弹框
-	private group_tips:eui.Group;
-	//关闭提示弹框
-	private tips_close:eui.Group;
-	//提示内容
-	private tips_text:eui.Label;
-	//是否‘提示框’打开的遮罩
-	private is_tips_mask:boolean = false;
-	
-	//全屏遮罩
-	private full_mask:eui.Rect;
+	//提示框
+	public tips:any;
 	
 	public constructor(other_user_name:string) {
 		super();
@@ -55,6 +45,7 @@ class OthersGarden extends eui.Component {
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
+		this.tips = Tips.Shared();
 		//顶部果园用户头像、昵称信息
 		this.other_user_name = other_user_name;
 		
@@ -134,13 +125,6 @@ class OthersGarden extends eui.Component {
 				console.log('waiting......');
 			}
 		});
-
-		this.tips_close.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
-			if(this.is_tips_mask){
-				this.full_mask.visible = false;
-			}
-			this.group_tips.visible = false;
-		},this);
 
 		//返回
 		this.back.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onBackTap,this);
@@ -226,10 +210,7 @@ class OthersGarden extends eui.Component {
 					this.group_top.addChild( this.jiaoshui_mc_1 );
 					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
 				}else{
-					this.full_mask.visible = true;
-					this.is_tips_mask = true;
-					this.tips_text.text = res.msg;
-					this.group_tips.visible = true;
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
@@ -253,10 +234,7 @@ class OthersGarden extends eui.Component {
 				if(res.code == 0){
 					this.group_top.removeChild(this.guozishule_mc_1);
 				}
-				this.full_mask.visible = true;
-				this.is_tips_mask = true;
-				this.tips_text.text = res.msg;
-				this.group_tips.visible = true;
+				this.tips.showTips(res.msg);
 			},
 			error:()=>{
 				console.log('error');
@@ -269,10 +247,7 @@ class OthersGarden extends eui.Component {
 
 	//点击虫子
 	private onInsectTap(e:egret.TouchEvent){
-		this.full_mask.visible = true;
-		this.is_tips_mask = true;
-		this.tips_text.text = '只有主人才可以除虫';
-		this.group_tips.visible = true;
+		this.tips.showTips('只有主人才可以除虫');
 	}
 
 }

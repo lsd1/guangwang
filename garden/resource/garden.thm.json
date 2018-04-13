@@ -4,7 +4,9 @@
     "myGarden":"resource/garden_skins/MyGarden.exml",
     "othersGarden":"resource/garden_skins/OthersGarden.exml",
     "tool":"resource/garden_skins/Tools.exml",
-    "scoreList":"resource/garden_skins/ScoreList.exml"
+    "scoreList":"resource/garden_skins/ScoreList.exml",
+    "tips":"resource/garden_skins/Tips.exml",
+    "wait":"resource/garden_skins/wait.exml"
   },
   "autoGenerateExmlsList": true,
   "exmls": [
@@ -12,6 +14,8 @@
     "resource/garden_skins/MyGarden.exml",
     "resource/garden_skins/OthersGarden.exml",
     "resource/garden_skins/Tools.exml",
-    "resource/garden_skins/ScoreList.exml"
+    "resource/garden_skins/ScoreList.exml",
+    "resource/garden_skins/Tips.exml",
+    "resource/garden_skins/Wait.exml"
   ]
 }

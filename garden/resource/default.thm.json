@@ -1,5 +1,7 @@
 {
-	"skins": {},
+	"skins": {
+		"wait": "resource/garden_skins/wait.exml"
+	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/ButtonSkin.exml",
@@ -20,7 +22,9 @@
 		"resource/garden_skins/MyGarden.exml",
 		"resource/garden_skins/OthersGarden.exml",
 		"resource/garden_skins/ScoreList.exml",
-		"resource/garden_skins/Tools.exml"
+		"resource/garden_skins/Tips.exml",
+		"resource/garden_skins/Tools.exml",
+		"resource/garden_skins/Wait.exml"
 	],
 	"path": "resource/default.thm.json"
 }

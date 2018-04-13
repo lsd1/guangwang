@@ -1,16 +1,21 @@
 {
-  "1623811ca24": {
-    "backgroundType": "null",
-    "backgroundX": 0,
-    "backgroundY": 0,
-    "backgroundWidth": -1,
-    "backgroundHeight": -1,
-    "useBgImage": true,
-    "useBgColor": true,
-    "backgroundAlpha": 100
-  },
-  "global": {
-    "globalAdsorbEnable": false,
-    "globalRulerEnable": true
-  }
+    "1623811ca24": {
+        "backgroundType": "null",
+        "backgroundX": 0,
+        "backgroundY": 0,
+        "backgroundWidth": -1,
+        "backgroundHeight": -1,
+        "useBgImage": true,
+        "useBgColor": true,
+        "backgroundAlpha": 100
+    },
+    "global": {
+        "globalAdsorbEnable": false,
+        "globalRulerEnable": true
+    },
+    "162be6df187": {
+        "path": "garden\\wait.ts",
+        "class": "wait",
+        "parentPath": ""
+    }
 }
