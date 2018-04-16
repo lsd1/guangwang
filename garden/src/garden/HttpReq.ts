@@ -1,6 +1,6 @@
 class HttpReq extends egret.HttpRequest{
 	private common:Common = Common.Shared();
-	private api_domain:string = "http://app.test.com/";
+	private api_domain:string = "http://123.207.58.186/";
 	private url:string;
 	private data:any;
 	private success:any;
