@@ -26,6 +26,8 @@ class MyGarden extends eui.Component{
 	private panel_props:eui.Group;
 	//关闭道具弹框按钮
 	private props_close:eui.Button;
+	//道具列表Group
+	private toolGroup:eui.Group;
 
 	//激活套餐弹框
 	public panel_active_package:eui.Group;
@@ -175,9 +177,13 @@ class MyGarden extends eui.Component{
 	private avatar = new eui.Image();
 	//提示框
 	public tips:any;
-	//是否加载更多
-	private needUp:boolean = false;
-	private newsData:any[] = [];
+
+	//果园信息是否加载更多
+	private news_is_more:number = 0;//-1：没有更多数据，0：加载完成，1：需要加载更多。
+	//果园信息
+	public news_data:any[] = [];
+	//果园last_id
+	private news_last_id:number = 0;
 
 	public constructor() {
 		super();
@@ -381,10 +387,6 @@ class MyGarden extends eui.Component{
 			}
 		});
 
-		//尾部果园互动消息列表
-		this.scroller_news.addEventListener(eui.UIEvent.CHANGE, this.moveHandler, this);  
-        this.scroller_news.addEventListener(eui.UIEvent.CHANGE_END, this.outHandler, this);  
-
 	}
 
 	private onCommitActiveGardenTap(e:egret.TouchEvent){
@@ -430,6 +432,7 @@ class MyGarden extends eui.Component{
 			success:(res)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
+					this.toolGroup = new eui.Group();
 					var toolList = res.data.toolList;
 					for(var i = 0; i < toolList.length; i++){
 						let toolInfo = toolList[i];
@@ -465,9 +468,11 @@ class MyGarden extends eui.Component{
 						myTool.tool_num.text = toolInfo.count;
 						myTool.tool_name.text = toolInfo.toolname;
 						myTool.tool_id = toolInfo.toolId;
-						this.panel_props.addChild(myTool);
+						this.toolGroup.addChild(myTool);
 					}
-					
+					this.panel_props.addChild(this.toolGroup);
+					console.log(this.panel_props);					
+					this.panel_props.swapChildren(this.toolGroup, this.props_close);
 					this.panel_props.visible = true;
 				}else{
 					this.tips.showTips(res.msg);
@@ -518,8 +523,6 @@ class MyGarden extends eui.Component{
 				console.log('waiting......');
 			}
 		});
-
-
 		this.panel_garden_interactive.visible = true;
 	}
 
@@ -561,6 +564,7 @@ class MyGarden extends eui.Component{
 
 	//关闭道具弹框
 	private onPropsCloseTap(e:egret.TouchEvent){
+		this.panel_props.removeChild(this.toolGroup);
 		this.full_mask.visible = false;		
 		this.panel_props.visible = false;
 	}
@@ -626,26 +630,28 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					
+					var news_data = [];
 					let userLogList = res.data.userLogList;
-					var list = new eui.List();
-					this.scroller_news.viewport = list;
-		
 					for(var i = 0; i < userLogList.length; i++){
-						this.newsData.push({
-									"userAvatar":'mygarden_png',
-									"username":userLogList[i].username,
-									"time":userLogList[i].datetime,
-									"content":userLogList[i].content
-									});
+						news_data.push({
+						"userAvatar":'mygarden_png',
+						"username":userLogList[i].username,
+						"time":userLogList[i].datetime,
+						"content":userLogList[i].content
+						});
+						news_data.push({
+						"userAvatar":'mygarden_png',
+						"username":userLogList[i].username,
+						"time":userLogList[i].datetime,
+						"content":userLogList[i].content
+						});
+						this.news_last_id = userLogList[i].id;
 					}
-					let arrCollection: eui.ArrayCollection = new eui.ArrayCollection(this.newsData);
-					list.dataProvider = arrCollection;
-					list.itemRenderer = NewsList;
-					//var list = news.createList(avatar_source, userLogList[i].username, userLogList[i].datetime, userLogList[i].content, 0, i * 122);
-					//this.scroller_news.addChild(list);
+					var scroller_news = new ScrollerNews(news_data, this.news_last_id);
+					scroller_news.horizontalCenter="0" 
+					scroller_news.bottom="0"
+					this.panel_garden_news.addChild(scroller_news);
 					this.panel_garden_news.visible = true;		
-
 				}
 			},
 			error:()=>{
@@ -655,49 +661,6 @@ class MyGarden extends eui.Component{
 				console.log('waiting......');
 			}
 		});
-	}
-
-	private moveHandler(e:eui.UIEvent){
-		if(this.scroller_news.viewport.scrollV > (this.scroller_news.viewport.contentHeight - this.scroller_news.viewport.height)+40){  
-            this.needUp = true;  
-        }  
-	}
-
-	private outHandler(e:eui.UIEvent){
-        console.log(this.needUp);  
-        if(this.needUp){  
-            this.needUp = false;  
-			var httpReq = new HttpReq();
-		var url = 'v1.0/user/user_logs';
-		httpReq.GET({
-			url:url,
-			data:{},
-			success:(res:any)=>{
-				var res = JSON.parse(res);
-				if(res.code == 0){	
-					let userLogList = res.data.userLogList;
-					var list = new eui.List();
-					this.scroller_news.viewport = list;
-		
-					for(var i = 0; i < userLogList.length; i++){
-						this.newsData.push({
-									"userAvatar":'mygarden_png',
-									"username":userLogList[i].username,
-									"time":userLogList[i].datetime,
-									"content":userLogList[i].content
-									});
-					}
-				}
-			},
-			error:()=>{
-				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
-			}
-		});
-            //this.addToStage();  
-        }  
 	}
 
 	private onChangePasswordTap(e:egret.TouchEvent){

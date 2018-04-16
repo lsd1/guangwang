@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="scrollerNews"  width="700" height="1049" xmlns:e="http://ns.egret.com/eui">
+    <e:Scroller id="scroller_news" width="700" height="1049" horizontalCenter="0" verticalCenter="0">
+    </e:Scroller>
+</e:Skin>

@@ -6,6 +6,7 @@
     "tool":"resource/garden_skins/Tools.exml",
     "scoreList":"resource/garden_skins/ScoreList.exml",
     "tips":"resource/garden_skins/Tips.exml",
+    "scrollerNews":"resource/garden_skins/scrollerNews.exml",
     "wait":"resource/garden_skins/wait.exml"
   },
   "autoGenerateExmlsList": true,
@@ -16,6 +17,7 @@
     "resource/garden_skins/Tools.exml",
     "resource/garden_skins/ScoreList.exml",
     "resource/garden_skins/Tips.exml",
+    "resource/garden_skins/scrollerNews.exml",
     "resource/garden_skins/Wait.exml"
   ]
 }
