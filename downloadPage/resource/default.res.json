@@ -1,0 +1,25 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,download_btn_png,download_bg_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "download_btn_png",
+			"type": "image",
+			"url": "assets/download_btn.png"
+		},
+		{
+			"name": "download_bg_png",
+			"type": "image",
+			"url": "assets/download_bg.png"
+		}
+	]
+}
