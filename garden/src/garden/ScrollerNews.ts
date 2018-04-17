@@ -8,7 +8,7 @@ class ScrollerNews extends eui.Scroller{
 	private news_last_id:number = 0;
 	public constructor(collection:any, news_last_id:number) {
 		super();
-		this.skinName = 'resource/garden_skins/scrollerNews.exml';
+		this.skinName = 'resource/garden_skins/ScrollerNews.exml';
 		this.list.itemRenderer = NewsList;
 		this.collection = collection;
 		this.news_last_id = news_last_id;
@@ -32,12 +32,12 @@ class ScrollerNews extends eui.Scroller{
 	public outHandler(e:eui.UIEvent){
 		if(this.is_need_more > 0){
 			this.is_need_more = 0;
-			this.loreMoreNews();
+			this.loreMore();
 		}
 	}
 
 		//加载更多果园信息
-	private loreMoreNews(){
+	private loreMore(){
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/user_logs';
 		return httpReq.GET({

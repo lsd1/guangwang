@@ -57,6 +57,8 @@ class MyGarden extends eui.Component{
 	private group_interactive_list:eui.Group;
 	//关闭果园互动按钮
 	private garden_interactive_close:eui.Button;
+	//互动数据
+	private scroller_interaction:any = false;
 
 	//果园动态弹出框
 	private panel_garden_news:eui.Group;
@@ -185,6 +187,11 @@ class MyGarden extends eui.Component{
 	//果园last_id
 	private news_last_id:number = 0;
 
+	//返回app
+	private goApp:eui.Label;
+	//调起支付
+	private goPay:eui.Label;
+
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
@@ -195,6 +202,33 @@ class MyGarden extends eui.Component{
 		this.tips = Tips.Shared();
 		this.addChildAt(this.tips, -1);
 		this.addChildAt(this.wait, -2);
+
+		setInterval(()=>{
+			let web_method:any = this.common.getCookie('web_method');
+			if(web_method !== ""){
+				web_method = JSON.parse(web_method);
+			}else{
+				console.log('nothing!');				
+			}
+		},500);
+
+		this.goPay.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			var data = {
+						"type":"buyCoinToPay",
+						"data":{"number":111,"price":222,"payOrder":"mcoinTrade"}
+						};
+			this.common.setCookie('app_method', encodeURI(JSON.stringify(data)), 30);
+			egret.log(JSON.stringify(data));			
+		}, this);
+		this.goApp.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+			var data = {
+						"type":"goApp",
+						"data":""
+						};
+			this.common.setCookie('app_method',  encodeURI(JSON.stringify(data)), 30);
+			egret.log(JSON.stringify(data));
+		}, this);
+
 
 		//判断果园是否激活
 		var isActivate:any = this.common.getCookie('isActivate');
@@ -481,15 +515,20 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				console.log('error');
+				this.wait.hide();
 			},
 			progress:()=>{
 				console.log('waiting......');
+				this.wait.hide();
 			}
 		});
 	}
 
 	//点击互动
 	private onInteractionTap(e:egret.TouchEvent){
+		if(this.scroller_interaction){
+			this.panel_garden_interactive.removeChild(this.scroller_interaction);
+		}
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/pick_list';
 		httpReq.GET({
@@ -497,23 +536,38 @@ class MyGarden extends eui.Component{
 			data:{},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
+				let lastId:number;
 				if(res.code == 0){
-					var pickList = res.data.pickList;			
+					var pickList = res.data.pickList;	
+					var collect:any[] = [];
 					for(var i = 0; i < pickList.length; i++){
-						let interaction = new InteractionList(pickList[i].id, pickList[i].username);
 						let typeArr = [];
-
 						if(pickList[i].countdown > 0){
 							typeArr.push(3);
-							var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [pickList[i].countdown], 0, i * 122);
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
 						}else{
 							pickList[i].isMature > 0 ? typeArr.push(2) : null;
 							pickList[i].isWater > 0 ? typeArr.push(1) : null;
-							//var list = interaction.createList(pickList[i].avatar, pickList[i].username, typeArr, [], 0, i * 122);
-							var list = interaction.createList('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', pickList[i].username, typeArr, [], 0, i * 122);
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
 						}
-						this.group_interactive_list.addChild(list);
+						lastId = pickList[i].id;
 					}
+					this.scroller_interaction = new ScrollerInteraction(collect, lastId)
+					console.log(this.scroller_interaction);
+					this.scroller_interaction.bottom = 0;
+					this.scroller_interaction.horizontalCenter = 0;
+					this.panel_garden_interactive.addChild(this.scroller_interaction);
 				}
 			},
 			error:()=>{

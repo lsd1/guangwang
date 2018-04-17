@@ -8,7 +8,9 @@
 			<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
-
+			<e:Label id="goPay" text="去支付" x="266.03" y="32.18" textColor="0xfc0000" bold="true" size="42"/>
+			<e:Label id="goApp" text="返回app" x="438.85" y="29.15" anchorOffsetY="0" height="42.12" size="44" textColor="0x35f904" bold="true"/>
+		
 		</e:Group>
 
 

@@ -1,26 +1,26 @@
 class ScrollerInteraction extends eui.Scroller{
 	private list:eui.List = new eui.List;
 	private tips:Tips = Tips.Shared();
-	private Scroller_interaction:eui.Scroller;
+	private scroller_interaction:eui.Scroller;
 	//0:数据加载完成；1：需要加载更多；-1：没有更多
 	private is_need_more = 0;
 	private collection:any[];
 	private news_last_id:number = 0;
 	public constructor(collection:any, news_last_id:number) {
 		super();
-		this.skinName = 'resource/garden_skins/scrollerNews.exml';
-		this.list.itemRenderer = NewsList;
+		this.skinName = 'resource/garden_skins/ScrollerInteraction.exml';
+		this.list.itemRenderer = InteractionList;
 		this.collection = collection;
 		this.news_last_id = news_last_id;
 		this.list.dataProvider = new eui.ArrayCollection(this.collection);
-		this.Scroller_interaction.viewport = this.list;
+		this.scroller_interaction.viewport = this.list;
 		//尾部果园互动消息列表
-		this.Scroller_interaction.addEventListener(eui.UIEvent.CHANGE, this.moveHandler, this);  
-        this.Scroller_interaction.addEventListener(eui.UIEvent.CHANGE_END, this.outHandler, this);  
+		this.scroller_interaction.addEventListener(eui.UIEvent.CHANGE, this.moveHandler, this);  
+        this.scroller_interaction.addEventListener(eui.UIEvent.CHANGE_END, this.outHandler, this);  
 	}
 
 	public moveHandler(e:eui.UIEvent){
-		if(this.Scroller_interaction.viewport.scrollV > (this.Scroller_interaction.viewport.contentHeight - this.Scroller_interaction.viewport.height) + 40){  
+		if(this.scroller_interaction.viewport.scrollV > (this.scroller_interaction.viewport.contentHeight - this.scroller_interaction.viewport.height) + 40){  
 			if (this.is_need_more > -1) {
 				this.is_need_more = 1;  
 			} else {
@@ -32,31 +32,34 @@ class ScrollerInteraction extends eui.Scroller{
 	public outHandler(e:eui.UIEvent){
 		if(this.is_need_more > 0){
 			this.is_need_more = 0;
-			this.loreMoreNews();
+			this.loreMore();
 		}
 	}
 
 		//加载更多果园信息
-	private loreMoreNews(){
+	private loreMore(){
 		var httpReq = new HttpReq();
-		var url = 'v1.0/user/user_logs';
-		return httpReq.GET({
+		var url = 'v1.0/user/pick_list';
+		console.log(this.news_last_id);
+		httpReq.GET({
 			url:url,
-			data:{'lastId':this.news_last_id},
-			//data:{},
+			data:{"lastId":this.news_last_id},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
-				if(res.code == 0){	
-					let userLogList = res.data.userLogList;
-					if(userLogList.length > 0){
-						for(var i = 0; i < userLogList.length; i++){
-							this.collection.push({
-							"userAvatar":'mygarden_png',
-							"username":userLogList[i].username,
-							"time":userLogList[i].datetime,
-							"content":userLogList[i].content
-							});
-							this.news_last_id = userLogList[i].id;
+				if(res.code == 0){
+					let pickList = res.data.pickList;	
+					if(pickList.length > 0 ){
+						for(let i = 0; i < pickList.length; i++){
+							let typeArr = [];
+							if(pickList[i].countdown > 0){
+								typeArr.push(3);
+								this.collection.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
+							}else{
+								pickList[i].isMature > 0 ? typeArr.push(2) : null;
+								pickList[i].isWater > 0 ? typeArr.push(1) : null;
+								this.collection.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							}
+							this.news_last_id = pickList[i].id;
 						}
 					}else{
 						this.is_need_more = -1;
@@ -71,7 +74,7 @@ class ScrollerInteraction extends eui.Scroller{
 			progress:()=>{
 				console.log('waiting......');
 			}
-		});     
+		});
 	}
 
 }

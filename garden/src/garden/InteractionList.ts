@@ -1,71 +1,90 @@
-class InteractionList {
+class InteractionList extends eui.ItemRenderer{
 	private common = Common.Shared();
 	private id:number;
-	private usernme:string;
-	public constructor(id:number, username:string) {
-		this.id = id;
-		this.usernme = username;
+	private group:eui.Group = new eui.Group();
+	private userAvatar:eui.Group;
+	private userName:eui.Label = new eui.Label();
+	private username:string;
+	private typeImage:any;
+	public constructor() {
+		super();
+		//背景
+        var rect:egret.Shape = new egret.Shape();
+		rect.graphics.beginFill(0xFFEFBD, 1);
+		rect.graphics.drawRoundRect(10, 10, 700, 120, 30);
+		//用户昵称
+		this.userName.width = 400;
+		this.userName.height = 140;
+		this.userName.textAlign = "center";
+		this.userName.verticalAlign = "middle";
+		this.userName.size = 30;
+		//this.userName.text = username;
+		this.userName.textColor = 0x7c3c03;
+		this.group.addChild(rect);
+
+		//用户头像
+		//this.group.addChild(this.common.createCircleMask(100,100,resource,20,20));
+		this.group.addChild(this.userName);
+		this.addChild(this.group);
+
+		//this.group.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionListTap,this);
 	}
 
 	//生成互动列表
 	public createList(resource?:string, username?:string,type?:any,typeResource?:any,x?:number,y?:number){
-		var group:eui.Group = new eui.Group();
-		group.x = x>0?x:0;
-		group.y = y>0?y:0;
-        var rect:egret.Shape = new egret.Shape();
-		rect.graphics.beginFill(0xFFEFBD, 1);
-		rect.graphics.drawRoundRect(10, 10, 700, 120, 30);
-		var label:eui.Label = new eui.Label();
-		label.width = 400;
-		label.height = 140;
-		label.textAlign = "center";
-		label.verticalAlign = "middle";
-		label.size = 30;
-		label.text = username;
-		label.textColor = 0x7c3c03;
-		group.addChild(rect);
-		group.addChild(this.common.createCircleMask(100,100,resource,20,20));
-		group.addChild(label);
 
-		group.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionListTap,this);
+	}
 
-		for(let i = 0; i < type.length; i++){
-			let typeImage:any;
-			switch(type[i]){
+	public onInteractionListTap(e:egret.TouchEvent){
+		MyGarden.Shared().parent.addChild(new OthersGarden(this.username));
+		MyGarden.Shared().parent.removeChild(MyGarden.Shared());
+	}
+
+	protected dataChanged():void{
+        //数据改变时，会自动调用 dataChanged 这个方法
+		if(this.userAvatar){
+			this.group.removeChild(this.userAvatar);
+		}
+		if(this.typeImage){
+			this.group.removeChild(this.typeImage);
+		}
+		//头像
+		this.group.addChild(this.common.createCircleMask(100,100,this.data.resource,20,20));
+		//昵称
+		this.userName.text = this.data.username;
+
+		//状态图标
+		for(let i = 0; i < this.data.type.length; i++){
+			//let typeImage:any;
+			switch(this.data.type[i]){
 				case 1:  
-					typeImage = this.common.createImage(40,40,'interaction_water_png',(610+30*i),50)
+					this.typeImage = this.common.createImage(40,40,'interaction_water_png',(610+30*i),50)
 					break;
 				case 2:  
-					typeImage = this.common.createImage(40,40,'interaction_pick_png',(610+30*i),50)
+					this.typeImage = this.common.createImage(40,40,'interaction_pick_png',(610+30*i),50)
 					break;
 				case 3:  
-					typeImage = new eui.Label();
-					typeImage.width = 680;
-					typeImage.height = 140;
-					typeImage.textAlign = "right";
-					typeImage.verticalAlign = "middle";
-					typeImage.size = 30;
+					this.typeImage = new eui.Label();
+					this.typeImage.width = 680;
+					this.typeImage.height = 140;
+					this.typeImage.textAlign = "right";
+					this.typeImage.verticalAlign = "middle";
+					this.typeImage.size = 30;
 					
-					typeImage.textColor = 0x7c3c03;
+					this.typeImage.textColor = 0x7c3c03;
 						setInterval(()=>{
-							if(typeResource[i]>0){
-								typeImage.text = this.common.secondToTime(typeResource[i]--, 3);
+							if(this.data.typeResource[i]>0){
+								this.typeImage.text = this.common.secondToTime(this.data.typeResource[i]--, 3);
 							}else{
-								group.removeChild(typeImage);
-								typeImage = this.common.createImage(40, 40,'interaction_take_png',(610 + 30 * i), 50);
-								group.addChild(typeImage);
+								this.group.removeChild(this.typeImage);
+								this.typeImage = this.common.createImage(40, 40,'interaction_take_png',(610 + 30 * i), 50);
+								this.group.addChild(this.typeImage);
 							}
 						}, 1000);
 					break;
 			}
-			group.addChild(typeImage);
+			this.group.addChild(this.typeImage);
 		}
-		return group;
-	}
-
-	public onInteractionListTap(e:egret.TouchEvent){
-		MyGarden.Shared().parent.addChild(new OthersGarden(this.usernme));
-		MyGarden.Shared().parent.removeChild(MyGarden.Shared());
-	}
+    }
 
 }

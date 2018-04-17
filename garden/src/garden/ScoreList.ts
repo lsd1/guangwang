@@ -6,7 +6,7 @@ class ScoreList extends eui.Component{
 	public constructor(x?:number,y?:number) {
 		super();
 		this.skinName = 'resource/garden_skins/scoreList.exml'
-		this.score_list.x = x?x:0;
-		this.score_list.y = y?y:0;
+		//this.score_list.x = x?x:0;
+		//this.score_list.y = y?y:0;
 	}
 }

@@ -58,6 +58,8 @@ declare class myGarden extends eui.Skin{
 }
 declare class scoreList extends eui.Skin{
 }
+declare class scrollerInteraction extends eui.Skin{
+}
 declare class scrollerNews extends eui.Skin{
 }
 declare class tips extends eui.Skin{
