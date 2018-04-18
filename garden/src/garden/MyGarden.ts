@@ -1,7 +1,7 @@
 class MyGarden extends eui.Component{
 	private static shared:MyGarden;
 	private common:Common = Common.Shared();
-	private wait:Wait = Wait.Shared();
+	public wait:Wait = Wait.Shared();
 	public static Shared(){
 		if(this.shared == null){
 			this.shared = new MyGarden();
@@ -124,7 +124,7 @@ class MyGarden extends eui.Component{
 	//裁剪区上半部分
 	private cut_area_group:eui.Group;
 	//裁剪区下半部分
-	private new_area_group:eui.Group;
+	//private new_area_group:eui.Group;
 	//原始图片
 	private origin_image:eui.Image;
 	private startX:any;
@@ -132,7 +132,7 @@ class MyGarden extends eui.Component{
 	//确认裁剪
 	private cut_commit:eui.Button;
 	//裁剪后图片
-	private new_image:eui.Image;
+	//private new_image:eui.Image;
 	//全局遮罩
 	public full_mask:eui.Rect;
 
@@ -187,11 +187,6 @@ class MyGarden extends eui.Component{
 	//果园last_id
 	private news_last_id:number = 0;
 
-	//返回app
-	private goApp:eui.Label;
-	//调起支付
-	private goPay:eui.Label;
-
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
@@ -202,33 +197,6 @@ class MyGarden extends eui.Component{
 		this.tips = Tips.Shared();
 		this.addChildAt(this.tips, -1);
 		this.addChildAt(this.wait, -2);
-
-		setInterval(()=>{
-			let web_method:any = this.common.getCookie('web_method');
-			if(web_method !== ""){
-				web_method = JSON.parse(web_method);
-			}else{
-				console.log('nothing!');				
-			}
-		},500);
-
-		this.goPay.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
-			var data = {
-						"type":"buyCoinToPay",
-						"data":{"number":111,"price":222,"payOrder":"mcoinTrade"}
-						};
-			this.common.setCookie('app_method', encodeURI(JSON.stringify(data)), 30);
-			egret.log(JSON.stringify(data));			
-		}, this);
-		this.goApp.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
-			var data = {
-						"type":"goApp",
-						"data":""
-						};
-			this.common.setCookie('app_method',  encodeURI(JSON.stringify(data)), 30);
-			egret.log(JSON.stringify(data));
-		}, this);
-
 
 		//判断果园是否激活
 		var isActivate:any = this.common.getCookie('isActivate');
@@ -286,6 +254,8 @@ class MyGarden extends eui.Component{
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+				}else{
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
@@ -411,6 +381,8 @@ class MyGarden extends eui.Component{
 							this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
 						}
 					}
+				}else{
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
@@ -429,6 +401,7 @@ class MyGarden extends eui.Component{
 			this.tips.showTips('激活码不能为空');
 			return false;
 		}
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_activate';
 		httpReq.POST({
@@ -444,8 +417,10 @@ class MyGarden extends eui.Component{
 				}else{
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{
@@ -526,6 +501,7 @@ class MyGarden extends eui.Component{
 
 	//点击互动
 	private onInteractionTap(e:egret.TouchEvent){
+		this.wait.show();
 		if(this.scroller_interaction){
 			this.panel_garden_interactive.removeChild(this.scroller_interaction);
 		}
@@ -568,9 +544,13 @@ class MyGarden extends eui.Component{
 					this.scroller_interaction.bottom = 0;
 					this.scroller_interaction.horizontalCenter = 0;
 					this.panel_garden_interactive.addChild(this.scroller_interaction);
+				}else{
+					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{
@@ -582,6 +562,7 @@ class MyGarden extends eui.Component{
 
 	//点击管理
 	private onManageTap(e:egret.TouchEvent){
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/score_logs';
 		httpReq.GET({
@@ -598,9 +579,13 @@ class MyGarden extends eui.Component{
 						score_log.score_date.text	= scoreLogList[i].datetime;
 						this.group_point_list.addChild(score_log);
 					}
+				}else{
+					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{
@@ -641,6 +626,7 @@ class MyGarden extends eui.Component{
 
 	//提交套餐激活弹框
 	private onCommitActivePackageTap(e:egret.TouchEvent){
+		this.wait.show();
 		this.panel_active_package.visible = false;
 		this.full_mask.visible = false;
 		let packageNo = this.package_no.text;
@@ -662,8 +648,10 @@ class MyGarden extends eui.Component{
 				}else{
 					this.tips.showTips(res.msg);		
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{
@@ -676,6 +664,7 @@ class MyGarden extends eui.Component{
 
 	//弹出果园动态框
 	private onGardenMoreNewsTap(e:egret.TouchEvent){
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/user_logs';
 		httpReq.GET({
@@ -706,6 +695,8 @@ class MyGarden extends eui.Component{
 					scroller_news.bottom="0"
 					this.panel_garden_news.addChild(scroller_news);
 					this.panel_garden_news.visible = true;		
+				}else{
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
@@ -747,6 +738,7 @@ class MyGarden extends eui.Component{
 			this.tips.showTips('两次输入密码不一致！');		
 			return false;					
 		}else{
+			this.wait.show();
 			var httpReq = new HttpReq();
 			var url = 'v1.0/user/edit_password';
 			httpReq.POST({
@@ -760,8 +752,10 @@ class MyGarden extends eui.Component{
 					}else{
 						this.tips.showTips(res.msg);		
 					}
+					this.wait.hide();
 				},
 				error:()=>{
+					this.wait.hide();
 					console.log('error');
 				},
 				progress:()=>{
@@ -799,6 +793,7 @@ class MyGarden extends eui.Component{
 			this.tips.showTips('钱包地址不能为空');
 			return false;
 		}
+		this.wait.show();
 		httpReq.POST({
 			url:url,
 			data:{score:score,address:address},
@@ -809,8 +804,10 @@ class MyGarden extends eui.Component{
 				}else{
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{
@@ -849,12 +846,12 @@ class MyGarden extends eui.Component{
 		a.origin_image.source = b;
 		//裁剪区域范围，舞台上半部分
 		a.cut_area_group.width = a.stage.stageWidth;
-		a.cut_area_group.height = a.stage.stageHeight / 2;
+		a.cut_area_group.height = a.stage.stageHeight;
 
 		//新图片的呈现区域范围，舞台下半部分
-		a.new_area_group.y =  a.stage.stageHeight / 2;
-		a.new_area_group.width = a.stage.stageWidth;
-		a.new_area_group.height = a.stage.stageHeight / 2;
+		//a.new_area_group.y =  a.stage.stageHeight / 2;
+		//a.new_area_group.width = a.stage.stageWidth;
+		//a.new_area_group.height = a.stage.stageHeight / 2;
 
 		a.origin_image.addEventListener(egret.Event.COMPLETE, a.onOriginImageComplete, a);
 
@@ -883,18 +880,18 @@ class MyGarden extends eui.Component{
 
 			//计算原始图片宽高比和舞台宽高比，然后等比缩放图片到舞台。
 			if(image_aspect_ratio > stage_aspect_ratio){
-				this.origin_image.width = this.stage.stageWidth / 2;
-				this.origin_image.height = this.stage.stageWidth / image_aspect_ratio / 2;
+				this.origin_image.width = this.stage.stageWidth;
+				this.origin_image.height = this.stage.stageWidth / image_aspect_ratio;
 			}else{
-				this.origin_image.height = this.stage.stageHeight / 2;
-				this.origin_image.width = this.stage.stageHeight * image_aspect_ratio / 2;
+				this.origin_image.height = this.stage.stageHeight;
+				this.origin_image.width = this.stage.stageHeight * image_aspect_ratio;
 			}
 
 			//裁剪区域为正方形。
 			this.cut_area.width = this.cut_area.height = this.origin_image.height < this.origin_image.width ? this.origin_image.height : this.origin_image.width
 			this.cut_area.x = this.stage.stageWidth / 2 - (this.cut_area.width / 2);
 			this.cut_area.y = 0;
-			this.setImageTexture(this.new_image);	
+			//this.setImageTexture(this.new_image);	
 			this.swapChildren(this.full_mask, this.panel_garden_manger);		
 			this.cut_image.visible = true;
 			this.full_mask.fillAlpha = 1;
@@ -933,7 +930,7 @@ class MyGarden extends eui.Component{
 	//图像裁剪框停止移动
 	private onCutAreaEnd(e:egret.TouchEvent){
 		//停止移动时把裁剪区域更新到新图片区域
-		this.setImageTexture(this.new_image);
+		//this.setImageTexture(this.new_image);
 	}
 
 	//确认裁剪
@@ -942,6 +939,7 @@ class MyGarden extends eui.Component{
 		var avatar = this.getImageBase64(this.origin_image);
 		var url = 'v1.0/user/upload_avatar';
 		var httpReq = new HttpReq();
+		this.wait.show();
 		httpReq.POST({
 			url:url,
 			data:{'avatar': avatar},
@@ -958,9 +956,14 @@ class MyGarden extends eui.Component{
 				this.cut_image.visible = false;
 				this.full_mask.fillAlpha = 0.4;
 				this.full_mask.visible = false;
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
+				this.cut_image.visible = false;
+				this.full_mask.fillAlpha = 0.4;
+				this.full_mask.visible = false;
 			},
 			progress:()=>{
 				console.log('waiting......');
@@ -995,6 +998,7 @@ class MyGarden extends eui.Component{
 		this.panel_tool_tips.visible = false;
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/use_tool';
+		this.wait.show();
 		httpReq.POST({
 			url:url,
 			data:{toolId:toolId,useNum:1},
@@ -1042,8 +1046,10 @@ class MyGarden extends eui.Component{
 				}else{
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
 				console.log('error');
 			},
 			progress:()=>{

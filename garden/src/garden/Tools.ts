@@ -24,6 +24,7 @@ class Tools extends eui.Component {
 			MyGarden.Shared().useToolGroup = this;
 			var httpReq = new HttpReq();
 			var url = 'v1.0/tool/show_tips';
+			MyGarden.Shared().wait.show();
 			httpReq.GET({
 				url:url,
 				data:{toolId:this.tool_id},
@@ -34,9 +35,13 @@ class Tools extends eui.Component {
 						MyGarden.Shared().tips_title.text = toolInfo.tooltips;
 						MyGarden.Shared().tips_title.text = '使用' + toolInfo.toolname;
 						MyGarden.Shared().panel_tool_tips.visible = true;					
+					}else{
+						MyGarden.Shared().tips.showTips(res.msg);
 					}
+					MyGarden.Shared().wait.hide();
 				},
 				error:()=>{
+					MyGarden.Shared().wait.hide();
 					console.log('error');
 				},
 				progress:()=>{

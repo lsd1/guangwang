@@ -116,6 +116,8 @@ class OthersGarden extends eui.Component {
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+				}else{
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
@@ -168,6 +170,8 @@ class OthersGarden extends eui.Component {
 							break;
 						}
 					}
+				}else{
+					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
