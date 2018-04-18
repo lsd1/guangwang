@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,download_btn_png,download_bg_png",
+			"keys": "description_json,download_btn_png,download_bg_png,config_json",
 			"name": "preload"
 		}
 	],
@@ -20,6 +20,11 @@
 			"name": "download_bg_png",
 			"type": "image",
 			"url": "assets/download_bg.png"
+		},
+		{
+			"name": "config_json",
+			"type": "json",
+			"url": "config/config.json"
 		}
 	]
 }

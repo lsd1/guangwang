@@ -15,7 +15,6 @@ class NewsList extends eui.ItemRenderer{
 		//用户名称
 		this.labelName.width = 400;
 		this.labelName.height = 140;
-		this.labelName.x = 5;
 		this.labelName.textAlign = "center";
 		this.labelName.verticalAlign = "middle";
 		this.labelName.size = 30;
@@ -50,8 +49,8 @@ class NewsList extends eui.ItemRenderer{
 	protected dataChanged():void{
         //数据改变时，会自动调用 dataChanged 这个方法
 		this.group.addChild(this.common.createCircleMask(100, 100, this.data.userAvatar, 20, 20));
-		this.labelName.text = this.data.username;
-		this.labelNews.text = this.data.content;
+		this.labelName.text = this.common.getChar(this.data.username, 5);
+		this.labelNews.text =  this.common.getChar(this.data.content, 7);
 		this.labelTime.text = this.data.time.toString().substring(5);
     }
 }

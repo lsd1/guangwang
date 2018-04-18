@@ -27,12 +27,7 @@ class InteractionList extends eui.ItemRenderer{
 		this.group.addChild(this.userName);
 		this.addChild(this.group);
 
-		//this.group.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionListTap,this);
-	}
-
-	//生成互动列表
-	public createList(resource?:string, username?:string,type?:any,typeResource?:any,x?:number,y?:number){
-
+		this.group.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionListTap,this);
 	}
 
 	public onInteractionListTap(e:egret.TouchEvent){
@@ -52,6 +47,7 @@ class InteractionList extends eui.ItemRenderer{
 		this.group.addChild(this.common.createCircleMask(100,100,this.data.resource,20,20));
 		//昵称
 		this.userName.text = this.data.username;
+		this.username = this.data.username;
 
 		//状态图标
 		for(let i = 0; i < this.data.type.length; i++){

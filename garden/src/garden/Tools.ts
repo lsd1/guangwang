@@ -32,9 +32,12 @@ class Tools extends eui.Component {
 					var res = JSON.parse(res);
 					if(res.code == 0){
 						var toolInfo = res.data.toolInfo;
-						MyGarden.Shared().tips_title.text = toolInfo.tooltips;
+						MyGarden.Shared().tool_tips.text = toolInfo.tooltips;
 						MyGarden.Shared().tips_title.text = '使用' + toolInfo.toolname;
 						MyGarden.Shared().panel_tool_tips.visible = true;					
+					}else if(res.code == 110){
+						MyGarden.Shared().tips.showTips(res.msg);
+						setTimeout(MyGarden.Shared().signOut, 2000);
 					}else{
 						MyGarden.Shared().tips.showTips(res.msg);
 					}
@@ -42,10 +45,8 @@ class Tools extends eui.Component {
 				},
 				error:()=>{
 					MyGarden.Shared().wait.hide();
+					MyGarden.Shared().tips.showTips('网络错误！请重新尝试！');
 					console.log('error');
-				},
-				progress:()=>{
-					console.log('waiting......');
 				}
 			});
 		}

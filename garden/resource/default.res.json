@@ -1,11 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "btn_close_nor_png,btn_close_pre_png,btn_login_nor_png,btn_login_pre_png,btn_logon_nor_png,btn_logon_pre_png,interaction_water_png,mygarden_icon_interaction_png,mygarden_icon_manage_png,mygarden_icon_props_png,othersgarden_icon_back_png,othersgarden_icon_water_png,props_icon01_png,props_icon02_png,props_icon03_png,props_icon04_png,props_icon05_png,text_dynamic_png,text_integral_record_png,text_integral_png,text_interaction_png,text_login_png,text_logon_png,text_mygarden_png,text_password_png,text_props_activate01_png,text_props_activate02_png,text_props_activate03_png,text_props_activate04_png,text_props_activate05_png,text_props_use01_png,text_props_use02_png,text_props_use03_png,text_props_use04_png,text_props_use05_png,text_props_png,garden_png,mygarden_png,123_jpg,cuishu_mc_json,cuishu_tex_png,fangtou_mc_json,fangtou_tex_png,feiliao_mc_json,feiliao_tex_png,ganku_mc_json,ganku_tex_png,guozishule_mc_json,guozishule_tex_png,shachong_mc_json,shachong_tex_png,yaoji_mc_json,yaoji_tex_png,jiaoshui_tex_png,jiaoshui_mc_json,insect_mc_json,insect_tex_png,garden_data_bg_png,garden_interaction_more_png,interaction_anti-theft_png,interaction_bug_png,interaction_fert_png,interaction_pick_png,interaction_ripener_png,interaction_steal_png,interaction_repellent2_png,interaction_repellent_png,download_bg_png,download_btn_png,download_line_png,download_logo_png,download_png,interaction_take_png",
+			"keys": "btn_close_nor_png,btn_close_pre_png,btn_login_nor_png,btn_login_pre_png,btn_logon_nor_png,btn_logon_pre_png,interaction_water_png,mygarden_icon_interaction_png,mygarden_icon_manage_png,mygarden_icon_props_png,othersgarden_icon_back_png,othersgarden_icon_water_png,props_icon01_png,props_icon02_png,props_icon03_png,props_icon04_png,props_icon05_png,text_dynamic_png,text_integral_record_png,text_integral_png,text_interaction_png,text_login_png,text_logon_png,text_mygarden_png,text_password_png,text_props_activate01_png,text_props_activate02_png,text_props_activate03_png,text_props_activate04_png,text_props_activate05_png,text_props_use01_png,text_props_use02_png,text_props_use03_png,text_props_use04_png,text_props_use05_png,text_props_png,garden_png,mygarden_png,123_jpg,cuishu_mc_json,cuishu_tex_png,fangtou_mc_json,fangtou_tex_png,feiliao_mc_json,feiliao_tex_png,ganku_mc_json,ganku_tex_png,guozishule_mc_json,guozishule_tex_png,shachong_mc_json,shachong_tex_png,yaoji_mc_json,yaoji_tex_png,jiaoshui_tex_png,jiaoshui_mc_json,insect_mc_json,insect_tex_png,garden_data_bg_png,garden_interaction_more_png,interaction_anti-theft_png,interaction_bug_png,interaction_fert_png,interaction_pick_png,interaction_ripener_png,interaction_steal_png,interaction_repellent_png,download_bg_png,download_btn_png,download_line_png,download_logo_png,download_png,interaction_take_png,interaction_drug_png,config_json",
 			"name": "garden"
 		},
 		{
-			"keys": "download_png,download_bg_png,download_btn_png,download_line_png,download_logo_png",
+			"keys": "config_json",
 			"name": "preload"
 		}
 	],
@@ -346,11 +346,6 @@
 			"name": "interaction_take_png"
 		},
 		{
-			"url": "assets/garden/interaction_repellent2.png",
-			"type": "image",
-			"name": "interaction_repellent2_png"
-		},
-		{
 			"url": "assets/garden/interaction_repellent.png",
 			"type": "image",
 			"name": "interaction_repellent_png"
@@ -379,6 +374,16 @@
 			"url": "assets/garden/download_logo.png",
 			"type": "image",
 			"name": "download_logo_png"
+		},
+		{
+			"url": "assets/garden/interaction_drug.png",
+			"type": "image",
+			"name": "interaction_drug_png"
+		},
+		{
+			"url": "config/config.json",
+			"type": "json",
+			"name": "config_json"
 		}
 	]
 }

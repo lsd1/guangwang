@@ -67,9 +67,7 @@ class ScrollerNews extends eui.Scroller{
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				MyGarden.Shared().tips.showTips('网络错误！请重新尝试！');
 			}
 		});     
 	}

@@ -1,6 +1,6 @@
 class MyGarden extends eui.Component{
 	private static shared:MyGarden;
-	private common:Common = Common.Shared();
+	common:Common = Common.Shared();
 	public wait:Wait = Wait.Shared();
 	public static Shared(){
 		if(this.shared == null){
@@ -81,6 +81,8 @@ class MyGarden extends eui.Component{
 	private user_point:eui.Label;
 	//积分纪录列表
 	private group_point_list:eui.Group;
+	//积分列表滚动框
+	private score_list:eui.Scroller;
 	//提取积分按钮
 	private extract_point:eui.Group;
 	//修改密码按钮
@@ -186,6 +188,8 @@ class MyGarden extends eui.Component{
 	public news_data:any[] = [];
 	//果园last_id
 	private news_last_id:number = 0;
+	//是否正在切换界面
+	private isSwitch:boolean = false;
 
 	public constructor() {
 		super();
@@ -195,9 +199,8 @@ class MyGarden extends eui.Component{
 		this.top = 0;
 		this.bottom = 0;
 		this.tips = Tips.Shared();
-		this.addChildAt(this.tips, -1);
 		this.addChildAt(this.wait, -2);
-
+		this.addChildAt(this.tips, -3);		
 		//判断果园是否激活
 		var isActivate:any = this.common.getCookie('isActivate');
 		if(isActivate <= 0){
@@ -254,15 +257,17 @@ class MyGarden extends eui.Component{
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
 		});
 
@@ -324,9 +329,10 @@ class MyGarden extends eui.Component{
 		var topAvatar = this.common.createCircleMask(100, 100, this.avatar, 20, 20);
 		var topAvatarBg = this.common.createImage(350, 140, 'garden_data_bg_png', 0, 0);
 		var label:eui.Label = new eui.Label();
+		label.x = 150;
 		label.width = 380;
 		label.height = 140;
-		label.textAlign = "center";
+		//label.textAlign = "center";
 		label.verticalAlign = "middle";
 		label.size = 30;
 		label.text = this.common.getCookie('username');
@@ -358,7 +364,13 @@ class MyGarden extends eui.Component{
 						avatar.x = 25 + i * 120;
 						//let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
 						let avatar_source = "mygarden_png"; 
-						switch(userLogList[i].curType){
+						//更多
+						if(i==5){
+							this.garden_more_news = avatar.createAvatar(3, avatar_source, "30");
+							this.group_avatar.addChild(this.garden_more_news);
+							this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
+						}else{
+							switch(userLogList[i].curType){
 							case 'steal':
 								let avatar_cell1 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
 								this.group_avatar.addChild(avatar_cell1);
@@ -368,28 +380,22 @@ class MyGarden extends eui.Component{
 								this.group_avatar.addChild(avatar_cell2);
 							break;
 							default:
-								let garden_more_news = avatar.createAvatar(1, avatar_source, 'interaction_' + userLogList[i].curType+ '_png');
-								this.group_avatar.addChild(garden_more_news);
-								garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
+								let avatar_cell3 = avatar.createAvatar(1, avatar_source, 'interaction_' + userLogList[i].curType+ '_png');
+								this.group_avatar.addChild(avatar_cell3);
 							break;
 						}
-						
-						//更多
-						if(i==5){
-							this.garden_more_news = avatar.createAvatar(3, avatar_source, "30");
-							this.group_avatar.addChild(this.garden_more_news);
-							this.garden_more_news.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGardenMoreNewsTap, this);
 						}
 					}
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
 				}else{
 					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
 		});
 
@@ -414,6 +420,10 @@ class MyGarden extends eui.Component{
 					this.full_mask.visible = false;
 					this.tips.showTips('恭喜你激活成功！');
 					this.common.setCookie('isActivate', true, 30);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -421,12 +431,10 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	//点击道具
@@ -480,9 +488,12 @@ class MyGarden extends eui.Component{
 						this.toolGroup.addChild(myTool);
 					}
 					this.panel_props.addChild(this.toolGroup);
-					console.log(this.panel_props);					
 					this.panel_props.swapChildren(this.toolGroup, this.props_close);
 					this.panel_props.visible = true;
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -491,12 +502,9 @@ class MyGarden extends eui.Component{
 			error:()=>{
 				console.log('error');
 				this.wait.hide();
-			},
-			progress:()=>{
-				console.log('waiting......');
-				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	//点击互动
@@ -525,25 +533,17 @@ class MyGarden extends eui.Component{
 							pickList[i].isMature > 0 ? typeArr.push(2) : null;
 							pickList[i].isWater > 0 ? typeArr.push(1) : null;
 							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
 						}
 						lastId = pickList[i].id;
 					}
 					this.scroller_interaction = new ScrollerInteraction(collect, lastId)
-					console.log(this.scroller_interaction);
 					this.scroller_interaction.bottom = 0;
 					this.scroller_interaction.horizontalCenter = 0;
 					this.panel_garden_interactive.addChild(this.scroller_interaction);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -551,17 +551,18 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 		this.panel_garden_interactive.visible = true;
 	}
 
 	//点击管理
 	private onManageTap(e:egret.TouchEvent){
+		if(this.score_list){
+			this.group_point_list.removeChild(this.score_list);
+		}
 		this.wait.show();
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/score_logs';
@@ -571,14 +572,24 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
+					this.user_point.text = res.data.score;
 					var scoreLogList = res.data.scoreLogList;
+					var scoreCollection:any[] = [];
+					var lastId:number = 0;
 					for(let i = 0; i < scoreLogList.length; i++){
-						let score_log = new ScoreList(10, 10 + 40 *i);
-						score_log.score_desc.text = scoreLogList[i].content;
-						score_log.score_change.text	= scoreLogList[i].changeScore;
-						score_log.score_date.text	= scoreLogList[i].datetime;
-						this.group_point_list.addChild(score_log);
+						scoreCollection.push({
+							"score_desc":scoreLogList[i].content,
+							"score_change":scoreLogList[i].changeScore,
+							"score_date":scoreLogList[i].datetime
+						});
+						lastId = scoreLogList[i].id;
 					}
+					this.score_list = new ScrollerScore(scoreCollection, lastId);
+					this.group_point_list.addChild(this.score_list);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -586,12 +597,10 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 		this.panel_garden_manger.visible = true;
 	}
 
@@ -644,7 +653,12 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.full_mask.visible = true;	
+					this.setChildIndex(this.tips, -1);
 					this.tips.showTips('恭喜你获得了道具大礼包！');		
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);		
 				}
@@ -652,12 +666,10 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 		var data = {"packageNo":999,"price":10,"payOrder":"mcoinTrade"};
 
 	}
@@ -682,12 +694,6 @@ class MyGarden extends eui.Component{
 						"time":userLogList[i].datetime,
 						"content":userLogList[i].content
 						});
-						news_data.push({
-						"userAvatar":'mygarden_png',
-						"username":userLogList[i].username,
-						"time":userLogList[i].datetime,
-						"content":userLogList[i].content
-						});
 						this.news_last_id = userLogList[i].id;
 					}
 					var scroller_news = new ScrollerNews(news_data, this.news_last_id);
@@ -695,17 +701,21 @@ class MyGarden extends eui.Component{
 					scroller_news.bottom="0"
 					this.panel_garden_news.addChild(scroller_news);
 					this.panel_garden_news.visible = true;		
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:()=>{
+				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	private onChangePasswordTap(e:egret.TouchEvent){
@@ -749,6 +759,9 @@ class MyGarden extends eui.Component{
 					if(res.code == 0){
 						this.tips.showTips('修改密码成功');		
 						this.panel_set_pass_word.visible = false;
+					}else if(res.code == 110){
+						this.tips.showTips(res.msg);
+						setTimeout((e)=>{this.signOut(e)}, 2000);
 					}else{
 						this.tips.showTips(res.msg);		
 					}
@@ -756,12 +769,10 @@ class MyGarden extends eui.Component{
 				},
 				error:()=>{
 					this.wait.hide();
+					this.tips.showTips('网络错误！请重新尝试！');
 					console.log('error');
-				},
-				progress:()=>{
-					console.log('waiting......');
 				}
-			});
+			}, e.currentTarget);
 		}
 		
 	}
@@ -801,6 +812,10 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.tips.showTips('积分提取成功');
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -808,12 +823,10 @@ class MyGarden extends eui.Component{
 			},
 			error:()=>{
 				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
 			}
-		});
+		}, e.currentTarget);
 		this.panel_extract_point.visible = false;
 	}
 
@@ -949,6 +962,10 @@ class MyGarden extends eui.Component{
 					this.tips.showTips('修改头像成功！');
 					this.setImageTexture(this.my_avatar);
 					this.setImageTexture(this.avatar);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -964,11 +981,9 @@ class MyGarden extends eui.Component{
 				this.cut_image.visible = false;
 				this.full_mask.fillAlpha = 0.4;
 				this.full_mask.visible = false;
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	//填充图片
@@ -994,7 +1009,6 @@ class MyGarden extends eui.Component{
 	//确认使用道具
 	private onCommitToolTipsTap(e:egret.TouchEvent){
 		var toolId = this.useToolGroup.tool_id;
-		this.useToolGroup.tool_num.text--;
 		this.panel_tool_tips.visible = false;
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/use_tool';
@@ -1014,19 +1028,19 @@ class MyGarden extends eui.Component{
 					switch(toolId){
 						case 1:
 							mv_name = 'feiliao';
-							var mc = this.common.mc(mv_name, 320, 950, this);
+							var mc = this.common.mc(mv_name, 320, 950, this.group_top);
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);	
 						break;
 						case 2:
 							mv_name = 'shachong';		
-							var mc = this.common.mc(mv_name,  225, 425, this);	
+							var mc = this.common.mc(mv_name,  225, 425, this.group_top);	
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);				
 						break;
 						case 3:
 							mv_name = 'cuishu';		
-							var mc = this.common.mc(mv_name, 320, 950, this);		
+							var mc = this.common.mc(mv_name, 320, 950, this.group_top);		
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);			
 						break;
@@ -1038,11 +1052,17 @@ class MyGarden extends eui.Component{
 						break;
 						case 5:
 							mv_name = 'yaoji';	
-							var mc = this.common.mc(mv_name,  225, 425, this);	
+							var mc = this.common.mc(mv_name,  225, 425, this.group_top);	
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);				
 						break;
 					}
+
+					this.useToolGroup.tool_num.text--;
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -1051,11 +1071,9 @@ class MyGarden extends eui.Component{
 			error:()=>{
 				this.wait.hide();
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 
 	}
 
@@ -1076,17 +1094,19 @@ class MyGarden extends eui.Component{
 					this.group_top.addChild( this.jiaoshui_mc_1 );
 					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
 					this.group_top.removeChild(this.ganku_mc_1);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}else{
 					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	//点击果子收获
@@ -1100,20 +1120,32 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.group_top.removeChild(this.guozishule_mc_1);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				
 				}
 				this.tips.showTips(res.msg);
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	 }
 	 
 	 //点击虫子
 	 private onInsectTap(e:egret.TouchEvent){
 		 this.onPropsTap(e);
+	 }
+
+	 //退出登陆
+	 public signOut(e:egret.Event){
+		if(this.isSwitch) return false;
+		this.isSwitch = true;
+		this.common.setCookie('token', '', 30);
+		this.common.setCookie('uid', '' , 30);
+		this.parent.addChild(Index.Shared());
+		this.parent.removeChild(this);
 	 }
 }

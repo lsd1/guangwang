@@ -40,7 +40,6 @@ class ScrollerInteraction extends eui.Scroller{
 	private loreMore(){
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/pick_list';
-		console.log(this.news_last_id);
 		httpReq.GET({
 			url:url,
 			data:{"lastId":this.news_last_id},
@@ -70,9 +69,7 @@ class ScrollerInteraction extends eui.Scroller{
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				MyGarden.Shared().tips.showTips('网络错误！请重新尝试！');
 			}
 		});
 	}

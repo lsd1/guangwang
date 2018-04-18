@@ -1,0 +1,10 @@
+{
+	"skins": {
+		"index": "resource/my_skins/Index.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/my_skins/Index.exml"
+	],
+	"path": "resource/default.thm.json"
+}

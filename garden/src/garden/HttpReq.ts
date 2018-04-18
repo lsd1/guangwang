@@ -1,6 +1,6 @@
 class HttpReq extends egret.HttpRequest{
 	private common:Common = Common.Shared();
-	private api_domain:string = "http://123.207.58.186/";
+	private api_domain:string;
 	private url:string;
 	private data:any;
 	private success:any;
@@ -14,9 +14,12 @@ class HttpReq extends egret.HttpRequest{
 	private network:number;
 	private version:string;
 	private params:Params;
+	private target:any;
 
 	public constructor(username?:string, action?:string, lang?:number, clientType?:number, network?:number, version?:string) {
 		super();
+		var arr = document.cookie.match(new RegExp("(^| )api_url=([^;]*)(;|$)"));
+		this.api_domain = decodeURI(arr[2]);
 		var lang = lang ? lang : 0;
 		var username = username ? username : this.common.getCookie('username');
 		var action = action ? action : '';
@@ -25,7 +28,12 @@ class HttpReq extends egret.HttpRequest{
 		var version = version ? version : '';	
 	}
 
-	public GET(actionParams:any){
+	public GET(actionParams:any, target?:any){
+		if(target){
+			this.target = target;
+			this.target.touchEnabled = false;
+			this.target.touchChildren = false;
+		}
 		//MyGarden.Shared().wait.show();
 		this.action = actionParams.url;
 		this.username =  actionParams.username;
@@ -54,7 +62,13 @@ class HttpReq extends egret.HttpRequest{
 		request.addEventListener(egret.ProgressEvent.PROGRESS,this.onGetProgress,this);
 	}
 
-	public POST(actionParams:any){
+	public POST(actionParams:any,target?:any){
+		if(target){
+			this.target = target;
+			this.target.touchEnabled = false;
+			this.target.touchChildren = false;
+		}
+
 		//MyGarden.Shared().wait.show();
 		this.url = this.api_domain + actionParams.url;	
 		this.username = actionParams.data.username;
@@ -83,6 +97,10 @@ class HttpReq extends egret.HttpRequest{
 		//MyGarden.Shared().wait.hide();
 		var request = <egret.HttpRequest>event.currentTarget;
 		if(this.success){
+			if(this.target){
+				this.target.touchEnabled = true;
+				this.target.touchChildren = true;
+			}
 			this.success(request.response);
 		}
 	}
@@ -90,6 +108,10 @@ class HttpReq extends egret.HttpRequest{
 	public onGetIOError(event:egret.IOErrorEvent):void{
 		//MyGarden.Shared().wait.hide();
 		if(this.error){
+			if(this.target){
+				this.target.touchEnabled = true;
+				this.target.touchChildren = true;
+			}
 			this.error();
 		}
 	}
@@ -97,6 +119,10 @@ class HttpReq extends egret.HttpRequest{
 	public onGetProgress(event:egret.ProgressEvent):void {
 		//MyGarden.Shared().wait.hide();
 		if(this.progress){
+			if(this.target){
+				this.target.touchEnabled = true;
+				this.target.touchChildren = true;
+			}
 			this.progress();
 		}
 	}

@@ -9,6 +9,7 @@ class Index extends eui.Component {
 		return this.shared;
 	}
 	private common:Common = Common.Shared();
+	public wait:Wait = Wait.Shared();
 
 	//登录、注册按钮
 	private btn_log:eui.Button;
@@ -47,6 +48,7 @@ class Index extends eui.Component {
 
 		this.tips = Tips.Shared();
 		this.addChildAt(this.tips, -1);
+		this.addChildAt(this.wait, -2);
 
 		//打开登录、注册弹框
 		this.btn_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnLogClick, this);
@@ -88,26 +90,23 @@ class Index extends eui.Component {
 	private onBtnRegClick(){
 		this.full_mask.visible = true;		
 		this.panel_reg.visible = true;
-		console.log('open reg');
 	}
 
 	//关闭登录框 
 	private onLogCloseClick(){
 		this.full_mask.visible = false;		
 		this.panel_log.visible = false;
-		console.log('close log');
-		
 	}
 
 	//关闭注册框 
 	private onRegCloseClick(){
 		this.full_mask.visible = false;		
 		this.panel_reg.visible = false;
-		console.log('close reg');
 	}
 
 	//登录
-	private onCommitLogClick(){
+	private onCommitLogClick(e:egret.TouchEvent){
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/login';
 		var username = this.log_user_name.text;
@@ -129,14 +128,14 @@ class Index extends eui.Component {
 				}else{
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:(error)=>{
+				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');				
 				console.log(error);
-			},
-			progress:()=>{
-				console.log('等待！');
 			}
-		});
+		}, e.currentTarget);
 		// httpReq.POST({
 		// 	url:url,
 		// 	data:{username:this.log_user_name.text,password:this.log_pass_word.text},
@@ -160,7 +159,7 @@ class Index extends eui.Component {
 			this.tips.showTips('两次输入密码不一致');
 			return false;
 		}
-
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/register';
 
@@ -182,14 +181,14 @@ class Index extends eui.Component {
 				} else {
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();
 			},
 			error:(error)=>{
+				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');				
 				console.log(error);
-			},
-			progress:()=>{
-				console.log('等待！');
 			}
-		});
+		}, e.currentTarget);
 
 
 

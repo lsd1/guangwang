@@ -37,6 +37,8 @@ class OthersGarden extends eui.Component {
 	private isNight:number;
 	//提示框
 	public tips:any;
+	//是否正在切换界面
+	private isSwitch:boolean = false;
 	
 	public constructor(other_user_name:string) {
 		super();
@@ -46,6 +48,7 @@ class OthersGarden extends eui.Component {
 		this.top = 0;
 		this.bottom = 0;
 		this.tips = Tips.Shared();
+		this.addChildAt(this.tips, -1);
 		//顶部果园用户头像、昵称信息
 		this.other_user_name = other_user_name;
 		
@@ -61,9 +64,10 @@ class OthersGarden extends eui.Component {
 					var topAvatar = this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
 					var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
 					var label:eui.Label = new eui.Label();
+					label.x = 150;
 					label.width = 380;
 					label.height = 140;
-					label.textAlign = "center";
+					//label.textAlign = "center";
 					label.verticalAlign = "middle";
 					label.size = 30;
 					label.text = other_user_name;
@@ -80,7 +84,6 @@ class OthersGarden extends eui.Component {
 					this.fangtou = res.data.fangtou ? res.data.fangtou : 0;
 					//是否显示干旱动画
 					if(this.isDry > 0){
-						console.log('dry');
 						this.ganku_mc_1 = this.common.mc('ganku', 425, 425);
 						this.group_top.addChild( this.ganku_mc_1);
 						this.ganku_mc_1.gotoAndPlay(0, -1);
@@ -89,7 +92,6 @@ class OthersGarden extends eui.Component {
 					}
 					//是否显示成熟动画
 					if(this.isMature > 0){
-						console.log('dry2');
 						this.guozishule_mc_1 = this.common.mc('guozishule', 300, 600);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
@@ -102,7 +104,6 @@ class OthersGarden extends eui.Component {
 					}
 					//是否长虫
 					if(this.isWormy > 0){
-						console.log('dry3');
 						this.insect_mc_1 = this.common.mc('insect', 200, 425);
 						this.group_top.addChild( this.insect_mc_1 );
 						this.insect_mc_1.gotoAndPlay(0, -1);
@@ -111,20 +112,20 @@ class OthersGarden extends eui.Component {
 					}
 					//是否开启防偷
 					if(this.fangtou > 0){
-						console.log('dry4');
 						this.fangtou_mc_1 = this.common.mc('fangtou', 300, 350);
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout(this.signOut, 2000);
 				}else{
 					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
 		});
 
@@ -140,47 +141,50 @@ class OthersGarden extends eui.Component {
 		this.group_avatar.addChild(line);
 
 		//尾部果园互动消息列表
-		var httpReq = new HttpReq();
-		var url = 'v1.0/user/user_logs';
-		httpReq.GET({
-			url:url,
-			data:{},
-			success:(res:any)=>{
-				var res = JSON.parse(res);
-				if(res.code == 0){
-					let userLogList = res.data.userLogList;
-					var len = userLogList.length > 6 ? 6 : userLogList.length;
-					for(var i = 0; i < len; i++){
-						let avatar = new AvatarList();
-						avatar.x = 25 + i * 120;
-						//let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
-						let avatar_source = "mygarden_png"; 
-						switch(userLogList[i].curType){
-							case 'steal':
-								let avatar_cell1 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
-								this.group_avatar.addChild(avatar_cell1);
-							break;
-							case 'pick':
-								let avatar_cell2 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
-								this.group_avatar.addChild(avatar_cell2);
-							break;
-							default:
-								let avatar_cell3 = avatar.createAvatar(1, avatar_source, 'interaction_' + userLogList[i].curType+ '_png');
-								this.group_avatar.addChild(avatar_cell3);
-							break;
-						}
-					}
-				}else{
-					this.tips.showTips(res.msg);
-				}
-			},
-			error:()=>{
-				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
-			}
-		});
+		// var httpReq = new HttpReq();
+		// var url = 'v1.0/user/user_logs';
+		// httpReq.GET({
+		// 	url:url,
+		// 	data:{},
+		// 	success:(res:any)=>{
+		// 		var res = JSON.parse(res);
+		// 		if(res.code == 0){
+		// 			let userLogList = res.data.userLogList;
+		// 			var len = userLogList.length > 6 ? 6 : userLogList.length;
+		// 			for(var i = 0; i < len; i++){
+		// 				let avatar = new AvatarList();
+		// 				avatar.x = 25 + i * 120;
+		// 				//let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
+		// 				let avatar_source = "mygarden_png"; 
+		// 				switch(userLogList[i].curType){
+		// 					case 'steal':
+		// 						let avatar_cell1 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
+		// 						this.group_avatar.addChild(avatar_cell1);
+		// 					break;
+		// 					case 'pick':
+		// 						let avatar_cell2 = avatar.createAvatar(2, avatar_source, userLogList[i].fruit);
+		// 						this.group_avatar.addChild(avatar_cell2);
+		// 					break;
+		// 					default:
+		// 						let avatar_cell3 = avatar.createAvatar(1, avatar_source, 'interaction_' + userLogList[i].curType+ '_png');
+		// 						this.group_avatar.addChild(avatar_cell3);
+		// 					break;
+		// 				}
+		// 			}
+		// 		}else if(res.code == 110){
+		// 			this.tips.showTips(res.msg);
+		// 			setTimeout(this.signOut, 2000);
+		// 		}else{
+		// 			this.tips.showTips(res.msg);
+		// 		}
+		// 	},
+		// 	error:()=>{
+		// 		console.log('error');
+		// 	},
+		// 	progress:()=>{
+		// 		console.log('waiting......');
+		// 	}
+		// });
 
 
 		//点击浇水
@@ -213,17 +217,18 @@ class OthersGarden extends eui.Component {
 				if(res.code == 0){
 					this.group_top.addChild( this.jiaoshui_mc_1 );
 					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout(this.signOut, 2000);
 				}else{
 					this.tips.showTips(res.msg);
 				}
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	}
 
 	//点击偷取果子
@@ -237,21 +242,32 @@ class OthersGarden extends eui.Component {
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.group_top.removeChild(this.guozishule_mc_1);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout(this.signOut, 2000);
 				}
 				this.tips.showTips(res.msg);
 			},
 			error:()=>{
 				console.log('error');
-			},
-			progress:()=>{
-				console.log('waiting......');
+				this.tips.showTips('网络错误！请重新尝试！');
 			}
-		});
+		}, e.currentTarget);
 	 }
 
 	//点击虫子
 	private onInsectTap(e:egret.TouchEvent){
 		this.tips.showTips('只有主人才可以除虫');
 	}
+
+	 //退出登陆
+	 public signOut(e:egret.Event){
+		if(this.isSwitch) return false;
+		this.isSwitch = true;
+		this.common.setCookie('token', '', 30);
+		this.common.setCookie('uid', '' , 30);
+		this.parent.addChild(Index.Shared());
+		this.parent.removeChild(this);
+	 }
 
 }

@@ -18,11 +18,19 @@ class Index extends eui.Component{
         this.left = 0;
         this.top = 0;
         this.bottom = 0;
-        var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);//判断是否ios终端
-		this.download_dom = document.getElementById('download');
-		this.android_url = '456.txt';
-		this.ios_url = '123.txt';
-		this.download_dom.download = isiOS ? this.ios_url : this.android_url;
-		this.download_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{this.download_dom.click();}, this);
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', './resource/config/config.json?v=' + Math.random(), true);
+		xhr.addEventListener("load",  () => {
+			var config = JSON.parse(xhr.response);
+			console.log(config);
+			this.ios_url = config.ios_url;
+			this.android_url = config.android_url;
+			var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);//判断是否ios终端
+			this.download_dom = document.createElement('a');
+			this.download_dom.href = '';
+			this.download_dom.download = isiOS ? this.ios_url : this.android_url;
+			this.download_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{ console.log(this.download_dom.download);this.download_dom.click();}, this);
+		});
+		xhr.send(null);
 	}
 }

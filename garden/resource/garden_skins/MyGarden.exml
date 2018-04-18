@@ -23,7 +23,7 @@
 	</e:Group>
 	<e:Rect id="full_mask" fillAlpha="0.4" left="0" top="0" right="0" bottom="0" visible="false"/>
 
-	<e:Group id="panel_props" width="580" height="544" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
+	<e:Group id="panel_props" width="580" height="544" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" locked="true" visible="false">
 
 		<e:Rect width="580" height="544" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="100" x="0" y="0"/>
 		<e:Rect width="544" height="418" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" verticalCenter="26" horizontalCenter="0"/>
@@ -100,7 +100,7 @@
 
 	</e:Group>
 
-	<e:Group id="panel_tool_tips" width="580" height="450" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
+	<e:Group id="panel_tool_tips" width="580" height="450" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false" locked="true">
 
 		<e:Rect width="580" height="450" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" left="0"/>
 		<e:Rect width="544" height="334" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="20" fillColor="0xffefbd" horizontalCenter="0" y="94"/>
@@ -112,7 +112,7 @@
 			</e:skinName>
 		</e:Button>
 
-		<e:Label id="tool_tips" text="" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" horizontalCenter="0" verticalCenter="-16"/>
+		<e:Label id="tool_tips" text="" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" verticalCenter="0" horizontalCenter="0"/>
 		<e:Group id="commit_tool_tips" width="330" height="100" y="304" horizontalCenter="0">
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
 			<e:Label text="确定" y="35.379999999999995" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>
@@ -120,9 +120,9 @@
 		<e:Label id="tips_title" text="" horizontalCenter="7.5" textColor="0x7c3c03" bold="true" fontFamily="Microsoft YaHei" size="42" top="36"/>
 	</e:Group>
 
-	<e:Group id="panel_garden_interactive" width="750" height="1140" anchorOffsetY="0" horizontalCenter="0" bottom="0" visible="false" locked="true">
+	<e:Group id="panel_garden_interactive" width="750" height="1140" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true" visible="false">
 		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
-		<e:Image y="22" anchorOffsetY="0" height="46" source="text_dynamic_png" horizontalCenter="0"/>
+		<e:Image y="22" anchorOffsetY="0" height="46" horizontalCenter="0" source="text_interaction_png"/>
 		<e:Button id="garden_interactive_close" label="" x="678" y="22" width="45" height="45" anchorOffsetY="0">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
@@ -132,9 +132,9 @@
 		</e:Button>
 	</e:Group>
 
-	<e:Group id="panel_garden_news" width="750" height="1140" anchorOffsetY="0" bottom="0" horizontalCenter="0" visible="false">
+	<e:Group id="panel_garden_news" width="750" height="1140" anchorOffsetY="0" bottom="0" horizontalCenter="0" visible="false" locked="true">
 		<e:Rect width="750" height="1140" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" horizontalCenter="0" bottom="0"/>
-		<e:Image y="22" horizontalCenter="0" source="text_interaction_png" anchorOffsetY="0" height="46"/>
+		<e:Image y="22" horizontalCenter="0" anchorOffsetY="0" height="46" source="text_dynamic_png"/>
 		<e:Button id="garden_news_close" label="" x="678" y="22" width="45" height="45" anchorOffsetY="0">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
@@ -144,10 +144,10 @@
 		</e:Button>
 	</e:Group>
 
-	<e:Group id="panel_garden_manger" width="750" height="1088" anchorOffsetY="0" bottom="0" horizontalCenter="0" locked="true" visible="false">
+	<e:Group id="panel_garden_manger" width="750" height="1088" anchorOffsetY="0" bottom="0" horizontalCenter="0" visible="false">
 		<e:Rect width="750" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" left="0" height="1088" top="0"/>
 		<e:Rect width="702" height="210" y="87" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="15" horizontalCenter="0"/>
-		<e:Rect width="702" height="480" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" bottom="0" horizontalCenter="0"/>
+		<e:Rect width="702" height="480" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0" bottom="0"/>
 		<e:Rect width="702" height="140" y="462" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
 		<e:Rect width="702" height="90" y="1230" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="0" horizontalCenter="0"/>
 		<e:Rect width="702" height="154" y="303" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffefbd" ellipseWidth="15" horizontalCenter="0"/>
@@ -176,11 +176,10 @@
 			<e:Label text="修改密码" horizontalCenter="0" verticalCenter="0" size="23" fontFamily="Microsoft YaHei"/>
 		</e:Group>
 		<e:Label text="积分纪录" y="550" textColor="0x673c13" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
-		<e:Scroller width="700" height="403" anchorOffsetY="0" bottom="74" horizontalCenter="0">
-			<e:Group id="group_point_list" anchorOffsetX="0" width="700" anchorOffsetY="0" height="391" x="0" y="16">
-			</e:Group>
-		</e:Scroller>
-		<e:Label id="more_point_log" text="查看更多记录" textColor="0x673c13" fontFamily="Microsoft YaHei" horizontalCenter="0" bottom="26"/>
+		<e:Group id="group_point_list" anchorOffsetX="0" width="700" height="475" horizontalCenter="0"  anchorOffsetY="0" x="0" bottom="0">
+		</e:Group>
+		
+
 		<e:Group id="change_avatar" width="158" height="56" x="532" y="364" anchorOffsetY="0">
 			<e:Rect width="158" x="0" y="-2" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xFFA600"/>
 			<e:Label text="修改头像" fontFamily="Microsoft YaHei" size="23" horizontalCenter="0" verticalCenter="0"/>
