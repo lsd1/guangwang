@@ -1,27 +1,29 @@
 {
-  "skins": {
-    "index":"resource/garden_skins/Index.exml",
-    "myGarden":"resource/garden_skins/MyGarden.exml",
-    "othersGarden":"resource/garden_skins/OthersGarden.exml",
-    "tool":"resource/garden_skins/Tools.exml",
-    "scoreList":"resource/garden_skins/ScoreList.exml",
-    "tips":"resource/garden_skins/Tips.exml",
-    "scrollerNews":"resource/garden_skins/ScrollerNews.exml",
-    "scrollerInteraction":"resource/garden_skins/ScrollerInteraction.exml",
-    "scrollerScore":"resource/garden_skins/ScrollerScore.exml",
-    "wait":"resource/garden_skins/wait.exml"
-  },
-  "autoGenerateExmlsList": true,
-  "exmls": [
-    "resource/garden_skins/Index.exml",
-    "resource/garden_skins/MyGarden.exml",
-    "resource/garden_skins/OthersGarden.exml",
-    "resource/garden_skins/Tools.exml",
-    "resource/garden_skins/ScoreList.exml",
-    "resource/garden_skins/Tips.exml",
-    "resource/garden_skins/ScrollerNews.exml",
-    "resource/garden_skins/ScrollerInteraction.exml",
-    "resource/garden_skins/ScrollerScore.exml",
-    "resource/garden_skins/Wait.exml"
-  ]
+	"skins": {
+		"index": "resource/garden_skins/Index.exml",
+		"myGarden": "resource/garden_skins/MyGarden.exml",
+		"othersGarden": "resource/garden_skins/OthersGarden.exml",
+		"tool": "resource/garden_skins/Tools.exml",
+		"scoreList": "resource/garden_skins/ScoreList.exml",
+		"tips": "resource/garden_skins/Tips.exml",
+		"scrollerNews": "resource/garden_skins/ScrollerNews.exml",
+		"scrollerInteraction": "resource/garden_skins/ScrollerInteraction.exml",
+		"scrollerScore": "resource/garden_skins/ScrollerScore.exml",
+		"wait": "resource/garden_skins/wait.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/garden_skins/Index.exml",
+		"resource/garden_skins/InteractionList.exml",
+		"resource/garden_skins/MyGarden.exml",
+		"resource/garden_skins/OthersGarden.exml",
+		"resource/garden_skins/ScoreList.exml",
+		"resource/garden_skins/ScrollerInteraction.exml",
+		"resource/garden_skins/ScrollerNews.exml",
+		"resource/garden_skins/ScrollerScore.exml",
+		"resource/garden_skins/Tips.exml",
+		"resource/garden_skins/Tools.exml",
+		"resource/garden_skins/Wait.exml"
+	],
+	"path": "resource/garden.thm.json"
 }

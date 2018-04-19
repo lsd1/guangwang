@@ -2,10 +2,14 @@
     "resourcePlugin": {
         "configs": [
             {
+                "configPath": "resource/garden.res.json",
+                "relativePath": "resource/"
+            },
+            {
                 "configPath": "resource/default.res.json",
                 "relativePath": "resource/"
             }
         ]
     },
-    "theme": "resource/default.thm.json"
+    "theme": "resource/garden.thm.json"
 }

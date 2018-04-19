@@ -129,6 +129,7 @@ class MyGarden extends eui.Component{
 	//private new_area_group:eui.Group;
 	//原始图片
 	private origin_image:eui.Image;
+	private cache_image:eui.Image;
 	private startX:any;
 	private startY:any;
 	//确认裁剪
@@ -274,14 +275,14 @@ class MyGarden extends eui.Component{
 
 		//关闭激活套餐弹框
 		this.active_package_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onActivePackageCloseTap, this);
-		this.package_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		//this.package_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 		//激活礼包获取道具
 		this.commit_active_package.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActivePackageTap,this);
 		
 		//激活果园
 		this.commit_active_garden.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitActiveGardenTap,this);
 		//果园激活码输入框
-		this.activate_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		//this.activate_no.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 		
 		//道具列表
 		this.props.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onPropsTap, this);
@@ -302,16 +303,16 @@ class MyGarden extends eui.Component{
 		this.change_password.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangePasswordTap, this);	
 		this.set_pass_word_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSetPassWordCloseTap, this);
 		this.commit_change.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCommitChangeTap,this);		
-		this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
-		this.new_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
-		this.repeat_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		// this.old_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		// this.new_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		// this.repeat_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 		//提取积分
 		this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointTap, this);
 		this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointCloseTap, this);
 		this.commit_extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitExtractPointTap, this);
-		this.wallet_address.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
-		this.point_number.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		//this.wallet_address.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
+		//this.point_number.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
 		//修改头像
 		this.change_avatar.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangeAvatarTap, this);
@@ -860,28 +861,10 @@ class MyGarden extends eui.Component{
 		//裁剪区域范围，舞台上半部分
 		a.cut_area_group.width = a.stage.stageWidth;
 		a.cut_area_group.height = a.stage.stageHeight;
-
-		//新图片的呈现区域范围，舞台下半部分
-		//a.new_area_group.y =  a.stage.stageHeight / 2;
-		//a.new_area_group.width = a.stage.stageWidth;
-		//a.new_area_group.height = a.stage.stageHeight / 2;
-
-		a.origin_image.addEventListener(egret.Event.COMPLETE, a.onOriginImageComplete, a);
-
-		// var mydisp:any = b;
-		// var rt: egret.RenderTexture = new egret.RenderTexture();   //建立缓冲画布
-		// rt.drawToTexture(mydisp, new egret.Rectangle(0, 0, mydisp.width, mydisp.height));  //将对象画到缓冲画布上（可指定画对象的某个区域，或画整个）
-		// this.my_avatar.texture = rt;
-		// var imageBase64:string = rt.toDataURL("image/png");  //转换为图片base64。  （对的你没看错！就这么3行。。。。）
-		// console.log(imageBase64); //弹出来看看
-
-		// var saveImage: HTMLImageElement = new Image;
-		// saveImage.onload = () => {   //图片加载完成事件（只有加载完成才能转换）
-		// 	saveImage.onload = null;
-		// 	var myBmp:egret.Bitmap = new egret.Bitmap(<any>saveImage);   //将image强转为egret.Texture即可，也可以将HTMLCanvasElement强转为egret.Texture
-		// 	this.addChild(myBmp);   //假设有一个容器叫myContainer，将建立的egret.Bitmap添加到容器
-		// }
-		// saveImage.src = imageBase64;  //使用上面生成的base64字符串开始加载图片
+		a.cache_image = new eui.Image(b);
+		a.cache_image.visible = false;
+		a.addChild(a.cache_image);
+		a.cache_image.addEventListener(egret.Event.COMPLETE, a.onOriginImageComplete, a);
 	}
 
 	//原始图片加载完成
@@ -889,8 +872,9 @@ class MyGarden extends eui.Component{
 			this.origin_image.removeEventListener(egret.Event.COMPLETE, this.onOriginImageComplete,this);
 			//舞台和原始图片的宽高比
 			var stage_aspect_ratio = this.stage.stageWidth / this.stage.stageHeight;
-			var image_aspect_ratio = this.origin_image.width / this.origin_image.height;
-
+			var image_aspect_ratio = this.cache_image.width / this.cache_image.height;
+			console.log(this.cache_image.width );
+			console.log(this.cache_image.height );
 			//计算原始图片宽高比和舞台宽高比，然后等比缩放图片到舞台。
 			if(image_aspect_ratio > stage_aspect_ratio){
 				this.origin_image.width = this.stage.stageWidth;
@@ -974,8 +958,10 @@ class MyGarden extends eui.Component{
 				this.full_mask.fillAlpha = 0.4;
 				this.full_mask.visible = false;
 				this.wait.hide();
+				this.removeChild(this.cache_image);
 			},
 			error:()=>{
+				this.removeChild(this.cache_image);
 				this.wait.hide();
 				console.log('error');
 				this.cut_image.visible = false;
