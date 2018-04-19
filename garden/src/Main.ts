@@ -97,15 +97,22 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        var common = Common.Shared();
-        common.setCookie('app_method', '', 30);
-        common.setCookie('web_method', '', 30);
-        //this.addChild(Index.Shared());
-        if(common.getCookie('token') && common.getCookie('username')){
-			this.addChild(MyGarden.Shared());
-		}else{
-            this.addChild(Index.Shared());
-        }
+
+        var xhr =  new XMLHttpRequest();
+            xhr.open('GET', './resource/config/config.json?v=' + Math.random(), true);
+            xhr.addEventListener("load",  ()=>{
+                var config = JSON.parse(xhr.response);  
+                egret.localStorage.setItem('api_url',config.api_url);
+                var common = Common.Shared();
+                common.setCookie('app_method', '', 30);
+                common.setCookie('web_method', '', 30);
+                if(common.getCookie('token') && common.getCookie('username')){
+                    this.addChild(MyGarden.Shared());
+                }else{
+                    this.addChild(Index.Shared());
+                }
+            });
+        xhr.send(null);
     }
 
 }

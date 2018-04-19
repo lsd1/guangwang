@@ -18,8 +18,7 @@ class HttpReq extends egret.HttpRequest{
 
 	public constructor(username?:string, action?:string, lang?:number, clientType?:number, network?:number, version?:string) {
 		super();
-		var arr = document.cookie.match(new RegExp("(^| )api_url=([^;]*)(;|$)"));
-		this.api_domain = decodeURI(arr[2]);
+		this.api_domain = egret.localStorage.getItem('api_url');
 		var lang = lang ? lang : 0;
 		var username = username ? username : this.common.getCookie('username');
 		var action = action ? action : '';
