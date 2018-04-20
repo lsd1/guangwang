@@ -51,7 +51,7 @@ class ScrollerNews extends eui.Scroller{
 					if(userLogList.length > 0){
 						for(var i = 0; i < userLogList.length; i++){
 							this.collection.push({
-							"userAvatar":'mygarden_png',
+							"userAvatar":userLogList[i].avatar,
 							"username":userLogList[i].username,
 							"time":userLogList[i].datetime,
 							"content":userLogList[i].content

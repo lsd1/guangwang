@@ -52,11 +52,11 @@ class ScrollerInteraction extends eui.Scroller{
 							let typeArr = [];
 							if(pickList[i].countdown > 0){
 								typeArr.push(3);
-								this.collection.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
+								this.collection.push({"resource":pickList[i].avatar, "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
 							}else{
 								pickList[i].isMature > 0 ? typeArr.push(2) : null;
 								pickList[i].isWater > 0 ? typeArr.push(1) : null;
-								this.collection.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+								this.collection.push({"resource":pickList[i].avatar, "username":pickList[i].username, "type":typeArr, "typeResource":[]});
 							}
 							this.news_last_id = pickList[i].id;
 						}

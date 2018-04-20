@@ -59,21 +59,21 @@ class Index extends eui.Component {
 		this.reg_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegCloseClick, this);
 
 		//登录帐号、密码
-		this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
+		// this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
+		// this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
 
-		//注册帐号、密码、确认密码
-		this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
+		// //注册帐号、密码、确认密码
+		// this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
+		// this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
+		// this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
 
-		//登录帐号、密码
-		this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-		this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+		// //登录帐号、密码
+		// this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+		// this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
 
-		//注册帐号、密码、确认密码
-		this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-		this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+		// //注册帐号、密码、确认密码
+		// this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+		// this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
 
 
 		//提交登录、注册
@@ -119,8 +119,8 @@ class Index extends eui.Component {
 				if(res.code == 0){
 					this.common.setCookie('username', res.data.userInfo.username, 30);
 					this.common.setCookie('uid', res.data.userInfo.id, 30);
-					//this.common.setCookie('avatar', res.data.userInfo.avatar, 30);
-					this.common.setCookie('avatar', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1373411777,3992091759&fm=27&gp=0.jpg', 30);
+					this.common.setCookie('avatar', res.data.userInfo.avatar, 30);
+					//this.common.setCookie('avatar', 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1373411777,3992091759&fm=27&gp=0.jpg', 30);
 					this.common.setCookie('token', res.token, 30);
 					this.common.setCookie('isActivate', res.data.userInfo.isActivate, 30);
 					this.parent.addChild(MyGarden.Shared())
@@ -194,20 +194,20 @@ class Index extends eui.Component {
 
 	}
 
-	private onInputFocusOut(e:egret.FocusEvent){
-		e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-		if(e.currentTarget.text == ''){
-			e.currentTarget.text = e.currentTarget.placeHolder;
-		}
-	}
+	// private onInputFocusOut(e:egret.FocusEvent){
+	// 	e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+	// 	if(e.currentTarget.text == ''){
+	// 		e.currentTarget.text = e.currentTarget.placeHolder;
+	// 	}
+	// }
 
-	private onInputFocusIn(e:egret.FocusEvent){
-		var patt = new RegExp('(请输入|请设置|请充值|请确认)');
-		if(patt.test(e.currentTarget.text)){
-			e.currentTarget.placeHolder =  e.currentTarget.text;	
-			e.currentTarget.text = '';	
-		}
+	// private onInputFocusIn(e:egret.FocusEvent){
+	// 	var patt = new RegExp('(请输入|请设置|请充值|请确认)');
+	// 	if(patt.test(e.currentTarget.text)){
+	// 		e.currentTarget.placeHolder =  e.currentTarget.text;	
+	// 		e.currentTarget.text = '';	
+	// 	}
 
-		e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-	}
+	// 	e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
+	// }
 }

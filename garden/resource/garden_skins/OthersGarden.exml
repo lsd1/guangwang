@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+
+	<e:Image left="0" right="0" bottom="0" source="mygarden_jpg" top="0"/>
+	<e:Group id="group_top" width="750" height="1086" anchorOffsetY="0" horizontalCenter="0" top="0">
+		<e:Label id="countDown" text="2:00后成熟" y="247" textColor="0xfcc03f" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" visible="false"/>
+		<e:Image source="ground_png" horizontalCenter="0" bottom="0"/>
+		<e:Image source="sun_png" top="0" right="0"/>
+		<e:Image source="tree_png" horizontalCenter="0" verticalCenter="0"/>
+		<e:Group width="750" height="100" horizontalCenter="-2" x="-2" scaleX="1" scaleY="1" bottom="2">
+			<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
+			<e:Image id="back" x="32" y="7" source="othersgarden_icon_back_png"/>
+			<e:Image id="water" source="othersgarden_icon_water_png" left="646" top="7" right="29" bottom="7"/>
+		</e:Group>
+	</e:Group>
 	<e:Group width="750" height="248" anchorOffsetX="0" bottom="0" horizontalCenter="0">
 		<e:Rect width="750" height="248" fillColor="0xffffff" bottom="0" horizontalCenter="0" locked="true"/>
 		<e:Label text="他的果园动态" x="30" y="28" textColor="0x000000" bold="true" fontFamily="SimHei" locked="true"/>
 		<e:Group id="group_avatar" height="140" anchorOffsetX="0" width="750" anchorOffsetY="0" horizontalCenter="0" bottom="0" locked="true"/>
-	</e:Group>
-	<e:Image source="mygarden_png" left="0" y="0" right="0" horizontalCenter="0"/>
-	<e:Group id="group_top" width="750" height="1086" anchorOffsetY="0" horizontalCenter="0" top="0">
-		<e:Group width="750" height="100" horizontalCenter="-2" x="-2" scaleX="1" scaleY="1" bottom="2">
-		<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
-		<e:Image id="back" x="32" y="7" source="othersgarden_icon_back_png"/>
-		<e:Image id="water" source="othersgarden_icon_water_png" left="646" top="7" right="29" bottom="7"/>
-		</e:Group>
 	</e:Group>
 </e:Skin>

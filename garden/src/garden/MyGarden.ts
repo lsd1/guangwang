@@ -89,6 +89,8 @@ class MyGarden extends eui.Component{
 	private change_password:eui.Group;
 	//更多记录按钮
 	private more_point_log:eui.Label;
+	//暂无记录
+	private no_score:eui.Label;
 
 	//设置新密码弹框
 	private panel_set_pass_word:eui.Group;
@@ -191,6 +193,8 @@ class MyGarden extends eui.Component{
 	private news_last_id:number = 0;
 	//是否正在切换界面
 	private isSwitch:boolean = false;
+	//倒计时
+	private countDown:eui.Label;
 
 	public constructor() {
 		super();
@@ -226,7 +230,7 @@ class MyGarden extends eui.Component{
 					this.fangtou = res.data.fangtou ? res.data.fangtou : 0;
 					//是否显示干旱动画
 					if(this.isDry > 0){
-						this.ganku_mc_1 = this.common.mc('ganku', 425, 425);
+						this.ganku_mc_1 = this.common.mc('ganku', 525, 325);
 						this.group_top.addChild( this.ganku_mc_1);
 						this.ganku_mc_1.gotoAndPlay(0, -1);
 						this.ganku_mc_1.touchEnabled = true;
@@ -234,7 +238,7 @@ class MyGarden extends eui.Component{
 					}
 					//是否显示成熟动画
 					if(this.isMature > 0){
-						this.guozishule_mc_1 = this.common.mc('guozishule', 300, 600);
+						this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
 						this.guozishule_mc_1.touchEnabled = true;
@@ -246,7 +250,7 @@ class MyGarden extends eui.Component{
 					}
 					//是否长虫
 					if(this.isWormy > 0){
-						this.insect_mc_1 = this.common.mc('insect', 200, 425);
+						this.insect_mc_1 = this.common.mc('insect', 200, 325);
 						this.group_top.addChild( this.insect_mc_1 );
 						this.insect_mc_1.gotoAndPlay(0, -1);
 						this.insect_mc_1.touchEnabled = true;
@@ -254,10 +258,31 @@ class MyGarden extends eui.Component{
 					}
 					//是否开启防偷
 					if(this.fangtou > 0){
-						this.fangtou_mc_1 = this.common.mc('fangtou', 300, 350);
+						this.fangtou_mc_1 = this.common.mc('fangtou', 350, 350);
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+
+					if(res.data.countdown > 0){
+						var countdown:number = res.data.countdown;
+						this.countDown.visible = true;
+						var t = setInterval(()=>{
+							if(countdown > 1){
+								this.countDown.text = this.common.secondToTime(countdown) + '后成熟';
+								countdown--;
+							}else{
+								this.countDown.visible = false;						
+								t = 0;
+								this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
+								this.group_top.addChild( this.guozishule_mc_1 );
+								this.guozishule_mc_1.gotoAndPlay(0, -1);
+								this.guozishule_mc_1.touchEnabled = true;
+								this.guozishule_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onFruitTap, this);									
+							}
+
+						},1000);
+					}
+
 				}else if(res.code == 110){
 					this.tips.showTips(res.msg);
 					setTimeout((e)=>{this.signOut(e)}, 2000);
@@ -363,8 +388,7 @@ class MyGarden extends eui.Component{
 					for(var i = 0; i < len; i++){
 						let avatar = new AvatarList();
 						avatar.x = 25 + i * 120;
-						//let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png"; 
-						let avatar_source = "mygarden_png"; 
+						let avatar_source = userLogList[i].avatar ? userLogList[i].avatar : "mygarden_png";
 						//更多
 						if(i==5){
 							this.garden_more_news = avatar.createAvatar(3, avatar_source, "30");
@@ -440,8 +464,8 @@ class MyGarden extends eui.Component{
 
 	//点击道具
 	private onPropsTap(e:egret.TouchEvent){
-		this.wait.show();
 		this.full_mask.visible = true;
+		this.wait.show();		
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/tool/show';
 		httpReq.GET({
@@ -451,7 +475,15 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.toolGroup = new eui.Group();
-					var toolList = res.data.toolList;
+					var originToolList = 
+					{
+						0:{toolId:1,toolname:'化肥',count:0},
+						1:{toolId:2,toolname:'驱虫器',count:0},
+						2:{toolId:3,toolname:'催熟剂',count:0},
+						3:{toolId:4,toolname:'防偷神器',count:0},
+						4:{toolId:5,toolname:'药剂',count:0},
+					};
+					var toolList = res.data.toolList.length > 0 ? res.data.toolList : originToolList;
 					for(var i = 0; i < toolList.length; i++){
 						let toolInfo = toolList[i];
 						let myTool = new Tools();
@@ -510,10 +542,10 @@ class MyGarden extends eui.Component{
 
 	//点击互动
 	private onInteractionTap(e:egret.TouchEvent){
-		this.wait.show();
 		if(this.scroller_interaction){
 			this.panel_garden_interactive.removeChild(this.scroller_interaction);
 		}
+		this.wait.show();		
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/pick_list';
 		httpReq.GET({
@@ -529,11 +561,11 @@ class MyGarden extends eui.Component{
 						let typeArr = [];
 						if(pickList[i].countdown > 0){
 							typeArr.push(3);
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
+							collect.push({"resource":pickList[i].avatar, "username":pickList[i].username, "type":typeArr, "typeResource":[pickList[i].countdown]});
 						}else{
 							pickList[i].isMature > 0 ? typeArr.push(2) : null;
 							pickList[i].isWater > 0 ? typeArr.push(1) : null;
-							collect.push({"resource":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188103899,3971327013&fm=27&gp=0.jpg', "username":pickList[i].username, "type":typeArr, "typeResource":[]});
+							collect.push({"resource":pickList[i].avatar, "username":pickList[i].username, "type":typeArr, "typeResource":[]});
 						}
 						lastId = pickList[i].id;
 					}
@@ -574,19 +606,25 @@ class MyGarden extends eui.Component{
 				var res = JSON.parse(res);
 				if(res.code == 0){
 					this.user_point.text = res.data.score;
+					this.active_date.text = res.data.activateTime;
 					var scoreLogList = res.data.scoreLogList;
 					var scoreCollection:any[] = [];
 					var lastId:number = 0;
-					for(let i = 0; i < scoreLogList.length; i++){
-						scoreCollection.push({
-							"score_desc":scoreLogList[i].content,
-							"score_change":scoreLogList[i].changeScore,
-							"score_date":scoreLogList[i].datetime
-						});
-						lastId = scoreLogList[i].id;
+					if(scoreLogList.length > 0){
+						for(let i = 0; i < scoreLogList.length; i++){
+							scoreCollection.push({
+								"score_desc":scoreLogList[i].content,
+								"score_change":scoreLogList[i].changeScore,
+								"score_date":scoreLogList[i].datetime
+							});
+							lastId = scoreLogList[i].id;
+						}
+						this.score_list = new ScrollerScore(scoreCollection, lastId);
+						this.group_point_list.addChild(this.score_list);
+						this.no_score.visible = false;
+					}else{
+						this.no_score.visible = true;
 					}
-					this.score_list = new ScrollerScore(scoreCollection, lastId);
-					this.group_point_list.addChild(this.score_list);
 				}else if(res.code == 110){
 					this.tips.showTips(res.msg);
 					setTimeout((e)=>{this.signOut(e)}, 2000);
@@ -636,7 +674,6 @@ class MyGarden extends eui.Component{
 
 	//提交套餐激活弹框
 	private onCommitActivePackageTap(e:egret.TouchEvent){
-		this.wait.show();
 		this.panel_active_package.visible = false;
 		this.full_mask.visible = false;
 		let packageNo = this.package_no.text;
@@ -644,7 +681,7 @@ class MyGarden extends eui.Component{
 			this.tips.showTips('请输入激活码');		
 			return false;
 		}
-
+		this.wait.show();
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_package';
 		httpReq.POST({
@@ -672,7 +709,6 @@ class MyGarden extends eui.Component{
 			}
 		}, e.currentTarget);
 		var data = {"packageNo":999,"price":10,"payOrder":"mcoinTrade"};
-
 	}
 
 	//弹出果园动态框
@@ -690,7 +726,7 @@ class MyGarden extends eui.Component{
 					let userLogList = res.data.userLogList;
 					for(var i = 0; i < userLogList.length; i++){
 						news_data.push({
-						"userAvatar":'mygarden_png',
+						"userAvatar":userLogList[i].avatar,
 						"username":userLogList[i].username,
 						"time":userLogList[i].datetime,
 						"content":userLogList[i].content
@@ -792,9 +828,6 @@ class MyGarden extends eui.Component{
 
 	//提交提取积分
 	private onCommitExtractPointTap(e:egret.TouchEvent){
-		
-		var httpReq = new HttpReq();
-		var url = 'v1.0/user/draw_score';
 		var score = this.point_number.text;
 		var address = this.wallet_address.text;
 		if(parseInt(score) <= 0 || score == ''){
@@ -806,6 +839,8 @@ class MyGarden extends eui.Component{
 			return false;
 		}
 		this.wait.show();
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/draw_score';
 		httpReq.POST({
 			url:url,
 			data:{score:score,address:address},
@@ -935,8 +970,8 @@ class MyGarden extends eui.Component{
 		//确定裁剪之后，更新头像。
 		var avatar = this.getImageBase64(this.origin_image);
 		var url = 'v1.0/user/upload_avatar';
+		this.wait.show();		
 		var httpReq = new HttpReq();
-		this.wait.show();
 		httpReq.POST({
 			url:url,
 			data:{'avatar': avatar},
@@ -996,9 +1031,9 @@ class MyGarden extends eui.Component{
 	private onCommitToolTipsTap(e:egret.TouchEvent){
 		var toolId = this.useToolGroup.tool_id;
 		this.panel_tool_tips.visible = false;
+		this.wait.show();		
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/use_tool';
-		this.wait.show();
 		httpReq.POST({
 			url:url,
 			data:{toolId:toolId,useNum:1},
@@ -1014,19 +1049,19 @@ class MyGarden extends eui.Component{
 					switch(toolId){
 						case 1:
 							mv_name = 'feiliao';
-							var mc = this.common.mc(mv_name, 320, 950, this.group_top);
+							var mc = this.common.mc(mv_name, 320, 650, this.group_top);
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);	
 						break;
 						case 2:
 							mv_name = 'shachong';		
-							var mc = this.common.mc(mv_name,  225, 425, this.group_top);	
+							var mc = this.common.mc(mv_name,  230, 325, this.group_top);	
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);				
 						break;
 						case 3:
 							mv_name = 'cuishu';		
-							var mc = this.common.mc(mv_name, 320, 950, this.group_top);		
+							var mc = this.common.mc(mv_name, 320, 650, this.group_top);		
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);			
 						break;
@@ -1038,7 +1073,7 @@ class MyGarden extends eui.Component{
 						break;
 						case 5:
 							mv_name = 'yaoji';	
-							var mc = this.common.mc(mv_name,  225, 425, this.group_top);	
+							var mc = this.common.mc(mv_name,  230, 325, this.group_top);	
 							this.group_top.addChild( mc );
 							mc.gotoAndPlay(1, 2);				
 						break;
@@ -1065,9 +1100,6 @@ class MyGarden extends eui.Component{
 
 	//点击水滴浇水
 	private onDryTap(e:egret.TouchEvent){
-		if(this.isWater > 0){
-			return false;
-		}
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/put_water';
 		httpReq.POST({
@@ -1076,7 +1108,7 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 350, 900, this.group_top);
+					this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 400, 750, this.group_top);
 					this.group_top.addChild( this.jiaoshui_mc_1 );
 					this.jiaoshui_mc_1.gotoAndPlay(1, 2);
 					this.group_top.removeChild(this.ganku_mc_1);

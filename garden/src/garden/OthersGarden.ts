@@ -61,7 +61,7 @@ class OthersGarden extends eui.Component {
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					var topAvatar = this.common.createCircleMask(100, 100, "mygarden_png", 20, 20);
+					var topAvatar = this.common.createCircleMask(100, 100, res.data.avatar, 20, 20);
 					var topAvatarBg = this.common.createImage(350, 140, "garden_data_bg_png", 0, 0);
 					var label:eui.Label = new eui.Label();
 					label.x = 150;
@@ -84,15 +84,15 @@ class OthersGarden extends eui.Component {
 					this.fangtou = res.data.fangtou ? res.data.fangtou : 0;
 					//是否显示干旱动画
 					if(this.isDry > 0){
-						this.ganku_mc_1 = this.common.mc('ganku', 425, 425);
+						this.ganku_mc_1 = this.common.mc('ganku', 525, 325);
 						this.group_top.addChild( this.ganku_mc_1);
 						this.ganku_mc_1.gotoAndPlay(0, -1);
 						this.ganku_mc_1.touchEnabled = true;
 						this.ganku_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWaterTap, this);
 					}
 					//是否显示成熟动画
-					if(this.isMature > 0){
-						this.guozishule_mc_1 = this.common.mc('guozishule', 300, 600);
+					if(this.isMature > 1){
+						this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
 						this.guozishule_mc_1.touchEnabled = true;
@@ -104,7 +104,7 @@ class OthersGarden extends eui.Component {
 					}
 					//是否长虫
 					if(this.isWormy > 0){
-						this.insect_mc_1 = this.common.mc('insect', 200, 425);
+						this.insect_mc_1 = this.common.mc('insect', 200, 325);
 						this.group_top.addChild( this.insect_mc_1 );
 						this.insect_mc_1.gotoAndPlay(0, -1);
 						this.insect_mc_1.touchEnabled = true;
@@ -112,7 +112,7 @@ class OthersGarden extends eui.Component {
 					}
 					//是否开启防偷
 					if(this.fangtou > 0){
-						this.fangtou_mc_1 = this.common.mc('fangtou', 300, 350);
+						this.fangtou_mc_1 = this.common.mc('fangtou', 350, 350);
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
@@ -189,7 +189,7 @@ class OthersGarden extends eui.Component {
 
 		//点击浇水
 		this.water.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onWaterTap,this);
-		this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 350, 750);
+		this.jiaoshui_mc_1 = this.common.mc('jiaoshui', 400, 750);
 		this.jiaoshui_mc_1.addEventListener(egret.Event.COMPLETE, (e:egret.Event)=>{
 			this.group_top.removeChild( this.jiaoshui_mc_1 );
 			if(this.group_top.getChildIndex(this.ganku_mc_1) > 0){

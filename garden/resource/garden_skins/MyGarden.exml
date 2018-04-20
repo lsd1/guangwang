@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="myGarden" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="mygarden_png" scaleX="1" scaleY="1" height="1334" left="0" right="0" y="0"/>
+	<e:Image scaleX="1" scaleY="1" source="mygarden_jpg" top="0" bottom="0" left="0" right="0"/>
 
 	<e:Group id="group_top" height="1086" width="750" top="0" horizontalCenter="0">
+		<e:Image source="sun_png" x="590.64" y="3.48"/>
+		<e:Image source="ground_png" x="3.18" bottom="0"/>
+		<e:Image source="tree_png" horizontalCenter="0" verticalCenter="0"/>
 		<e:Group width="750" height="100" scaleX="1" scaleY="1" bottom="0" horizontalCenter="-2">
 			<e:Rect width="750" height="100" y="0" fillAlpha="0.2" anchorOffsetY="0" x="0"/>
 			<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
-
-
-		
 		</e:Group>
+		<e:Label id="countDown" text="2:00后成熟" y="247" textColor="0xfcc03f" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" visible="false"/>
 
 
 	</e:Group>
@@ -71,7 +72,7 @@
 
 		<e:Label text="　　道具数量为零，请输入激活码激活套餐获取道具。" anchorOffsetX="0" width="510" anchorOffsetY="0" height="124" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" y="120" horizontalCenter="0"/>
 		<e:Rect width="424" height="86" y="236" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="package_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入激活码" promptColor="0xcccccc"/>
+		<e:EditableText id="package_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入激活码" promptColor="0xcccccc" restrict="0-9 a-z A-Z"/>
 
 		
 		<e:Group id="commit_active_package" width="330" height="100" y="358" horizontalCenter="0">
@@ -90,7 +91,7 @@
 
 		<e:Label text="　　当前果园处于未激活状态，请输入激活码激活。" anchorOffsetX="0" width="510" anchorOffsetY="0" height="124" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" y="120" horizontalCenter="0"/>
 		<e:Rect width="424" height="86" y="236" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="activate_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入激活码" promptColor="0xcccccc"/>
+		<e:EditableText id="activate_no" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入激活码" promptColor="0xcccccc" restrict="a-z 0-9 A-Z"/>
 
 		
 		<e:Group id="commit_active_garden" width="330" height="100" y="358" horizontalCenter="0">
@@ -154,7 +155,7 @@
 		<e:Label id="user_point" text="888888" x="195" y="500" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="195" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Label text="******" x="195" y="246" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Label id="user_name" text="Tommy" x="195" y="178" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
-		<e:Label id="active_date" text="2018-03-05 18:30" x="195" y="120" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="250" fontFamily="Microsoft YaHei" size="25"/>
+		<e:Label id="active_date" text="0000-00-00 00:00:00" x="195" y="120" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="250" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Label text="账户密码：" x="70" y="242" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Label text="账户积分：" x="70" y="498" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
 		<e:Label text="激活日期：" x="69" y="116" backgroundColor="0x000000" textColor="0x673C13" anchorOffsetY="0" height="28" anchorOffsetX="0" width="150" fontFamily="Microsoft YaHei" size="25"/>
@@ -175,7 +176,8 @@
 			<e:Rect width="158" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" height="56" ellipseWidth="90" fillColor="0xffa600"/>
 			<e:Label text="修改密码" horizontalCenter="0" verticalCenter="0" size="23" fontFamily="Microsoft YaHei"/>
 		</e:Group>
-		<e:Label text="积分纪录" y="550" textColor="0x673c13" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
+		<e:Label text="积分纪录" y="550" size="25" fontFamily="Microsoft YaHei" horizontalCenter="0" textColor="0x673c13"/>
+		<e:Label id="no_score" text="暂无记录~" horizontalCenter="0.5" textColor="0x673c13" fontFamily="Microsoft YaHei" height="139.39" verticalAlign="middle" anchorOffsetY="0" bottom="0" visible="false"/>
 		<e:Group id="group_point_list" anchorOffsetX="0" width="700" height="475" horizontalCenter="0"  anchorOffsetY="0" x="0" bottom="0">
 		</e:Group>
 		
@@ -201,11 +203,11 @@
 		<e:Image y="22" source="text_password_png" horizontalCenter="0"/>
 
 		<e:Rect width="424" height="86" y="134" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="old_pass_word" width="394" height="62" y="148" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入原来密码" promptColor="0xcccccc"/>
+		<e:EditableText id="old_pass_word" width="394" height="62" y="148" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入原来密码" promptColor="0xcccccc" restrict="a-z 0-9 A-Z"/>
 		<e:Rect width="424" height="86" y="246" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="new_pass_word" width="394" height="62" y="260" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入新密码" promptColor="0xcccccc"/>
+		<e:EditableText id="new_pass_word" width="394" height="62" y="260" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入新密码" promptColor="0xcccccc" restrict="a-z 0-9 A-Z"/>
 		<e:Rect width="424" height="86" y="358" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="repeat_pass_word" width="394" height="62" y="368" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请再次输入新密码" promptColor="0xcccccc"/>
+		<e:EditableText id="repeat_pass_word" width="394" height="62" y="368" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请再次输入新密码" promptColor="0xcccccc" restrict="a-z 0-9 A-Z"/>
 		<e:Group id="commit_change" width="330" height="100" y="466" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0">
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" y="0" horizontalCenter="0"/>
 			<e:Label text="确认" y="36.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="142"/>
@@ -225,9 +227,9 @@
 		</e:Button>
 		<e:Image source="text_integral_png" y="22" horizontalCenter="0"/>
 		<e:Rect width="424" height="86" y="124" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="wallet_address" width="394" height="62" y="132" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入钱包地址" promptColor="0xcccccc"/>
+		<e:EditableText id="wallet_address" width="394" height="62" y="132" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入钱包地址" promptColor="0xcccccc" restrict="a-z 0-9 A-Z"/>
 		<e:Rect width="424" height="86" y="236" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" ellipseWidth="20" horizontalCenter="0"/>
-		<e:EditableText id="point_number" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入提取数额(整数)" promptColor="0xcccccc"/>
+		<e:EditableText id="point_number" width="394" height="62" y="246" anchorOffsetX="0" anchorOffsetY="0" text="" textColor="0xcccccc" verticalAlign="middle" fontFamily="Microsoft YaHei" horizontalCenter="0" prompt="请输入提取数额(整数)" promptColor="0xcccccc" restrict="0-9"/>
 		<e:Group id="commit_extract_point" width="330" height="100" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" y="368">
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" x="0" y="0"/>
 			<e:Label text="确认" y="36.38" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="142"/>
