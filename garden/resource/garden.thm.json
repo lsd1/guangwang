@@ -15,6 +15,7 @@
 	"exmls": [
 		"resource/garden_skins/Index.exml",
 		"resource/garden_skins/InteractionList.exml",
+		"resource/garden_skins/loading.exml",
 		"resource/garden_skins/MyGarden.exml",
 		"resource/garden_skins/OthersGarden.exml",
 		"resource/garden_skins/ScoreList.exml",

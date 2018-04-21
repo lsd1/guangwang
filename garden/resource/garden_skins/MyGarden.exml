@@ -12,7 +12,7 @@
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
 		</e:Group>
-		<e:Label id="countDown" text="2:00后成熟" y="247" textColor="0xfcc03f" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" visible="false"/>
+		<e:Label id="countDown" text="" y="247" textColor="0xfcc03f" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" visible="false"/>
 
 
 	</e:Group>

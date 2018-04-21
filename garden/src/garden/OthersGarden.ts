@@ -39,6 +39,8 @@ class OthersGarden extends eui.Component {
 	public tips:any;
 	//是否正在切换界面
 	private isSwitch:boolean = false;
+	//成熟倒计时
+	private countDown:eui.Label;
 	
 	public constructor(other_user_name:string) {
 		super();
@@ -112,10 +114,33 @@ class OthersGarden extends eui.Component {
 					}
 					//是否开启防偷
 					if(this.fangtou > 0){
-						this.fangtou_mc_1 = this.common.mc('fangtou', 350, 350);
+						this.fangtou_mc_1 = this.common.mc('fangtou', 380, 350);
+						this.fangtou_mc_1.scaleX = 1.5;
+						this.fangtou_mc_1.scaleY = 1.5;
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
+					//开启倒计时
+					if(res.data.countdown > 0){
+						var countdown:number = res.data.countdown;
+						this.countDown.visible = true;
+						var t = setInterval(()=>{
+							if(countdown > 0){
+								this.countDown.text = this.common.secondToTime(countdown) + '后成熟';
+								countdown--;
+							}else{
+								this.countDown.visible = false;						
+								t = 0;
+								this.guozishule_mc_1 = this.common.mc('guozishule', 380,530);
+								this.group_top.addChild( this.guozishule_mc_1 );
+								this.guozishule_mc_1.gotoAndPlay(0, -1);
+								this.guozishule_mc_1.touchEnabled = true;
+								this.guozishule_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onFruitTap, this);									
+							}
+
+						},1000);
+					}
+
 				}else if(res.code == 110){
 					this.tips.showTips(res.msg);
 					setTimeout(this.signOut, 2000);

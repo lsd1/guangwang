@@ -8,19 +8,21 @@ class Common {
 	}
 
 	//秒数转化为倒计时
-	public secondToTime(second:number,type?:number){
-		if(!type) type = 3;
-		var t:string = '';
+	public secondToTime(second:number){
 		if(second > -1){
 			var hour:any = Math.floor(second/3600);
 			var min:any = Math.floor(second/60) % 60;
 			var sec:any = second % 60;
-			
+			var t = '';
 			if(hour < 10 ){hour = '0'+ hour.toString();}
 			if(min < 10){min = "0" + min.toString();}
 			if(sec < 10){sec = "0" + sec.toFixed(0).toString();}
-			var timeArr = [hour,min,sec];
-			for(var i = 0; i < type; i++){
+			if(second>3600){
+				var timeArr = [hour,min,sec];
+			}else{
+				var timeArr = [min,sec];
+			}
+			for(var i = 0; i < timeArr.length; i++){
 				t += t == '' ?  timeArr[i] : ':' + timeArr[i];
 			}	
 		}

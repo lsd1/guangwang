@@ -68,12 +68,14 @@ class Main extends eui.UILayer {
 
     private async loadResource() {
         try {
+            await RES.loadConfig("resource/garden.res.json", "resource/");
+            await RES.loadGroup("loading");                        
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
-            await RES.loadConfig("resource/garden.res.json", "resource/");
             await this.loadTheme();
             await RES.loadGroup("garden", 0, loadingView);
             this.stage.removeChild(loadingView);
+        
         }
         catch (e) {
             console.error(e);

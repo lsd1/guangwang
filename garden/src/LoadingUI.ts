@@ -31,18 +31,28 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
     public constructor() {
         super();
-        this.createView();
+        this.createView();        
     }
 
     private textField: egret.TextField;
-
+    private bg:eui.Image;
+    private bgGroup:eui.Component;
     private createView(): void {
+        this.bgGroup = new eui.Component;
+        this.bgGroup.skinName = '<?xml version="1.0" encoding="utf-8"?><e:Skin class="loading" width="750" height="1334" xmlns:e="http://ns.egret.com/eui"><e:Image source="garden_png" left="0" top="0" right="0" bottom="0"/></e:Skin>';
+        this.addChild(this.bgGroup);
+        this.bgGroup.top = 0;
+        this.bgGroup.bottom = 0;
+        this.bgGroup.right = 0;
+        this.bgGroup.left = 0;
+  
         this.textField = new egret.TextField();
-        this.addChild(this.textField);
+        this.bgGroup.addChild(this.textField);
         this.textField.y = 300;
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+
     }
 
     public onProgress(current: number, total: number): void {

@@ -70,7 +70,7 @@ class InteractionList extends eui.ItemRenderer{
 					this.typeImage.textColor = 0x7c3c03;
 						setInterval(()=>{
 							if(this.data.typeResource[i]>0){
-								this.typeImage.text = this.common.secondToTime(this.data.typeResource[i]--, 3);
+								this.typeImage.text = this.common.secondToTime(this.data.typeResource[i]--);
 							}else{
 								this.group.removeChild(this.typeImage);
 								this.typeImage = this.common.createImage(40, 40,'interaction_take_png',(610 + 30 * i), 50);
