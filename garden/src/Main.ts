@@ -72,6 +72,7 @@ class Main extends eui.UILayer {
             await RES.loadGroup("loading");                        
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
+            loadingView.createView();
             await this.loadTheme();
             await RES.loadGroup("garden", 0, loadingView);
             this.stage.removeChild(loadingView);

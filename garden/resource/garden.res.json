@@ -5,7 +5,7 @@
 			"name": "garden"
 		},
 		{
-			"keys": "garden_png",
+			"keys": "garden_png,undercolor_png,load_bar_png",
 			"name": "loading"
 		}
 	],
@@ -389,6 +389,16 @@
 			"url": "assets/garden/mygarden.jpg",
 			"type": "image",
 			"name": "mygarden_jpg"
+		},
+		{
+			"url": "assets/garden/load_bar.png",
+			"type": "image",
+			"name": "load_bar_png"
+		},
+		{
+			"url": "assets/garden/undercolor.png",
+			"type": "image",
+			"name": "undercolor_png"
 		}
 	]
 }
