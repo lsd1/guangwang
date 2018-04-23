@@ -264,7 +264,6 @@ class MyGarden extends eui.Component{
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
 					}
-					res.data.countdown = 10
 					if(res.data.countdown > 0){
 						var countdown:number = res.data.countdown;
 						this.countDown.visible = true;

@@ -93,7 +93,7 @@ class OthersGarden extends eui.Component {
 						this.ganku_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWaterTap, this);
 					}
 					//是否显示成熟动画
-					if(this.isMature > 1){
+					if(this.isMature > 0){
 						this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
