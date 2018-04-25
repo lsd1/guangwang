@@ -196,6 +196,21 @@ class MyGarden extends eui.Component{
 	//倒计时
 	private countDown:eui.Label;
 
+	//邀请按钮
+	private invite:eui.Image;
+	//邀请界面
+	private panel_invite:eui.Group;
+	//复制按钮
+	private copy:eui.Group;
+	//邀请链接
+	private inviteUrl:eui.Label;
+	//邀请二维码
+	private qr_code:eui.Image;
+	//邀请人数
+	private invite_number:eui.Label;
+	//关闭邀请界面
+	private invite_close:eui.Button;
+	
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
@@ -212,7 +227,12 @@ class MyGarden extends eui.Component{
 			this.full_mask.visible = true;
 			this.panel_active_garden.visible = true;
 		} 
+		//点击邀请
+		this.invite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInviteTap, this);
+		//关闭邀请界面
+		this.invite_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInviteCloseTap, this);
 
+		this.copy.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCopyTap, this);
 		//获取果园信息
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/show_garden';
@@ -238,7 +258,7 @@ class MyGarden extends eui.Component{
 					}
 					//是否显示成熟动画
 					if(this.isMature > 0){
-						this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
+						this.guozishule_mc_1 = this.common.mc('guozishule', 370, 550);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
 						this.guozishule_mc_1.touchEnabled = true;
@@ -347,6 +367,9 @@ class MyGarden extends eui.Component{
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_END,this.onCutAreaEnd,this);		
 		this.cut_area.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onCutAreaEnd,this);		
 		this.cut_commit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCutCommitTap,this);
+
+		//复制邀请链接
+		this.copy.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCopyTap, this);
 		
 
 		//顶部果园用户头像、昵称信息
@@ -1167,4 +1190,46 @@ class MyGarden extends eui.Component{
 		this.parent.addChild(Index.Shared());
 		this.parent.removeChild(this);
 	 }
+
+	 //复制邀请链接
+	 private onCopyTap(e:egret.Event){
+		var input = document.createElement("input");
+        input.value = this.inviteUrl.text;
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length),
+		document.execCommand('Copy');
+        document.body.removeChild(input);
+	 }
+
+	 //打开邀请界面
+	private onInviteTap(e:egret.TouchEvent){
+		this.panel_invite.visible = true;		
+		// var httpReq = new HttpReq();
+		// var url = 'v1.0/user/get_invite';
+		// httpReq.GET({
+		// 	url:url,
+		// 	data:{},
+		// 	success:(res:any)=>{
+		// 		var res = JSON.parse(res);
+		// 		if(res.code == 0){
+		// 			this.inviteUrl.text = ''
+		// 			this.qr_code.source = '';
+		// 			this.invite_number.text = '你已经成功邀请好友'+''+'位';
+		// 			this.panel_invite.visible = true;	
+		// 		}else{
+		// 			this.tips.showTips(res.msg);
+		// 		}
+		// 	},
+		// 	error:()=>{
+		// 		console.log('error');
+		// 		this.tips.showTips('网络错误！请重新尝试！');
+		// 	}
+		// });
+	}
+
+	//关闭邀请界面
+	private onInviteCloseTap(e:egret.TouchEvent){
+		this.panel_invite.visible = false;
+	}
 }

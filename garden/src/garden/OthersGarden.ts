@@ -94,7 +94,7 @@ class OthersGarden extends eui.Component {
 					}
 					//是否显示成熟动画
 					if(this.isMature > 0){
-						this.guozishule_mc_1 = this.common.mc('guozishule', 380, 600);
+						this.guozishule_mc_1 = this.common.mc('guozishule', 370, 550);
 						this.group_top.addChild( this.guozishule_mc_1 );
 						this.guozishule_mc_1.gotoAndPlay(0, -1);
 						this.guozishule_mc_1.touchEnabled = true;

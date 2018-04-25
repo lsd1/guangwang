@@ -18,21 +18,31 @@ class Index extends eui.Component {
 	//关闭登陆、注册按钮
 	private log_close:eui.Button;
 	private reg_close:eui.Button;
+	private reg_invite_close:eui.Button;
 
 	//登陆、注册框
 	private panel_log:eui.Group;
 	private panel_reg:eui.Group;
+	private panel_reg_invite:eui.Group;
 
-	//确认登陆、注册
+	//确认登陆、注册、下一步、返回、获取验证码按钮
 	private commit_log:eui.Group;
 	private commit_reg:eui.Group;
+	private reg_invite_next:eui.Group;
+	private reg_back:eui.Button;
+	private invite_get_code:eui.Group;
+	private get_code_text:eui.Label;
 
-	//登陆、注册输入框
+	//登陆、注册、邀请输入框
 	private log_user_name:eui.EditableText;
 	private log_pass_word:eui.EditableText;
 	private reg_user_name:eui.EditableText;
 	private reg_pass_word:eui.EditableText;
 	private reg_rep_pass_word:eui.EditableText;
+
+	private reg_invite_mobile:eui.EditableText;
+	private reg_invite_code:eui.EditableText;
+	private reg_invite_number:eui.EditableText;
 	//提示弹框
 	private tips:any;
 	//全屏遮罩
@@ -57,24 +67,15 @@ class Index extends eui.Component {
 		//关闭登录、注册弹框
 		this.log_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onLogCloseClick, this);
 		this.reg_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegCloseClick, this);
+		this.reg_invite_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegInviteCloseClick, this);
+		
 
-		//登录帐号、密码
-		// this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		// this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-
-		// //注册帐号、密码、确认密码
-		// this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		// this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-		// this.reg_rep_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN, this.onInputFocusIn, this);
-
-		// //登录帐号、密码
-		// this.log_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-		// this.log_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-
-		// //注册帐号、密码、确认密码
-		// this.reg_user_name.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-		// this.reg_pass_word.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-
+		//获取验证码
+		this.invite_get_code.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInviteGetCodeTap, this);
+		//注册下一步
+		this.reg_invite_next.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegInviteNextTap, this);
+		//返回上一部
+		this.reg_back.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRegBackTap, this);
 
 		//提交登录、注册
 		this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
@@ -89,13 +90,19 @@ class Index extends eui.Component {
 	//弹出注册框 
 	private onBtnRegClick(){
 		this.full_mask.visible = true;		
-		this.panel_reg.visible = true;
+		this.panel_reg_invite.visible = true;
 	}
 
 	//关闭登录框 
 	private onLogCloseClick(){
 		this.full_mask.visible = false;		
 		this.panel_log.visible = false;
+	}
+
+	//关闭注册_邀请框 
+	private onRegInviteCloseClick(){
+		this.full_mask.visible = false;		
+		this.panel_reg_invite.visible = false;
 	}
 
 	//关闭注册框 
@@ -194,20 +201,76 @@ class Index extends eui.Component {
 
 	}
 
-	// private onInputFocusOut(e:egret.FocusEvent){
-	// 	e.currentTarget.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-	// 	if(e.currentTarget.text == ''){
-	// 		e.currentTarget.text = e.currentTarget.placeHolder;
-	// 	}
-	// }
+	//获取验证码
+	private onInviteGetCodeTap(e:egret.TouchEvent){
+		var patt = /\d{3}-\d{8}|\d{4}-\{7,8}/;
+		var mobile = this.reg_invite_mobile;
+		var is_mobile = patt.test(mobile.text);
+		if(is_mobile){
+			this.tips.showTips('请输入正确的手机号码');
+			return false;
+		}
 
-	// private onInputFocusIn(e:egret.FocusEvent){
-	// 	var patt = new RegExp('(请输入|请设置|请充值|请确认)');
-	// 	if(patt.test(e.currentTarget.text)){
-	// 		e.currentTarget.placeHolder =  e.currentTarget.text;	
-	// 		e.currentTarget.text = '';	
-	// 	}
+		var httpReq = new HttpReq();
+		var url:string = 'v1.0/get_code';
 
-	// 	e.currentTarget.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onInputFocusOut, this);
-	// }
+		httpReq.POST({
+			url:url,
+			data:{},
+			success:(res)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					var time = 60;
+					var t = setInterval(()=>{
+						if(time > 0){
+							this.get_code_text.text = time + '';
+							time--;
+						}else{
+							this.get_code_text.text = '获取验证码';
+							clearInterval(t);
+						}
+					},999);
+				} else {
+					this.tips.showTips(res.msg);
+				}
+			},
+			error:(error)=>{
+				this.tips.showTips('网络错误！请重新尝试！');				
+				console.log(error);
+			}
+		}, e.currentTarget);
+	}
+
+	//下一步
+	private onRegInviteNextTap(e:egret.TouchEvent){
+		var mobile = this.reg_invite_mobile.text;
+		var invite_code = this.reg_invite_code.text;
+		var invite_number = this.reg_invite_number.text;
+
+		if(mobile == ''){
+			this.tips.showTips('手机号码不能为空！');
+			return false;
+		}
+
+		if(invite_code == ''){
+			this.tips.showTips('验证码不能为空！');
+			return false;
+		}
+
+		if(invite_number == ''){
+			this.tips.showTips('邀请人号码不能为空！');
+			return false;
+		}
+
+		this.panel_reg_invite.visible = false;
+		this.panel_reg.visible = true;
+
+	}
+
+	//上一步
+	private onRegBackTap(e:egret.TouchEvent){
+		this.panel_reg_invite.visible = true;
+		this.panel_reg.visible = false;
+	}
+
 }

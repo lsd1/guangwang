@@ -75,8 +75,7 @@ class Main extends eui.UILayer {
             loadingView.createView();
             await this.loadTheme();
             await RES.loadGroup("garden", 0, loadingView);
-            this.stage.removeChild(loadingView);
-        
+            this.stage.removeChild(loadingView);  
         }
         catch (e) {
             console.error(e);

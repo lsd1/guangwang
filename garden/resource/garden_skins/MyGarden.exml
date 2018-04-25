@@ -11,6 +11,7 @@
 			<e:Image id="props" source="mygarden_icon_props_png" x="32" y="7"/>
 			<e:Image id="interaction" source="mygarden_icon_interaction_png" x="155" y="7"/>
 			<e:Image id="manage" source="mygarden_icon_manage_png" x="646" y="7"/>
+			<e:Image id="invite" source="mygarden_icon_invite_png" x="278" y="7"/>
 		</e:Group>
 		<e:Label id="countDown" text="" y="247" textColor="0xfcc03f" fontFamily="Microsoft YaHei" size="24" horizontalCenter="0" visible="false"/>
 
@@ -187,6 +188,35 @@
 			<e:Label text="修改头像" fontFamily="Microsoft YaHei" size="23" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
 		<e:Image id="my_avatar" x="48" y="307" anchorOffsetX="0" anchorOffsetY="0" source="othersgarden_icon_water_png" width="150" height="150"/>
+	</e:Group>
+
+	<e:Group id="panel_invite" width="750" height="1088" anchorOffsetY="0" bottom="0" horizontalCenter="0" visible="false">
+		<e:Rect width="750" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="15" left="0" height="1166" top="-78"/>
+
+
+		<e:Rect width="702" height="1076" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFEFBD" ellipseWidth="30" horizontalCenter="0" bottom="0"/>
+
+
+	
+		<e:Label text="        复制下面地址发送给你的朋友，或者让朋友扫下面二维码，邀请大家一起来玩吧！" y="58" anchorOffsetY="0" height="126" anchorOffsetX="0" width="620" size="31" horizontalCenter="0" verticalAlign="middle" textColor="0x681111" fontFamily="Microsoft YaHei" lineSpacing="20"/>
+		<e:Rect width="488" height="76" x="131" y="228" ellipseWidth="20" fillColor="0xffffff"/>
+		<e:Label id="inviteUrl" text="http://www.baidu.com" y="228" anchorOffsetX="0" width="488" anchorOffsetY="0" height="76" verticalAlign="middle" horizontalCenter="0" textColor="0x000000" size="33" textAlign="center" backgroundColor="0xffffff"/>
+		<e:Group id="copy" width="418" height="156" y="312" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" locked="true">
+			<e:Image source="btn_bg_png" anchorOffsetY="0" height="114" anchorOffsetX="0" width="368" fillMode="scale" horizontalCenter="0" verticalCenter="0"/>
+			<e:Label text="复制" bold="true" size="51" fontFamily="Microsoft JhengHei" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
+		<e:Label text="你已成功邀请好友100位" y="476" textColor="0x4f1818" horizontalCenter="0.5" fontFamily="Microsoft YaHei"/>
+		<e:Image id="qr_code" source="qr_code_png" y="580" anchorOffsetX="0" width="300" height="300" horizontalCenter="0"/>
+		<e:Label text="扫一扫加入EBCGAME" y="905" textColor="0x3d1212" fontFamily="Microsoft YaHei" horizontalCenter="0.5"/>
+		<e:Label text="邀请好友" y="-52" textColor="0x662500" fontFamily="Microsoft YaHei" size="41" bold="true" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Button id="invite_close" label="" x="672" y="-52" width="45" height="45" anchorOffsetY="0" scaleX="1" scaleY="1">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btn_close_nor_png" source.down="btn_close_pre_png"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	
 	</e:Group>
 
 	<e:Group id="panel_set_pass_word" width="580" height="620" anchorOffsetY="0" horizontalCenter="0" verticalCenter="0" visible="false">
