@@ -34,6 +34,10 @@
 		{
 			"name": "md5",
 			"path": "../md5"
+		},
+		{
+			"name": "qrcode",
+			"path": "../qrcode"
 		}
 	]
 }

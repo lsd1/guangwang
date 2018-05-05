@@ -32,6 +32,7 @@ class LoadingUI extends eui.Component implements RES.PromiseTaskReporter {
     public constructor() {
         super();
         this.skinName = '<?xml version="1.0" encoding="utf-8"?><e:Skin class="loading" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"><e:Image source="garden_png" left="0" right="0" top="0" bottom="0"/><e:Group width="500" height="433" horizontalCenter="0" anchorOffsetY="0" bottom="0"><e:Image source="undercolor_png" width="500" height="50" x="0" scaleX="1" scaleY="1" verticalCenter="0"/><e:Image id="loading_bar" source="load_bar_png" width="0" height="38" x="10" scaleX="1" scaleY="1" verticalCenter="0"/></e:Group></e:Skin>';  
+        this.cacheAsBitmap = true;
     }
     public createView(){
         this.width = this.stage.stageWidth;

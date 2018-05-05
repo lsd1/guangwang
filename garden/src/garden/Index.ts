@@ -43,6 +43,9 @@ class Index extends eui.Component {
 	private reg_invite_mobile:eui.EditableText;
 	private reg_invite_code:eui.EditableText;
 	private reg_invite_number:eui.EditableText;
+
+	//验证码倒计时
+	private invite_count:eui.Label;
 	//提示弹框
 	private tips:any;
 	//全屏遮罩
@@ -55,7 +58,7 @@ class Index extends eui.Component {
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
-
+		this.cacheAsBitmap = true;
 		this.tips = Tips.Shared();
 		this.addChildAt(this.tips, -1);
 		this.addChildAt(this.wait, -2);
@@ -80,6 +83,11 @@ class Index extends eui.Component {
 		//提交登录、注册
 		this.commit_log.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitLogClick, this);
 		this.commit_reg.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitRegClick, this);
+		var inviter = this.common.getQueryString('inviter');
+		if(inviter){
+			this.onBtnRegClick();
+			this.reg_invite_number.text = inviter;
+		}
 	}
 
 	//弹出登录框 
@@ -131,6 +139,7 @@ class Index extends eui.Component {
 					this.common.setCookie('token', res.token, 30);
 					this.common.setCookie('isActivate', res.data.userInfo.isActivate, 30);
 					this.parent.addChild(MyGarden.Shared())
+					MyGarden.Shared().addChild(Rule.Shared());
 					this.parent.removeChild(this);
 				}else{
 					this.tips.showTips(res.msg);
@@ -169,13 +178,14 @@ class Index extends eui.Component {
 		this.wait.show();
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/register';
-
-		var username = this.reg_user_name.text;
+		var username = this.reg_invite_mobile.text;
+		var nickname = this.reg_user_name.text;
 		var password = hex_md5(this.reg_pass_word.text);
+		var inviter = this.reg_invite_number.text;
 
 		httpReq.POST({
 			url:url,
-			data:{username:username,password:password},
+			data:{username:username,nickname:nickname,password:password,inviter:inviter},
 			success:(res)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
@@ -184,7 +194,7 @@ class Index extends eui.Component {
 						this.tips.closeTips();
 						this.panel_reg.visible = false;
 						this.panel_log.visible = true;				
-					} ,2000)
+					} ,2000);
 				} else {
 					this.tips.showTips(res.msg);
 				}
@@ -196,45 +206,47 @@ class Index extends eui.Component {
 				console.log(error);
 			}
 		}, e.currentTarget);
-
-
-
 	}
 
 	//获取验证码
 	private onInviteGetCodeTap(e:egret.TouchEvent){
-		var patt = /\d{3}-\d{8}|\d{4}-\{7,8}/;
+		var patt = /^1[3|4|5|8|7][0-9]\d{8}$/;
 		var mobile = this.reg_invite_mobile;
 		var is_mobile = patt.test(mobile.text);
-		if(is_mobile){
+		if(!is_mobile){
 			this.tips.showTips('请输入正确的手机号码');
 			return false;
 		}
-
 		var httpReq = new HttpReq();
-		var url:string = 'v1.0/get_code';
-
+		var url:string = 'v1.0/register/send_code';
+		this.wait.show();		
 		httpReq.POST({
 			url:url,
-			data:{},
+			data:{username:mobile.text},
 			success:(res)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
+					this.invite_get_code.touchChildren = false;
+					this.invite_get_code.touchEnabled = false;
 					var time = 60;
 					var t = setInterval(()=>{
 						if(time > 0){
-							this.get_code_text.text = time + '';
+							this.invite_count.text = time + 'S';
 							time--;
 						}else{
-							this.get_code_text.text = '获取验证码';
+							this.invite_get_code.touchChildren = true;
+							this.invite_get_code.touchEnabled = true;
+							this.invite_count.text = '获取验证码';
 							clearInterval(t);
 						}
 					},999);
 				} else {
 					this.tips.showTips(res.msg);
 				}
+				this.wait.hide();	
 			},
 			error:(error)=>{
+				this.wait.hide();					
 				this.tips.showTips('网络错误！请重新尝试！');				
 				console.log(error);
 			}
@@ -245,7 +257,7 @@ class Index extends eui.Component {
 	private onRegInviteNextTap(e:egret.TouchEvent){
 		var mobile = this.reg_invite_mobile.text;
 		var invite_code = this.reg_invite_code.text;
-		var invite_number = this.reg_invite_number.text;
+		//var invite_number = this.reg_invite_number.text;
 
 		if(mobile == ''){
 			this.tips.showTips('手机号码不能为空！');
@@ -257,14 +269,32 @@ class Index extends eui.Component {
 			return false;
 		}
 
-		if(invite_number == ''){
-			this.tips.showTips('邀请人号码不能为空！');
-			return false;
-		}
+		// if(invite_number == ''){
+		// 	this.tips.showTips('邀请人号码不能为空！');
+		// 	return false;
+		// }
 
-		this.panel_reg_invite.visible = false;
-		this.panel_reg.visible = true;
-
+		var httpReq = new HttpReq();
+		var url:string = 'v1.0/register/check_code';
+		this.wait.show();		
+		httpReq.POST({
+			url:url,
+			data:{username:mobile,smscode:invite_code},
+			success:(res)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.panel_reg_invite.visible = false;
+					this.panel_reg.visible = true;
+				} else {
+					this.tips.showTips(res.msg);
+				}
+				this.wait.hide();	
+			},
+			error:(error)=>{
+				this.wait.hide();					
+				this.tips.showTips('网络错误！请重新尝试！');				
+			}
+		}, e.currentTarget);
 	}
 
 	//上一步

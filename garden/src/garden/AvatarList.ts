@@ -45,6 +45,7 @@ class AvatarList extends eui.Component{
 		this.statusNumber.textAlign = "center";
 		this.statusNumber.verticalAlign = "middle";
 		this.statusNumber.size = 20;
+		this.cacheAsBitmap = true;
 	}
 
 	public createAvatar(type:number, avatarResource:string, statusResource:string){

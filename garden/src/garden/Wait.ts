@@ -15,7 +15,8 @@ class Wait extends eui.Component{
 		this.right = 0;
 		this.left = 0;
 		this.top = 0;
-		this.bottom = 0;
+		this.bottom = 0;		
+		this.cacheAsBitmap = true;
 	}
 
 	//显示

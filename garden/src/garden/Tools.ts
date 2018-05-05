@@ -11,15 +11,19 @@ class Tools extends eui.Component {
 	public constructor() {
 		super();
 		this.skinName = 'resource/garden_skins/Tools.exml';
+		this.cacheAsBitmap = true;
 		this.group_tool.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onToolGroupTap, this);
 	}
 
 	//点击使用道具
 	private onToolGroupTap(e:egret.TouchEvent){
 		if(parseInt(this.tool_num.text) < 1){
-			MyGarden.Shared().full_mask.visible = true;
-			MyGarden.Shared().package_no.text = '请输入激活码';
-			MyGarden.Shared().panel_active_package.visible = true;
+			MyGarden.Shared().onPropsCloseTap(e);
+			MyGarden.Shared().onInviteTap(e);
+			// MyGarden.Shared().setChildIndex(MyGarden.Shared().panel_active_package, -1);
+			// MyGarden.Shared().full_mask.visible = true;
+			// MyGarden.Shared().package_no.text = '请输入激活码';
+			// MyGarden.Shared().panel_active_package.visible = true;
 		}else{
 			MyGarden.Shared().useToolGroup = this;
 			var httpReq = new HttpReq();
@@ -31,6 +35,7 @@ class Tools extends eui.Component {
 				success:(res:any)=>{
 					var res = JSON.parse(res);
 					if(res.code == 0){
+						MyGarden.Shared().setChildIndex(MyGarden.Shared().panel_tool_tips, -1);
 						var toolInfo = res.data.toolInfo;
 						MyGarden.Shared().tool_tips.text = toolInfo.tooltips;
 						MyGarden.Shared().tips_title.text = '使用' + toolInfo.toolname;

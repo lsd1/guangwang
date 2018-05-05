@@ -9,6 +9,7 @@ class ScrollerInteraction extends eui.Scroller{
 	public constructor(collection:any, news_last_id:number) {
 		super();
 		this.skinName = 'resource/garden_skins/ScrollerInteraction.exml';
+		this.cacheAsBitmap = true;
 		this.list.itemRenderer = InteractionList;
 		this.collection = collection;
 		this.news_last_id = news_last_id;

@@ -44,6 +44,7 @@ class NewsList extends eui.ItemRenderer{
 		this.group.addChild(this.labelNews);
 		this.group.addChild(this.labelTime);
 		this.addChild(this.group);
+		this.cacheAsBitmap = true;
 	}
 
 	protected dataChanged():void{

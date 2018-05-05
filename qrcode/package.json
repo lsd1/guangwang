@@ -1,0 +1,5 @@
+{
+	"name": "qrcode",
+	"compilerVersion": "5.1.9",
+	"typings": "typings/qrcode.d.ts"
+}

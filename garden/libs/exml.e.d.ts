@@ -6,6 +6,8 @@ declare class loading extends eui.Skin{
 }
 declare class myGarden extends eui.Skin{
 }
+declare class rule extends eui.Skin{
+}
 declare class scoreList extends eui.Skin{
 }
 declare class scrollerInteraction extends eui.Skin{

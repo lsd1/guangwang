@@ -9,6 +9,7 @@ class ScrollerNews extends eui.Scroller{
 	public constructor(collection:any, news_last_id:number) {
 		super();
 		this.skinName = 'resource/garden_skins/ScrollerNews.exml';
+		this.cacheAsBitmap = true;
 		this.list.itemRenderer = NewsList;
 		this.collection = collection;
 		this.news_last_id = news_last_id;

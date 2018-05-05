@@ -21,13 +21,12 @@ var Index = (function (_super) {
         xhr.open('GET', './resource/config/config.json?v=' + Math.random(), true);
         xhr.addEventListener("load", function () {
             var config = JSON.parse(xhr.response);
-            console.log(config);
             _this.ios_url = config.ios_url;
             _this.android_url = config.android_url;
             var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //判断是否ios终端
             _this.download_dom = document.createElement('a');
-            //this.download_dom.href = '';
             _this.download_dom.download = isiOS ? _this.ios_url : _this.android_url;
+            _this.download_dom.href = 'isiOS ? this.ios_url : this.android_url';
             _this.download_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { console.log(_this.download_dom.download); _this.download_dom.click(); }, _this);
         });
         xhr.send(null);

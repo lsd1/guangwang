@@ -28,6 +28,7 @@ class InteractionList extends eui.ItemRenderer{
 		this.addChild(this.group);
 
 		this.group.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInteractionListTap,this);
+		this.cacheAsBitmap = true;
 	}
 
 	public onInteractionListTap(e:egret.TouchEvent){

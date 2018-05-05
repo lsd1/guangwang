@@ -6,6 +6,7 @@ class ScoreList extends eui.ItemRenderer{
 	public constructor() {
 		super();
 		this.skinName = 'resource/garden_skins/ScoreList.exml'
+		this.cacheAsBitmap = true;
 	}
 	protected dataChanged():void{
         //数据改变时，会自动调用 dataChanged 这个方法

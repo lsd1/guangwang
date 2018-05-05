@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="tools" width="180" height="209" xmlns:e="http://ns.egret.com/eui">
     <e:Group id="group_tool" width="180" height="209" x="0" y="0">
-        <e:Image id="tool_img" scaleX="1" scaleY="1" verticalCenter="-25.5" horizontalCenter="0" source=""/>
+        <e:Image id="tool_img" scaleX="1" scaleY="1" verticalCenter="-25" horizontalCenter="0" source=""/>
         <e:Label id="tool_name" text="" y="138" textColor="0x000000" bold="true" fontFamily="Microsoft YaHei" horizontalCenter="0"/>
         <e:Label id="tool_num" text="0" fontFamily="Microsoft YaHei" textColor="0xf9a000" size="25" horizontalCenter="5" bottom="8"/>
-        <e:Label text="x" x="61.3" y="174" textColor="0xf9a000" size="25" fontFamily="Microsoft YaHei"/>
+        <e:Label text="x" x="61" y="174" textColor="0xf9a000" size="25" fontFamily="Microsoft YaHei"/>
     </e:Group>
 </e:Skin>

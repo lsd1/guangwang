@@ -9,6 +9,7 @@ class ScrollerScore extends eui.Scroller{
 	public constructor(collection:any, last_id:number) {
 		super();
 		this.skinName = 'resource/garden_skins/ScrollerScore.exml';
+		this.cacheAsBitmap = true;
 		this.list.itemRenderer = ScoreList;
 		this.collection = collection;
 		this.last_id = last_id;

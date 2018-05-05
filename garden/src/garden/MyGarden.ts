@@ -8,9 +8,13 @@ class MyGarden extends eui.Component{
 		}
 		return this.shared;
 	}
-
+	//退出登录
+	private logout:eui.Image;
 	//主界面上部分
 	private group_top:eui.Group;
+
+	//成熟倒计时
+	private countdownNum:number = 0;
 
 	//尾部互动信息列表
 	private group_avatar:eui.Group;
@@ -76,6 +80,8 @@ class MyGarden extends eui.Component{
 	//激活时间
 	private active_date:eui.Label;
 	//用户帐号
+	private username:eui.Label;
+	//用户帐号
 	private user_name:eui.Label;
 	//用户积分
 	private user_point:eui.Label;
@@ -104,6 +110,17 @@ class MyGarden extends eui.Component{
 	private commit_change:eui.Group;
 	//关闭设置新密码按钮
 	private set_pass_word_close:eui.Button;	
+
+	//设置新昵称
+	//设置按钮
+	private change_nickname:eui.Group;
+	private panel_set_nickname:eui.Group;
+	//新昵称
+	private new_nickname:eui.Label;
+	//提交修改
+	private commit_nickname:eui.Group;
+	//关闭设置新密码按钮
+	private set_nickname_close:eui.Button;	
 	
 	//提取积分弹框
 	private panel_extract_point:eui.Group;
@@ -175,7 +192,7 @@ class MyGarden extends eui.Component{
 	//虫害状态
 	private isWormy:number;
 	//是否防偷
-	private fangtou:number;
+	private fangtou:number = 0;
 	//昼夜状态
 	private isNight:number;
 	//背景图
@@ -218,6 +235,7 @@ class MyGarden extends eui.Component{
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
+		this.cacheAsBitmap = true;
 		this.tips = Tips.Shared();
 		this.addChildAt(this.wait, -2);
 		this.addChildAt(this.tips, -3);		
@@ -227,6 +245,8 @@ class MyGarden extends eui.Component{
 			this.full_mask.visible = true;
 			this.panel_active_garden.visible = true;
 		} 
+		//退出登录
+		this.logout.addEventListener(egret.TouchEvent.TOUCH_TAP, this.signOut, this);
 		//点击邀请
 		this.invite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInviteTap, this);
 		//关闭邀请界面
@@ -241,13 +261,39 @@ class MyGarden extends eui.Component{
 			data:{},
 			success:(res:any)=>{
 				var res = JSON.parse(res);
+				console.log(res);
 				if(res.code == 0){
+					//顶部果园用户头像、昵称信息
+					this.my_avatar.source = res.data.avatar;
+					this.user_name.text = res.data.nickname;
+					this.avatar.source = res.data.avatar;
+					var topAvatar = this.common.createCircleMask(100, 100, this.avatar, 20, 20);
+					var topAvatarBg = this.common.createImage(350, 140, 'garden_data_bg_png', 0, 0);
+					this.username = new eui.Label();
+					this.username.x = 150;
+					this.username.width = 380;
+					this.username.height = 140;
+					//label.textAlign = "center";
+					this.username.verticalAlign = "middle";
+					this.username.size = 30;
+					this.username.text = res.data.nickname;
+					this.username.textColor = 0x000000;
+					this.group_top.addChild(topAvatarBg);		
+					this.group_top.addChild(topAvatar);
+					this.group_top.addChild(this.username);
+					//横线
+					var line:egret.Shape = new egret.Shape();
+					line.graphics.lineStyle(2, 0x000000, 0.1 );
+					line.graphics.moveTo(750, -30);
+					line.graphics.lineTo(0, -30);
+					line.graphics.endFill();
+					this.group_avatar.addChild(line);
+
 					this.isDry = res.data.isDry;
 					this.isWater = res.data.isWater;
 					this.isWormy = res.data.isWormy;
 					this.isNight = res.data.isNight;
 					this.isMature = res.data.isMature;
-					this.fangtou = res.data.fangtou ? res.data.fangtou : 0;
 					//是否显示干旱动画
 					if(this.isDry > 0){
 						this.ganku_mc_1 = this.common.mc('ganku', 525, 325);
@@ -277,31 +323,12 @@ class MyGarden extends eui.Component{
 						this.insect_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onInsectTap, this);
 					}
 					//是否开启防偷
-					if(this.fangtou > 0){
-						this.fangtou_mc_1 = this.common.mc('fangtou', 380, 350);
-						this.fangtou_mc_1.scaleX = 1.5;
-						this.fangtou_mc_1.scaleY = 1.5;
-						this.group_top.addChild( this.fangtou_mc_1 );
-						this.fangtou_mc_1.gotoAndPlay(0, -1);
+					if(res.data.fangtou > 0){
+						this.startFangtou(res.data.fangtou);
 					}
 					if(res.data.countdown > 0){
-						var countdown:number = res.data.countdown;
-						this.countDown.visible = true;
-						var t = setInterval(()=>{
-							if(countdown > 0){
-								this.countDown.text = this.common.secondToTime(countdown) + '后成熟';
-								countdown--;
-							}else{
-								this.countDown.visible = false;						
-								t = 0;
-								this.guozishule_mc_1 = this.common.mc('guozishule', 380, 530);
-								this.group_top.addChild( this.guozishule_mc_1 );
-								this.guozishule_mc_1.gotoAndPlay(0, -1);
-								this.guozishule_mc_1.touchEnabled = true;
-								this.guozishule_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onFruitTap, this);									
-							}
-
-						},1000);
+						//var countdown:number = res.data.countdown;
+						this.startCountDown(res.data.countdown);
 					}
 
 				}else if(res.code == 110){
@@ -353,6 +380,11 @@ class MyGarden extends eui.Component{
 		// this.new_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 		// this.repeat_pass_word.addEventListener(egret.FocusEvent.FOCUS_IN,this.onInputFocusIn,this);
 
+		//修改昵称
+		this.change_nickname.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onChangeNicknameTap, this);	
+		this.set_nickname_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onSetNicknameCloseTap, this);	
+		this.commit_nickname.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCommitNicknameTap, this);	
+
 		//提取积分
 		this.extract_point.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointTap, this);
 		this.extract_point_close.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onExtractPointCloseTap, this);
@@ -371,33 +403,6 @@ class MyGarden extends eui.Component{
 		//复制邀请链接
 		this.copy.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCopyTap, this);
 		
-
-		//顶部果园用户头像、昵称信息
-		this.my_avatar.source = this.common.getCookie('avatar');
-		this.user_name.text = this.common.getCookie('username');
-		this.avatar.source = this.common.getCookie('avatar');
-		var topAvatar = this.common.createCircleMask(100, 100, this.avatar, 20, 20);
-		var topAvatarBg = this.common.createImage(350, 140, 'garden_data_bg_png', 0, 0);
-		var label:eui.Label = new eui.Label();
-		label.x = 150;
-		label.width = 380;
-		label.height = 140;
-		//label.textAlign = "center";
-		label.verticalAlign = "middle";
-		label.size = 30;
-		label.text = this.common.getCookie('username');
-		label.textColor = 0x000000;
-		this.group_top.addChild(topAvatarBg);		
-		this.group_top.addChild(topAvatar);
-		this.group_top.addChild(label);
-		//横线
-        var line:egret.Shape = new egret.Shape();
-		line.graphics.lineStyle(2, 0x000000, 0.1 );
-		line.graphics.moveTo(750, -30);
-		line.graphics.lineTo(0, -30);
-        line.graphics.endFill();
-		this.group_avatar.addChild(line);
-
 		//获取果园日志
 		var httpReq = new HttpReq();
 		var url = 'v1.0/user/user_logs';
@@ -488,7 +493,6 @@ class MyGarden extends eui.Component{
 
 	//点击道具
 	private onPropsTap(e:egret.TouchEvent){
-		this.full_mask.visible = true;
 		this.wait.show();		
 		var httpReq = new HttpReq();
 		var url:string = 'v1.0/tool/show';
@@ -544,6 +548,9 @@ class MyGarden extends eui.Component{
 						myTool.tool_id = toolInfo.toolId;
 						this.toolGroup.addChild(myTool);
 					}
+					this.setChildIndex(this.full_mask, -1);
+					this.setChildIndex(this.panel_props, -1);
+					this.full_mask.visible = true;
 					this.panel_props.addChild(this.toolGroup);
 					this.panel_props.swapChildren(this.toolGroup, this.props_close);
 					this.panel_props.visible = true;
@@ -652,7 +659,6 @@ class MyGarden extends eui.Component{
 				}else if(res.code == 110){
 					this.tips.showTips(res.msg);
 					setTimeout((e)=>{this.signOut(e)}, 2000);
-				
 				}else{
 					this.tips.showTips(res.msg);
 				}
@@ -674,7 +680,7 @@ class MyGarden extends eui.Component{
 	}
 
 	//关闭道具弹框
-	private onPropsCloseTap(e:egret.TouchEvent){
+	public onPropsCloseTap(e:egret.TouchEvent){
 		this.panel_props.removeChild(this.toolGroup);
 		this.full_mask.visible = false;		
 		this.panel_props.visible = false;
@@ -692,14 +698,14 @@ class MyGarden extends eui.Component{
 
 	//关闭套餐激活弹框
 	private onActivePackageCloseTap(e:egret.TouchEvent){
-		this.full_mask.visible = false;
+		//this.full_mask.visible = false;
 		this.panel_active_package.visible = false;
 	}
 
 	//提交套餐激活弹框
 	private onCommitActivePackageTap(e:egret.TouchEvent){
 		this.panel_active_package.visible = false;
-		this.full_mask.visible = false;
+		//this.full_mask.visible = false;
 		let packageNo = this.package_no.text;
 		if(packageNo == ''){
 			this.tips.showTips('请输入激活码');		
@@ -714,13 +720,10 @@ class MyGarden extends eui.Component{
 			success:(res:any)=>{
 				var res = JSON.parse(res);
 				if(res.code == 0){
-					this.full_mask.visible = true;	
-					this.setChildIndex(this.tips, -1);
 					this.tips.showTips('恭喜你获得了道具大礼包！');		
 				}else if(res.code == 110){
 					this.tips.showTips(res.msg);
 					setTimeout((e)=>{this.signOut(e)}, 2000);
-				
 				}else{
 					this.tips.showTips(res.msg);		
 				}
@@ -780,6 +783,8 @@ class MyGarden extends eui.Component{
 	}
 
 	private onChangePasswordTap(e:egret.TouchEvent){
+		this.setChildIndex(this.full_mask, -1);
+		this.setChildIndex(this.panel_set_pass_word, -1);
 		this.full_mask.visible = true;
 		this.panel_set_pass_word.visible = true;
 	}
@@ -787,6 +792,55 @@ class MyGarden extends eui.Component{
 	private onSetPassWordCloseTap(e:egret.TouchEvent){
 		this.full_mask.visible = false;
 		this.panel_set_pass_word.visible = false;
+	}
+
+	private onChangeNicknameTap(e:egret.TouchEvent){
+		this.setChildIndex(this.full_mask, -1);
+		this.setChildIndex(this.panel_set_nickname, -1);
+		this.full_mask.visible = true;
+		this.panel_set_nickname.visible = true;
+	}
+
+	private onSetNicknameCloseTap(e:egret.TouchEvent){
+		this.full_mask.visible = false;
+		this.panel_set_nickname.visible = false;
+	}
+
+	private onCommitNicknameTap(e:egret.TouchEvent){
+		var nickname = this.new_nickname.text;
+		if(nickname == ''){
+			this.tips.showTips('昵称不能为空！');
+			return false;
+		}
+
+		this.wait.show();
+		var httpReq = new HttpReq();
+		var url = 'v1.0/user/edit_nickname';
+		httpReq.POST({
+			url:url,
+			data:{nickname:nickname},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					this.tips.showTips('修改昵称成功');	
+					this.user_name.text = nickname;
+					this.username.text = nickname;
+					this.panel_set_pass_word.visible = false;
+					this.onSetNicknameCloseTap(e);
+				}else if(res.code == 110){
+					this.tips.showTips(res.msg);
+					setTimeout((e)=>{this.signOut(e)}, 2000);
+				}else{
+					this.tips.showTips(res.msg);		
+				}
+				this.wait.hide();
+			},
+			error:()=>{
+				this.wait.hide();
+				this.tips.showTips('网络错误！请重新尝试！');
+				console.log('error');
+			}
+		}, e.currentTarget);
 	}
 
 	//修改密码-提交
@@ -827,11 +881,13 @@ class MyGarden extends eui.Component{
 						this.tips.showTips(res.msg);		
 					}
 					this.wait.hide();
+					this.full_mask.visible = false;
 				},
 				error:()=>{
 					this.wait.hide();
 					this.tips.showTips('网络错误！请重新尝试！');
 					console.log('error');
+					this.full_mask.visible = false;					
 				}
 			}, e.currentTarget);
 		}
@@ -840,8 +896,11 @@ class MyGarden extends eui.Component{
 
 	//提取积分弹框
 	private onExtractPointTap(e:egret.TouchEvent){
-		this.full_mask.visible = true;	
-		this.panel_extract_point.visible = true;
+		this.tips.showTips('该功能暂未开放，敬请期待！');
+		// this.setChildIndex(this.full_mask, -1);
+		// this.setChildIndex(this.panel_extract_point, -1);
+		// this.full_mask.visible = true;	
+		// this.panel_extract_point.visible = true;
 	}
 
 	//关闭提取积分弹框
@@ -880,8 +939,11 @@ class MyGarden extends eui.Component{
 					this.tips.showTips(res.msg);
 				}
 				this.wait.hide();
+				this.full_mask.visible = false;	
+				
 			},
 			error:()=>{
+				this.full_mask.visible = false;					
 				this.wait.hide();
 				this.tips.showTips('网络错误！请重新尝试！');
 				console.log('error');
@@ -948,7 +1010,8 @@ class MyGarden extends eui.Component{
 			this.cut_area.x = this.stage.stageWidth / 2 - (this.cut_area.width / 2);
 			this.cut_area.y = 0;
 			//this.setImageTexture(this.new_image);	
-			this.swapChildren(this.full_mask, this.panel_garden_manger);		
+			//this.swapChildren(this.full_mask, this.panel_garden_manger);
+			this.setChildIndex(this.cut_image, -1);		
 			this.cut_image.visible = true;
 			this.full_mask.fillAlpha = 1;
 			this.full_mask.visible = true;
@@ -1012,7 +1075,7 @@ class MyGarden extends eui.Component{
 				}else{
 					this.tips.showTips(res.msg);
 				}
-				this.swapChildren(this.full_mask, this.panel_garden_manger);		
+				//this.swapChildren(this.full_mask, this.panel_garden_manger);		
 				this.cut_image.visible = false;
 				this.full_mask.fillAlpha = 0.4;
 				this.full_mask.visible = false;
@@ -1047,7 +1110,7 @@ class MyGarden extends eui.Component{
 
 	//关闭道具使用提示
 	private onToolTipsCloseTap(e:egret.TouchEvent){
-		this.full_mask.visible = false;		
+		//this.full_mask.visible = false;		
 		this.panel_tool_tips.visible = false;
 	}
 
@@ -1075,7 +1138,8 @@ class MyGarden extends eui.Component{
 							mv_name = 'feiliao';
 							var mc = this.common.mc(mv_name, 320, 650, this.group_top);
 							this.group_top.addChild( mc );
-							mc.gotoAndPlay(1, 2);	
+							mc.gotoAndPlay(1, 2);
+							this.startCountDown();
 						break;
 						case 2:
 							mv_name = 'shachong';		
@@ -1085,15 +1149,14 @@ class MyGarden extends eui.Component{
 						break;
 						case 3:
 							mv_name = 'cuishu';		
-							var mc = this.common.mc(mv_name, 320, 650, this.group_top);		
+							var mc = this.common.mc(mv_name, 350, 650, this.group_top);		
 							this.group_top.addChild( mc );
-							mc.gotoAndPlay(1, 2);			
+							mc.gotoAndPlay(1, 2);
+							this.countdownNum = Math.ceil(this.countdownNum / 2);		
 						break;
 						case 4:
-							mv_name = 'fangtou';	
-							var mc = this.common.mc(mv_name,  225, 425);	
-							this.group_top.addChild( mc );
-							mc.gotoAndPlay(1, -1);					
+							mv_name = 'fangtou';
+							this.startFangtou();
 						break;
 						case 5:
 							mv_name = 'yaoji';	
@@ -1200,36 +1263,89 @@ class MyGarden extends eui.Component{
         input.setSelectionRange(0, input.value.length),
 		document.execCommand('Copy');
         document.body.removeChild(input);
+		this.tips.showTips('复制成功！');
+		setTimeout(()=>{
+			this.tips.closeTips();
+		}, 800);
 	 }
 
 	 //打开邀请界面
-	private onInviteTap(e:egret.TouchEvent){
+	public onInviteTap(e:egret.TouchEvent){
 		this.panel_invite.visible = true;		
-		// var httpReq = new HttpReq();
-		// var url = 'v1.0/user/get_invite';
-		// httpReq.GET({
-		// 	url:url,
-		// 	data:{},
-		// 	success:(res:any)=>{
-		// 		var res = JSON.parse(res);
-		// 		if(res.code == 0){
-		// 			this.inviteUrl.text = ''
-		// 			this.qr_code.source = '';
-		// 			this.invite_number.text = '你已经成功邀请好友'+''+'位';
-		// 			this.panel_invite.visible = true;	
-		// 		}else{
-		// 			this.tips.showTips(res.msg);
-		// 		}
-		// 	},
-		// 	error:()=>{
-		// 		console.log('error');
-		// 		this.tips.showTips('网络错误！请重新尝试！');
-		// 	}
-		// });
+		var httpReq = new HttpReq();
+		var url = 'v1.0/share/show';
+		httpReq.GET({
+			url:url,
+			data:{},
+			success:(res:any)=>{
+				var res = JSON.parse(res);
+				if(res.code == 0){
+					console.log(res);
+					this.inviteUrl.text = res.data.shareUrl;
+					var QRCode = getQRImgUrl(document.createElement('div'), res.data.shareUrl); 
+					setTimeout(()=>{
+						this.qr_code.source = QRCode.getImgUrl();
+					});
+					//this.invite_number.text = '你已经成功邀请好友'+''+'位';
+					this.panel_invite.visible = true;	
+				}else{
+					this.tips.showTips(res.msg);
+				}
+			},
+			error:()=>{
+				console.log('error');
+				this.tips.showTips('网络错误！请重新尝试！');
+			}
+		});
 	}
 
 	//关闭邀请界面
 	private onInviteCloseTap(e:egret.TouchEvent){
 		this.panel_invite.visible = false;
+	}
+
+	//成熟倒计时
+	private startCountDown(countdownNum?:number){
+		if(this.countdownNum > 0){
+			return false;
+		}
+		this.countdownNum = countdownNum ? countdownNum : 43200;
+		this.countDown.visible = true;
+		var t = setInterval(()=>{
+			if(this.countdownNum > 0){
+				this.countDown.text = this.common.secondToTime(this.countdownNum) + '后成熟';
+				this.countdownNum--;
+			}else{
+				clearInterval(t);
+				this.countDown.visible = false;						
+				this.guozishule_mc_1 = this.common.mc('guozishule', 380, 530);
+				this.group_top.addChild( this.guozishule_mc_1 );
+				this.guozishule_mc_1.gotoAndPlay(0, -1);
+				this.guozishule_mc_1.touchEnabled = true;
+				this.guozishule_mc_1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onFruitTap, this);									
+			}
+
+		},1000);	
+	}
+
+	//开启防偷
+	private startFangtou(second?:number){
+		if(this.fangtou > 0){
+			return false;
+		}
+		this.fangtou = second ? second : 259200;
+		this.fangtou_mc_1 = this.common.mc('fangtou', 380, 350);
+		this.fangtou_mc_1.scaleX = 1.5;
+		this.fangtou_mc_1.scaleY = 1.5;
+		this.group_top.addChild( this.fangtou_mc_1 );
+		this.fangtou_mc_1.gotoAndPlay(0, -1);
+		var t = setInterval(()=>{
+			if(this.fangtou > 0){
+				this.fangtou--;
+			}else{
+				clearInterval(t);
+				this.group_top.removeChild(this.fangtou_mc_1);
+			}
+		}, 999);
 	}
 }

@@ -52,6 +52,7 @@ class Common {
 		}else{
 			img = image;
 		}
+		img.cacheAsBitmap = true;
 		img.width = width;
 		img.height = height;
 		img.x = x > 0 ? x : 0;
@@ -122,4 +123,12 @@ class Common {
 	public getChar(_str: string,_len: number): string {
 			return _str.substring(0, _len+1) + '...';
 	}
+
+	//获取get参数
+	public getQueryString(name:string) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return decodeURI(r[2]); return null;
+	}
 }
+

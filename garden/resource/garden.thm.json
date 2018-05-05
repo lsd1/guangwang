@@ -9,7 +9,8 @@
 		"scrollerNews": "resource/garden_skins/ScrollerNews.exml",
 		"scrollerInteraction": "resource/garden_skins/ScrollerInteraction.exml",
 		"scrollerScore": "resource/garden_skins/ScrollerScore.exml",
-		"wait": "resource/garden_skins/wait.exml"
+		"wait": "resource/garden_skins/wait.exml",
+		"rule": "resource/garden_skins/Rule.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -18,6 +19,7 @@
 		"resource/garden_skins/loading.exml",
 		"resource/garden_skins/MyGarden.exml",
 		"resource/garden_skins/OthersGarden.exml",
+		"resource/garden_skins/Rule.exml",
 		"resource/garden_skins/ScoreList.exml",
 		"resource/garden_skins/ScrollerInteraction.exml",
 		"resource/garden_skins/ScrollerNews.exml",

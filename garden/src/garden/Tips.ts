@@ -20,6 +20,7 @@ class Tips extends eui.Component{
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/Tips.exml";
+		this.cacheAsBitmap = true;
 		this.right = 0;
 		this.left = 0;
 		this.top = 0;
@@ -34,6 +35,7 @@ class Tips extends eui.Component{
 
 	//打开提示框
 	public showTips(tips:any){
+		this.parent.setChildIndex(this, -1);
 		this.full_mask.visible = true;
 		this.tips_text.text = tips;
 		this.group_tips.visible = true;

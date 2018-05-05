@@ -2,7 +2,7 @@
 <e:Skin class="scoreList" width="690" height="50" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Group id="score_list" width="690" height="50" x="0" y="0">
 		<e:Label id="score_desc" text="{data.score_desc}" left="13" width="150" height="37" fontFamily="Microsoft YaHei" textColor="0x673c13" x="0" scaleX="1" scaleY="1" verticalCenter="0.5"/>
-		<e:Label id="score_change" text="{data.score_change}" x="198.48000000000002" anchorOffsetX="0" width="150" anchorOffsetY="0" height="37" fontFamily="Microsoft YaHei" scaleX="1" scaleY="1" textColor="0xdda024" verticalCenter="0"/>
+		<e:Label id="score_change" text="{data.score_change}" x="198" anchorOffsetX="0" width="150" anchorOffsetY="0" height="37" fontFamily="Microsoft YaHei" scaleX="1" scaleY="1" textColor="0xdda024" verticalCenter="0"/>
 		<e:Label id="score_date" text="{data.score_date}" fontFamily="Microsoft YaHei" height="37" anchorOffsetX="0" right="0" width="300" x="400" scaleX="1" scaleY="1" textColor="0xdda024" verticalCenter="0"/>
 	</e:Group>
 </e:Skin>

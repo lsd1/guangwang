@@ -49,6 +49,7 @@ class OthersGarden extends eui.Component {
 		this.left = 0;
 		this.top = 0;
 		this.bottom = 0;
+		this.cacheAsBitmap = true;
 		this.tips = Tips.Shared();
 		this.addChildAt(this.tips, -1);
 		//顶部果园用户头像、昵称信息
@@ -119,6 +120,14 @@ class OthersGarden extends eui.Component {
 						this.fangtou_mc_1.scaleY = 1.5;
 						this.group_top.addChild( this.fangtou_mc_1 );
 						this.fangtou_mc_1.gotoAndPlay(0, -1);
+						var t = setInterval(()=>{
+							if(this.fangtou > 0){
+								this.fangtou--;
+							}else{
+								clearInterval(t);
+								this.group_top.removeChild(this.fangtou_mc_1);
+							}
+						}, 999);
 					}
 					//开启倒计时
 					if(res.data.countdown > 0){

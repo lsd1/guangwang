@@ -1,0 +1,1 @@
+declare function getQRImgUrl(el, content): any;
