@@ -51,7 +51,7 @@
 			</e:skinName>
 		</e:Button>
 		<e:Image source="text_props_use01_png" y="26" horizontalCenter="0"/>
-		<e:Label text="　　在施用肥料24小时后，可以结出果实20颗，是否确定使用？" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" verticalCenter="-42" horizontalCenter="0"/>
+		<e:Label id="use_muck_tips" text="" anchorOffsetX="0" width="510" anchorOffsetY="0" height="172" textColor="0x7c3c03" size="31" fontFamily="Microsoft YaHei" verticalAlign="middle" lineSpacing="20" verticalCenter="-42" horizontalCenter="0"/>
 		<e:Group id="commit_use_muck" width="330" height="100" horizontalCenter="0" y="299">
 			<e:Rect width="330" height="100" fillColor="0xffa600" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="120" ellipseWidth="120" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
 			<e:Label text="确定" y="35" fontFamily="SimHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0" x="130"/>

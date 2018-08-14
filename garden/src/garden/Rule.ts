@@ -1,4 +1,4 @@
-class Rule extends eui.Component{
+class Rule extends eui.ItemRenderer{
 
 	public static share:Rule;
 	public static Shared(){
@@ -20,6 +20,7 @@ class Rule extends eui.Component{
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/Rule.exml";
+		this.data = JSON.parse(egret.localStorage.getItem('langData'));
 		this.cacheAsBitmap = true;
 		this.right = 0;
 		this.left = 0;

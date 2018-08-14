@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="index" width="750" height="1334" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" right="0" top="0" bottom="0" strokeColor="0xffffff" fillColor="0xffffff"/>
+	<e:Group left="0" right="0" top="0" bottom="0">
+		<e:Image id="bg_img" height="753" left="0" right="0" verticalCenter="-149.5" source="download_bg_png" x="0" y="141" scaleX="1" scaleY="1"/>
+		<e:Image id="download_btn" width="567" height="124" source="download_btn_png" horizontalCenter="0.5" x="92.00000000000001" y="973.63" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>

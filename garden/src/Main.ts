@@ -90,7 +90,6 @@ class Main extends eui.UILayer {
             theme.addEventListener(eui.UIEvent.COMPLETE, () => {
                 resolve();
             }, this);
-
         })
     }
 
@@ -99,22 +98,26 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-
-        var xhr =  new XMLHttpRequest();
-            xhr.open('GET', './resource/config/config.json?v=' + Math.random(), true);
-            xhr.addEventListener("load",  ()=>{
-                var config = JSON.parse(xhr.response);  
-                egret.localStorage.setItem('api_url',config.api_url);
-                var common = Common.Shared();
-                common.setCookie('app_method', '', 30);
-                common.setCookie('web_method', '', 30);
-                if(common.getCookie('token') && common.getCookie('username')){
-                    this.addChild(MyGarden.Shared());
-                }else{
-                    this.addChild(Index.Shared());
-                }
-            });
-        xhr.send(null);
+        this.getLangData();
+        var common = Common.Shared();
+        if(common.getCookie('token') && common.getCookie('username')){
+            this.addChild(MyGarden.Shared());
+        }else{
+            this.addChild(Index.Shared());
+        }
+    }
+    
+    //获取语言包
+    protected getLangData(){
+        var lang:any = Common.Shared().getQueryString('lang');
+        if(lang == 1){
+            var langData = RES.getRes('langDataEn_json');
+        }else{
+            var langData = RES.getRes('langDataCn_json');
+        }
+        var gameConfig = RES.getRes('gameConfig_json');
+        egret.localStorage.setItem('api_url', gameConfig.api_url);
+        egret.localStorage.setItem('langData', langData);
     }
 
 }

@@ -1,4 +1,4 @@
-class MyGarden extends eui.Component{
+class MyGarden extends eui.ItemRenderer{
 	private static shared:MyGarden;
 	common:Common = Common.Shared();
 	public wait:Wait = Wait.Shared();
@@ -8,6 +8,7 @@ class MyGarden extends eui.Component{
 		}
 		return this.shared;
 	}
+	public gameConfig = RES.getRes('gameConfig_json');
 	//退出登录
 	private logout:eui.Image;
 	//主界面上部分
@@ -231,6 +232,7 @@ class MyGarden extends eui.Component{
 	public constructor() {
 		super();
 		this.skinName = "resource/garden_skins/MyGarden.exml";
+		this.data = JSON.parse(egret.localStorage.getItem('langData'));
 		this.right = 0;
 		this.left = 0;
 		this.top = 0;
@@ -1309,7 +1311,7 @@ class MyGarden extends eui.Component{
 		if(this.countdownNum > 0){
 			return false;
 		}
-		this.countdownNum = countdownNum ? countdownNum : 43200;
+		this.countdownNum = countdownNum ? countdownNum : this.gameConfig.mature_time;
 		this.countDown.visible = true;
 		var t = setInterval(()=>{
 			if(this.countdownNum > 0){
@@ -1333,7 +1335,7 @@ class MyGarden extends eui.Component{
 		if(this.fangtou > 0){
 			return false;
 		}
-		this.fangtou = second ? second : 259200;
+		this.fangtou = second ? second : this.gameConfig.fangtou;
 		this.fangtou_mc_1 = this.common.mc('fangtou', 380, 350);
 		this.fangtou_mc_1.scaleX = 1.5;
 		this.fangtou_mc_1.scaleY = 1.5;

@@ -121,7 +121,7 @@ class Common {
 	}
 
 	public getChar(_str: string,_len: number): string {
-			return _str.substring(0, _len+1) + '...';
+			return _str.substring(0, _len+1) + '..';
 	}
 
 	//获取get参数

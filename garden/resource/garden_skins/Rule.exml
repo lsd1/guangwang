@@ -4,11 +4,11 @@
     <e:Group id="group_tips" width="616" height="577" verticalCenter="-129" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
 		<e:Rect width="614" height="579" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffd778" ellipseWidth="50" scaleX="1" scaleY="1" y="0" horizontalCenter="0"/>
 		<e:Rect width="579" height="336" ellipseWidth="50" fillColor="0xffefbd" anchorOffsetX="0" anchorOffsetY="0" verticalCenter="-26" y="97" scaleX="1" scaleY="1" horizontalCenter="0"/>
-		<e:Label text="游戏规则" y="33" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0"/>
-		<e:Label id="tips_text" text="1、用户注册后可以获得50包化肥，每天1包释放。\n2、浇化肥后24小时可以产出果子20个。\n3、邀请一个好友可以获得5包化肥、1个驱虫剂、一个防偷神器，每天发放一份。\n4、每天可以偷取20次他人的果子。\n5、催熟剂使用后每次成熟时间减半。\n6、发生虫害将影响果子产量，使用杀虫剂可以除虫。" anchorOffsetX="0" width="530" anchorOffsetY="0" height="310" fontFamily="Microsoft YaHei" textColor="0x000000" size="22" lineSpacing="15" verticalCenter="-29" y="133" scaleX="1" scaleY="1" verticalAlign="middle" horizontalCenter="0"/>
+		<e:Label id="title" text="{data.rule.title}"  y="33" bold="true" textColor="0xf47933" fontFamily="Microsoft YaHei" size="35" scaleX="1" scaleY="1" horizontalCenter="0"/>
+		<e:Label id="tips_text" text="{data.rule.tips_text}" anchorOffsetX="0" width="530" anchorOffsetY="0" height="310" fontFamily="Microsoft YaHei" textColor="0x000000" size="22" lineSpacing="15" verticalCenter="-29" y="133" scaleX="1" scaleY="1" verticalAlign="middle" horizontalCenter="0"/>
 		<e:Group id="tips_close" width="222" height="82" y="466" scaleX="1" scaleY="1" horizontalCenter="0">
 			<e:Rect width="222" height="82" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffa223" ellipseWidth="100" verticalCenter="0" horizontalCenter="0"/>
-			<e:Label text="知道了" fontFamily="Microsoft YaHei" verticalCenter="0" horizontalCenter="0"/>
+			<e:Label id="confirm" text="{data.rule.confirm}" fontFamily="Microsoft YaHei" verticalCenter="0" horizontalCenter="0"/>
 		</e:Group>
 	</e:Group>
 </e:Skin>

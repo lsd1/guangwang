@@ -14,29 +14,32 @@ class NewsList extends eui.ItemRenderer{
 
 		//用户名称
 		this.labelName.width = 400;
-		this.labelName.height = 140;
+		this.labelName.y = 50;
+		this.labelName.height = 40;
 		this.labelName.textAlign = "center";
 		this.labelName.verticalAlign = "middle";
-		this.labelName.size = 30;
+		this.labelName.size = 25;
 		this.labelName.textColor = 0x673C13;
 		this.labelName.bold = true;
 
 		//果园消息
 		this.labelNews.x = 250;		
 		this.labelNews.width = 250;
-		this.labelNews.height = 140;
+		this.labelNews.y = 50;
+		this.labelNews.height = 40;
 		this.labelNews.textAlign = "center";
 		this.labelNews.verticalAlign = "middle";
-		this.labelNews.size = 30;
+		this.labelNews.size = 25;
 		this.labelNews.textColor = 0x673C13;
 
 		//时间
 		this.labelTime.width = 400;
-		this.labelTime.height = 140;
+		this.labelTime.y = 50;
+		this.labelTime.height = 40;
 		this.labelTime.x = 290;
 		this.labelTime.textAlign = "right";
 		this.labelTime.verticalAlign = "middle";
-		this.labelTime.size = 30;
+		this.labelTime.size = 25;
 		this.labelTime.textColor = 0xDDA024;
 
 		this.group.addChild(rect);
@@ -50,8 +53,8 @@ class NewsList extends eui.ItemRenderer{
 	protected dataChanged():void{
         //数据改变时，会自动调用 dataChanged 这个方法
 		this.group.addChild(this.common.createCircleMask(100, 100, this.data.userAvatar, 20, 20));
-		this.labelName.text = this.common.getChar(this.data.username, 5);
-		this.labelNews.text =  this.common.getChar(this.data.content, 7);
+		this.labelName.text = this.common.getChar(this.data.username, 6);
+		this.labelNews.text =  this.data.content;
 		this.labelTime.text = this.data.time.toString().substring(5);
     }
 }

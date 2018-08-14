@@ -1,0 +1,7 @@
+{
+	"rule": {
+		"title": "Game Rule",
+		"tips_text": "1. 50 packs of fertilizer can be obtained after registration by the user. One pack per day is released.\n2, 20 fruits can be produced within 2 hours after chemical fertilization. .\n3. Invite a friend to get 5 packs of fertilizer, 1 insect repellent, 1 anti-theft artifact, 1 copy per day.\n4. You can steal 20 other people's fruits every day.\n5. After use of ripeners Each time of maturation is halved.\n6. Insect pests will affect fruit production. The use of insecticides can eliminate insects.",
+		"confirm": "Knows"
+	}
+}
